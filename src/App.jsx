@@ -3,6 +3,7 @@ import './App.css'; // Importa el archivo de estilos CSS
 
 import LoginForm from './pages/login';
 import RegistrationForm from './pages/registration';
+import MainPage from './pages/mainpage';
 
 
 // Componente de la aplicación principal
@@ -14,6 +15,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<LoginForm />} />
             <Route path="/registro" element={<RegistrationForm />} />
+            <Route path="/home" element={<MainPage/>} />
+            
           </Routes>
         </div>
       </div>
