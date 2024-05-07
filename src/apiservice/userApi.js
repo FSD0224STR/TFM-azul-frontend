@@ -3,7 +3,9 @@
 const serverUrl = 'http://localhost:3000'
 
 export const login = async (username, password) => {
+
     const response = await fetch (`${serverUrl}/users/login`, {method: 'POST', body: JSON.stringify({username, password}), headers: {"content-Type": "application/json"}})
+    
     return await response.json ()
 }
 
@@ -18,6 +20,11 @@ export const homePage = async () => {
     const myInfoPage = await response.json()
     
     return myInfoPage
+}
+
+export const createUser = async (firstname, lastname, username, password, email) => {
+    const response = await fetch (`${serverUrl}/users/register`, {method: 'POST', body: JSON.stringify({firstname, lastname, username, password, email}), headers: {"content-Type": "application/json"} })
+    return await response.json()
 }
 
 

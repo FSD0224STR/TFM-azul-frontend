@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Alert } from 'antd';
 import NavFooter from '../components/navFooter';
+import { createUser } from '../apiservice/userApi';
+import { useNavigate } from 'react-router-dom/dist';
+
 
 const RegistrationForm = () => {
     const [password, setPassword] = useState('');
@@ -10,6 +13,15 @@ const RegistrationForm = () => {
         lowercase: false,
         specialChar: false
     });
+    const [firstname, setFirstname] = useState ('')
+    const [lastname, setLastname] = useState ('')
+    const [username, setUsername] = useState ('')
+    const [email, setEmail] = useState ('')
+
+    const [error, setError] = useState ('')
+    const [createdUser, setCreatedUser] = useState ('')
+
+    const navigate = useNavigate()
 
     const handlePasswordChange = (e) => {
         const newPassword = e.target.value;
@@ -24,32 +36,37 @@ const RegistrationForm = () => {
             number: /\d/.test(newPassword),
             specialChar: /[@$!@#$%^&*()_+\-=\\[\]{};:\\|,.<>?/~]/.test(newPassword)
         });
-  };
-  
-    const handleRegister = (values) => {
-      console.log('Valores del formulario de registro:', values);
-      console.log('password:', password);
     };
-  
-  
+
+    const handleRegister = async () => {
+        const response = await createUser(firstname, lastname, username, password, email)
+        console.log (response)
+        if (response.newUser) return navigate ('/')
+            else setError (response.message)
+
+            if (response.newUser) setCreatedUser (response.newUser)
+        }
+    
+
+
     return (
         <>
             <Form name="register" onSubmit={handleRegister}  layout="vertical">
                 <h2>Registrarse</h2>
                 <Form.Item label="Nombre de usuario" name="username" rules={[{ required: true, message: 'Por favor ingresa tu Nombre de usuario' }]}>
-                    <Input />
+                    <Input value={username} onChange={e => setUsername(e.currentTarget.value)} />
                 </Form.Item>
 
                 <Form.Item label="Nombre" name="name" rules={[{ required: true, message: 'Por favor ingresa tu nombre' }]}>
-                    <Input />
+                    <Input  value={firstname} onChange={e => setFirstname (e.currentTarget.value)}/>
                 </Form.Item>
 
                 <Form.Item label="Apellidos" name="surname" rules={[{ required: true, message: 'Por favor ingresa tus apellidos' }]}>
-                    <Input />
+                    <Input value={lastname} onChange={e => setLastname(e.currentTarget.value)} />
                 </Form.Item>
 
                 <Form.Item label="Correo electrónico" name="email" rules={[{ required: true, message: 'Por favor ingresa tu correo electrónico' }]}>
-                    <Input />
+                    <Input  value={email} onChange={e => setEmail (e.currentTarget.value)}/>
                 </Form.Item>
 
                 <Form.Item label="Contraseña" name="password" rules={[{ required: true, message: 'Por favor ingresa tu contraseña' }]}>
@@ -63,14 +80,16 @@ const RegistrationForm = () => {
                     <li>{requirements.specialChar ? '✅' : '❌'} Al menos un caracter especial</li>
                 </ul>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" block>
+                    <Button type="primary" htmlType="submit" onClick={handleRegister} block>
                         Registrarse
                     </Button>
                 </Form.Item>
+                {error && <Alert type="error" message={`Error al crear usuario: ${error}`} banner />}
+                {createdUser && <Alert type="success" message={`Usuario creado con éxito: ${createdUser.username}`} banner />}
             </Form>
             <NavFooter />
       </>
     );
-  };
+};
   
 export default RegistrationForm;
