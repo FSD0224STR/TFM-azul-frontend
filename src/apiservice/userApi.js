@@ -73,3 +73,19 @@ export const deleteUser = async (id) => {
 
   return { data: "ok, borrado" };
 };
+
+export const getMyProfile = async () => {
+  const token = localStorage.getItem("access_token");
+
+  const response = await fetch(`${serverUrl}/users/me`, {
+    method: "GET",
+    headers: { authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  return { data: await response.json() };
+};

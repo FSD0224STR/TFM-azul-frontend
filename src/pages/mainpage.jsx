@@ -1,51 +1,63 @@
-import { useEffect, useState } from "react"
-import {  homePage } from "../apiservice/userApi"
+import { useEffect, useState } from "react";
+import { homePage } from "../apiservice/userApi";
 import { Alert, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
+  const [userLogged, setUserLogged] = useState("");
+  const [dummy, refresh] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const [userLogged, setUserLogged] = useState ('')
-    const [dummy, refresh] = useState(false)
-    const [error, setError] = useState('')
-    const navigate = useNavigate ()
+  const getMyUser = async () => {
+    const response = await homePage();
 
-    const getMyUser = async () => {
+    if (response.username) setUserLogged(response);
+    else setError(response.message);
 
-        const response = await homePage()
+    console.log("a ver cual es la respuesta", response);
+  };
 
-        if (response.username) setUserLogged (response)
-        else setError (response.message)
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/");
+  };
 
-        console.log ('a ver cual es la respuesta', response)
-    }
+  const handleBackToLogin = () => {
+    navigate("/");
+  };
 
-    const handleLogout = () => {
-        localStorage.removeItem('access_token')
-        navigate ('/')
-    } 
+  useEffect(() => {
+    getMyUser();
+  }, [dummy]);
 
-    const handleBackToLogin = () => {
-        navigate ('/')
-    }
-
-    useEffect (() => {
-        getMyUser()
-    }, [dummy])
-
-    return (
-        <div>
-            { userLogged.username && <h3>SESIÓN INICIADA CON ÉXITO</h3>}
-            {userLogged.username && <p>Usuario: {userLogged.username} </p>}
-            {error && <Alert type="error" message={`Error al iniciar sesión: ${error}`} banner />}
-            {error && <Button type="primary" htmlType="submit" onClick={handleBackToLogin}  block>
-            Volver a iniciar sesión
-            </Button>}
-            {userLogged.username && <Button type="primary" htmlType="submit" onClick={handleLogout}  block>
-            Cerrar sesión
-            </Button>}
-        </div>
-        
-    )
-}
-export default MainPage
+  return (
+    <div>
+      {userLogged.username && <h3>SESIÓN INICIADA CON ÉXITO</h3>}
+      {userLogged.username && <p>Usuario: {userLogged.username} </p>}
+      {error && (
+        <Alert
+          type="error"
+          message={`Error al iniciar sesión: ${error}`}
+          banner
+        />
+      )}
+      {error && (
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={handleBackToLogin}
+          block
+        >
+          Volver a iniciar sesión
+        </Button>
+      )}
+      {userLogged.username && (
+        <Button type="primary" htmlType="submit" onClick={handleLogout} block>
+          Cerrar sesión
+        </Button>
+      )}
+    </div>
+  );
+};
+export default MainPage;
