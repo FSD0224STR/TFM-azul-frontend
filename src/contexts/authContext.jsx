@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userApi from "../apiservice/userApi";
 
-// Creamos el AuthContext
+// Create the AuthContext
 export const AuthContext = React.createContext();
 
-// Creamos el componente AuthProvider
+// Create the AuthProvider component
 export const AuthContextProvider = ({ children }) => {
-  // Estado para el seguimiento de la sesión
+  // State for tracking the logged in status
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -32,10 +32,10 @@ export const AuthContextProvider = ({ children }) => {
     getMyProfile();
   }, [navigate]);
 
-  //Función para iniciar sesión
-  const login = async (name, password) => {
+  // Function for logging in
+  const login = async (username, password) => {
     setLoading(true);
-    const response = await userApi.login(name, password);
+    const response = await userApi.login(username, password);
 
     if (response.error) setError(response.error);
     else {
@@ -47,12 +47,13 @@ export const AuthContextProvider = ({ children }) => {
     setIsLoggedIn(true);
   };
 
-  //Función para cerrar sesión
+  // Function for logging out
   const logout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("access_token");
   };
 
+  // Value object to be provided by the context
   const authContextValue = {
     isLoggedIn,
     error,
@@ -63,6 +64,7 @@ export const AuthContextProvider = ({ children }) => {
     setError,
   };
 
+  // Render the AuthProvider with the provided children
   return (
     <AuthContext.Provider value={authContextValue}>
       {children}

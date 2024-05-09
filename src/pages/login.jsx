@@ -1,51 +1,41 @@
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
 
-import { Form, Input, Button, Spin, Alert } from "antd";
-import NavFooter from "../components/navFooter";
-import Password from "antd/es/input/Password";
+import { Card, Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
 import { AuthContext } from "../contexts/authContext";
+import NavFooter from "../components/NavFooter";
 
-// Componente del formulario de inicio de sesión
-const LoginForm = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const { login, loading, error, setError } = useContext(AuthContext);
 
   return (
-    <>
-      <Form name="login" layout="vertical">
-        <h2>Iniciar sesión</h2>
-        <Form.Item
-          label="Correo electrónico"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Por favor ingresa tu correo electrónico",
-            },
-          ]}
+    <div style={{ marginTop: "20vh", maxWidth: "sm" }}>
+      <Card style={{ padding: "1em" }}>
+        <Typography.Title
+          level={2}
+          style={{ marginBottom: "1em", marginTop: "1em", textAlign: "center" }}
         >
-          <Input
-            value={username}
-            onChange={(e) => setUsername(e.currentTarget.value)}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Contraseña"
-          name="password"
-          rules={[
-            { required: true, message: "Por favor ingresa tu contraseña" },
-          ]}
-        >
-          <Input.Password
-            value={Password}
-            onChange={(e) => setPassword(e.currentTarget.value)}
-          />
-        </Form.Item>
-
-        <Form.Item>
+          Bienvenido
+        </Typography.Title>
+        <Row gutter={[16, 16]} justify="center">
+          <Col xs={24} sm={12} style={{ textAlign: "center" }}>
+            <Input
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.currentTarget.value)}
+            />
+          </Col>
+          <Col xs={24} sm={12} style={{ textAlign: "center" }}>
+            <Input.Password
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.currentTarget.value)}
+            />
+          </Col>
+        </Row>
+        <div style={{ margin: "2em", textAlign: "center" }}>
           {loading ? (
             <Spin />
           ) : (
@@ -53,18 +43,19 @@ const LoginForm = () => {
               Login
             </Button>
           )}
-        </Form.Item>
-      </Form>
+        </div>
+      </Card>
       {error && (
         <Alert
-          message={`Ha habido un error: ${error}`}
           type="error"
+          message={`Ha habido un error: ${error}`}
           closable
           onClose={() => setError("")}
         />
       )}
       <NavFooter />
-    </>
+    </div>
   );
 };
-export default LoginForm;
+
+export default Login;

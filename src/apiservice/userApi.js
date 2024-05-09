@@ -1,47 +1,21 @@
-const serverUrl = "http://localhost:3000";
+const baseUrl = "http://localhost:3000";
 
-export const login = async (username, password) => {
-  const response = await fetch(`${serverUrl}/users/login`, {
-    method: "POST",
-    body: JSON.stringify({ username, password }),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  if (!response.ok) return { error: response.statusText };
-
-  const token = await response.json();
-  return { data: token };
-};
-
-export const homePage = async () => {
-  const token = localStorage.getItem("access_token");
-
-  const id = localStorage.getItem("id");
-
-  const response = await fetch(`${serverUrl}/users/${id}`, {
-    method: "GET",
-    headers: { authorization: `Bearer ${token}` },
-  });
+const getAllUsers = async () => {
+  const response = await window.fetch(`${baseUrl}/users`);
 
   if (!response.ok) {
     const error = await response.json();
     return { error: error.message };
   }
 
-  const myInfoPage = await response.json();
-  return { data: myInfoPage };
+  const users = await response.json();
+  return { data: users };
 };
 
-export const createUser = async (
-  firstname,
-  lastname,
-  username,
-  password,
-  email
-) => {
+const addUser = async (firstname, lastname, username, password, email) => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${serverUrl}/users/register`, {
+  const response = await fetch(`${baseUrl}/users/add`, {
     method: "POST",
     body: JSON.stringify({ firstname, lastname, username, password, email }),
     headers: {
@@ -49,6 +23,7 @@ export const createUser = async (
       authorization: `Bearer ${token}`,
     },
   });
+
   if (!response.ok) {
     const error = await response.json();
     return { error: error.message };
@@ -58,10 +33,10 @@ export const createUser = async (
   return { data: newlyCreatedUser };
 };
 
-export const deleteUser = async (id) => {
+const deleteUser = async (id) => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${serverUrl}/users/${id}`, {
+  const response = await fetch(`${baseUrl}/users/${id}`, {
     method: "DELETE",
     headers: { authorization: `Bearer ${token}` },
   });
@@ -74,10 +49,23 @@ export const deleteUser = async (id) => {
   return { data: "ok, borrado" };
 };
 
-export const getMyProfile = async () => {
+const login = async (username, password) => {
+  const response = await fetch(`${baseUrl}/users/login`, {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) return { error: response.statusText };
+
+  const token = await response.json();
+  return { data: token };
+};
+
+const getMyProfile = async () => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${serverUrl}/users/me`, {
+  const response = await fetch(`${baseUrl}/users/me`, {
     method: "GET",
     headers: { authorization: `Bearer ${token}` },
   });
@@ -89,3 +77,5 @@ export const getMyProfile = async () => {
 
   return { data: await response.json() };
 };
+
+export default { getAllUsers, addUser, deleteUser, login, getMyProfile };
