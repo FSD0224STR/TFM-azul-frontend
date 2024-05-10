@@ -7,9 +7,7 @@ const { Header } = Layout;
 const { Title } = Typography;
 
 const NavBar = () => {
-  const { isLoggedIn, logout, profile } = useContext(AuthContext);
-
-  console.log(" a ver que es profile del context en navbar", profile);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <Header>

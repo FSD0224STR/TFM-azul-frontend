@@ -12,12 +12,12 @@ const getAllTrips = async () => {
   return { data: trips };
 };
 
-const addTrip = async (title) => {
+const addTrip = async (title, start_date, end_date) => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${baseUrl}/users/trips/add`, {
+  const response = await fetch(`${baseUrl}/user/trips/add`, {
     method: "POST",
-    body: JSON.stringify({ title }),
+    body: JSON.stringify({ title, start_date, end_date }),
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ const addTrip = async (title) => {
 const deleteTrip = async (id) => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${baseUrl}/users/trips/${id}`, {
+  const response = await fetch(`${baseUrl}/user/trips/${id}`, {
     method: "DELETE",
     headers: { authorization: `Bearer ${token}` },
   });

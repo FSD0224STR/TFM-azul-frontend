@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
+import { Card, Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
+import { TripCard } from "../components/TripCard";
 
 function Home() {
   const [trips, setTrips] = useState([]);
@@ -32,15 +33,15 @@ function Home() {
     setLoading(false);
   };
 
-  // const deleteTripAndSync = async (idToDelete) => {
-  //   setLoading(true);
-  //   const response = await tripAPI
-  //     .deleteTrip(idToDelete)
-  //     .then(() => refresh(!dummy));
-  //   if (response.error) setError(response.error);
-  //   else refresh(!dummy);
-  //   setLoading(false);
-  // };
+  const deleteTripAndSync = async (idToDelete) => {
+    setLoading(true);
+    const response = await tripAPI
+      .deleteTrip(idToDelete)
+      .then(() => refresh(!dummy));
+    if (response.error) setError(response.error);
+    else refresh(!dummy);
+    setLoading(false);
+  };
 
   useEffect(() => {
     getTrips();
@@ -48,6 +49,33 @@ function Home() {
 
   return (
     <div style={{ marginTop: "10vh", maxWidth: "md" }}>
+      <Card style={{ padding: 16 }}>
+        <Typography.Title level={2} style={{ marginBottom: 24 }}>
+          Lista de viajes
+        </Typography.Title>
+        {loading ? (
+          <Spin />
+        ) : (
+          <div>
+            {trips.map((trip) => (
+              <Card
+                key={trip._id}
+                style={{ marginBottom: 16, width: "100%" }}
+                xs={24}
+                sm={12}
+              >
+                <TripCard
+                  key={trip._id}
+                  title={trip.title}
+                  start_date={trip.start_date}
+                  end_date={trip.end_date}
+                  onDelete={() => deleteTripAndSync(trip._id)}
+                ></TripCard>
+              </Card>
+            ))}
+          </div>
+        )}
+      </Card>
       {isLoggedIn ? (
         <>
           <Typography.Title level={3} style={{ marginTop: "1em" }}>
@@ -61,6 +89,7 @@ function Home() {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </Col>
+
             <Col xs={24} sm={12}>
               {loading ? (
                 <Spin />
