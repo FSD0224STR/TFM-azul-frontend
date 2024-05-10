@@ -7,45 +7,52 @@ import { TripCard } from "../components/TripCard";
 
 function Home() {
   const [trips, setTrips] = useState([]);
-
-  const { isLoggedIn } = useContext(AuthContext);
-
   const [title, setTitle] = useState("");
-
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [dummy, refresh] = useState(false);
+  const { isLoggedIn } = useContext(AuthContext);
 
   const getTrips = async () => {
-    setLoading(true);
-    const response = await tripAPI.getAllTrips();
-    if (response.error) setError(response.error);
-    else setTrips(response.data);
-    setLoading(false);
+    try {
+      setLoading(true);
+      const response = await tripAPI.getAllTrips();
+      setTrips(response.data);
+    } catch (error) {
+      setError(`Error fetching trips: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const addTripAndSync = async () => {
-    setLoading(true);
-    const response = await tripAPI.addTrip({ title });
-    if (response.error) setError(response.error);
-    else refresh(!dummy);
-    setLoading(false);
+  const addTrip = async () => {
+    try {
+      setLoading(true);
+      const response = await tripAPI.addTrip({ title });
+      setTrips([...trips, response.data]);
+      setTitle("");
+    } catch (error) {
+      setError(`Error adding trip: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const deleteTripAndSync = async (idToDelete) => {
-    setLoading(true);
-    const response = await tripAPI
-      .deleteTrip(idToDelete)
-      .then(() => refresh(!dummy));
-    if (response.error) setError(response.error);
-    else refresh(!dummy);
-    setLoading(false);
+  const deleteTrip = async (idToDelete) => {
+    try {
+      setLoading(true);
+      await tripAPI.deleteTrip(idToDelete);
+      setTrips(trips.filter((trip) => trip._id !== idToDelete));
+    } catch (error) {
+      setError(`Error deleting trip: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     getTrips();
-  }, [dummy]);
+  }, []);
 
   return (
     <div style={{ marginTop: "10vh", maxWidth: "md" }}>
@@ -55,7 +62,7 @@ function Home() {
         </Typography.Title>
         {loading ? (
           <Spin />
-        ) : (
+        ) : Array.isArray(trips) && trips.length > 0 ? (
           <div>
             {trips.map((trip) => (
               <Card
@@ -69,11 +76,14 @@ function Home() {
                   title={trip.title}
                   start_date={trip.start_date}
                   end_date={trip.end_date}
-                  onDelete={() => deleteTripAndSync(trip._id)}
+                  user={trip.user}
+                  onDelete={() => deleteTrip(trip._id)}
                 ></TripCard>
               </Card>
             ))}
           </div>
+        ) : (
+          <Typography.Text>No trips found.</Typography.Text>
         )}
       </Card>
       {isLoggedIn ? (
@@ -94,7 +104,7 @@ function Home() {
               {loading ? (
                 <Spin />
               ) : (
-                <Button type="primary" onClick={addTripAndSync}>
+                <Button type="primary" onClick={addTrip}>
                   Añadir Viaje
                 </Button>
               )}

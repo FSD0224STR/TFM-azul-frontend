@@ -34,7 +34,7 @@ const NavBar = () => {
             ),
           },
           {
-            key: "4",
+            key: "3",
             label: !isLoggedIn && (
               <Link to="/login">
                 <Button type="link" style={{ color: "white" }}>
@@ -44,7 +44,7 @@ const NavBar = () => {
             ),
           },
           {
-            key: "5",
+            key: "4",
             label: isLoggedIn && (
               <Button type="link" onClick={logout} style={{ color: "white" }}>
                 Logout

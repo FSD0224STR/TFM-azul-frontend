@@ -7,8 +7,8 @@ const getAllTrips = async () => {
     return { error: "No token found. Please login again." };
   }
 
-  const response = await fetch(`${baseUrl}/users/trips/add`, {
-    method: "POST",
+  const response = await fetch(`${baseUrl}/users/trips/`, {
+    method: "GET",
     body: JSON.stringify(),
     headers: {
       "Content-Type": "application/json",
