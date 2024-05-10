@@ -18,39 +18,50 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const getMyProfile = async () => {
       setLoading(true);
-      const token = localStorage.getItem("access_token");
-      if (token) {
-        const response = await userApi.getMyProfile();
-        if (response.data) {
-          setProfile(response.data);
-          setIsLoggedIn(true);
-          navigate("/home");
+      try {
+        const token = localStorage.getItem("access_token");
+        if (token) {
+          const response = await userApi.getMyProfile();
+          if (response.data) {
+            setProfile(response.data);
+            setIsLoggedIn(true);
+            navigate("/home");
+          }
         }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     getMyProfile();
-  }, [navigate]);
+  }, [navigate, isLoggedIn]);
 
   // Function for logging in
   const login = async (username, password) => {
     setLoading(true);
-    const response = await userApi.login(username, password);
-
-    if (response.error) setError(response.error);
-    else {
-      const token = response.data;
-      localStorage.setItem("access_token", token);
-      navigate("/home");
+    try {
+      const response = await userApi.login(username, password);
+      if (response.error) {
+        setError(response.error);
+      } else {
+        const token = response.data;
+        localStorage.setItem("access_token", token);
+        navigate("/home");
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-    setIsLoggedIn(true);
   };
 
   // Function for logging out
   const logout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("access_token");
+    navigate("/login");
   };
 
   // Value object to be provided by the context

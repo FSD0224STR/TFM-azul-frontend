@@ -1,4 +1,4 @@
-import { Layout, Menu, Avatar, Button, Typography } from "antd";
+import { Layout, Menu, Button, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
@@ -11,39 +11,49 @@ const NavBar = () => {
 
   return (
     <Header>
-      <Menu theme="dark" mode="horizontal">
-        <Menu.Item key="1">
-          <Title level={3} style={{ color: "white" }}>
-            My App
-          </Title>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Link to="/home">
-            <Button type="link" style={{ color: "white" }}>
-              Home
-            </Button>
-          </Link>
-        </Menu.Item>
-
-        {!isLoggedIn && (
-          <Menu.Item key="4">
-            <Link to="/login">
-              <Button type="link" style={{ color: "white" }}>
-                Login
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        items={[
+          {
+            key: "1",
+            label: (
+              <Title level={5} style={{ color: "white" }}>
+                TFM GRUPO AZUL
+              </Title>
+            ),
+          },
+          {
+            key: "2",
+            label: (
+              <Link to="/home">
+                <Button type="link" style={{ color: "white" }}>
+                  Home
+                </Button>
+              </Link>
+            ),
+          },
+          {
+            key: "4",
+            label: !isLoggedIn && (
+              <Link to="/login">
+                <Button type="link" style={{ color: "white" }}>
+                  Login
+                </Button>
+              </Link>
+            ),
+          },
+          {
+            key: "5",
+            label: isLoggedIn && (
+              <Button type="link" onClick={logout} style={{ color: "white" }}>
+                Logout
               </Button>
-            </Link>
-          </Menu.Item>
-        )}
-        {isLoggedIn && (
-          <Menu.Item key="5">
-            <Button type="link" onClick={logout} style={{ color: "white" }}>
-              Logout
-            </Button>
-          </Menu.Item>
-        )}
-      </Menu>
+            ),
+          },
+        ]}
+      />
     </Header>
   );
 };
-
 export { NavBar };
