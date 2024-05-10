@@ -1,16 +1,16 @@
 const baseUrl = "http://localhost:3000";
 
-const getAllUsers = async () => {
-  const response = await window.fetch(`${baseUrl}/users`);
+// const getAllUsers = async () => {
+//   const response = await window.fetch(`${baseUrl}/users`);
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
+//   if (!response.ok) {
+//     const error = await response.json();
+//     return { error: error.message };
+//   }
 
-  const users = await response.json();
-  return { data: users };
-};
+//   const users = await response.json();
+//   return { data: users };
+// };
 
 const addUser = async (firstname, lastname, username, password, email) => {
   const token = localStorage.getItem("access_token");
@@ -62,10 +62,10 @@ const login = async (username, password) => {
   return { data: token };
 };
 
-const getMyProfile = async () => {
+const getMyProfile = async (username) => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${baseUrl}/users/me`, {
+  const response = await fetch(`${baseUrl}/users/${username}`, {
     method: "GET",
     headers: { authorization: `Bearer ${token}` },
   });
@@ -78,4 +78,4 @@ const getMyProfile = async () => {
   return { data: await response.json() };
 };
 
-export default { getAllUsers, addUser, deleteUser, login, getMyProfile };
+export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile };
