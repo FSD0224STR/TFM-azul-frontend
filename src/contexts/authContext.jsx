@@ -42,7 +42,9 @@ export const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await userApi.login(username, password);
+      console.log ('esta es la respuesta completa', response)
       if (response.error) {
+        console.log ("este es el error del login", response.error)
         setError(response.error);
       } else {
         const token = response.data;

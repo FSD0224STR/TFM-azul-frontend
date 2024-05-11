@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Input, Button, Alert } from "antd";
-import NavFooter from "../components/NavFooter";
+import {NavFooter} from "/src/components/navFooter"
 import userApi from "/src/apiservice/userApi.js";
 import { useNavigate } from "react-router-dom/dist";
 
@@ -156,7 +156,7 @@ const RegistrationForm = () => {
           />
         )}
       </Form>
-      <NavFooter />
+      < NavFooter/>
     </>
   );
 };

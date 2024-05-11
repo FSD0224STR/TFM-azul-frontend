@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 // Componente del pie de página
-const NavFooter = () => {
+export const NavFooter = () => {
   const location = useLocation();
 
   if (location.pathname === "/registration") {
@@ -24,4 +24,4 @@ const NavFooter = () => {
   }
 };
 
-export default NavFooter;
+

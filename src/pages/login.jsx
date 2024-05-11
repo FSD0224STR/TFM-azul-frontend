@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-
+import {NavFooter} from "/src/components/navFooter"
 import { Card, Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
 import { AuthContext } from "../contexts/authContext";
-import NavFooter from "../components/NavFooter";
+
 
 const Login = () => {
   const [username, setUsername] = useState("");

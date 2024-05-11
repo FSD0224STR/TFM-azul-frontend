@@ -55,11 +55,14 @@ const login = async (username, password) => {
     body: JSON.stringify({ username, password }),
     headers: { "Content-Type": "application/json" },
   });
-
-  if (!response.ok) return { error: response.statusText };
-
-  const token = await response.json();
-  return { data: token };
+  
+  if (!response.ok) {
+    const error = await response.json ()
+    return {error: error.message}
+  } 
+  const logged = await response.json()
+  return {data: logged }
+  
 };
 
 const getMyProfile = async (username) => {
