@@ -48,7 +48,7 @@ const Login = () => {
       {error && (
         <Alert
           type="error"
-          message={`Ha habido un error: ${error}`}
+          message={error}
           closable
           onClose={() => setError("")}
         />

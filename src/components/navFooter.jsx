@@ -19,6 +19,9 @@ export const NavFooter = () => {
         <p>
           ¿No tienes una cuenta? <Link to="/registration">Regístrate aquí</Link>
         </p>
+        <p>
+          ¿Has olvidado la contraseña? <Link to= ""> Recupera tu contraseña </Link>
+        </p>
       </div>
     );
   }
