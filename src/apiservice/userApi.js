@@ -1,30 +1,81 @@
+const baseUrl = "http://localhost:3000";
 
+// const getAllUsers = async () => {
+//   const response = await window.fetch(`${baseUrl}/users`);
 
-const serverUrl = 'http://localhost:3000'
+//   if (!response.ok) {
+//     const error = await response.json();
+//     return { error: error.message };
+//   }
 
-export const login = async (username, password) => {
+//   const users = await response.json();
+//   return { data: users };
+// };
 
-    const response = await fetch (`${serverUrl}/users/login`, {method: 'POST', body: JSON.stringify({username, password}), headers: {"content-Type": "application/json"}})
-    
-    return await response.json ()
-}
+const addUser = async (firstname, lastname, username, password, email) => {
+  const token = localStorage.getItem("access_token");
 
-export const homePage = async () => {
+  const response = await fetch(`${baseUrl}/users/add`, {
+    method: "POST",
+    body: JSON.stringify({ firstname, lastname, username, password, email }),
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
 
-    const token = localStorage.getItem ('access_token')
-    
-    const id = localStorage.getItem ('id')
-    
-    const response = await fetch (`${serverUrl}/users/${id}`, {headers: {"authorization": `Bearer ${token}`}})
-    
-    const myInfoPage = await response.json()
-    
-    return myInfoPage
-}
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
 
-export const createUser = async (firstname, lastname, username, password, email) => {
-    const response = await fetch (`${serverUrl}/users/register`, {method: 'POST', body: JSON.stringify({firstname, lastname, username, password, email}), headers: {"content-Type": "application/json"} })
-    return await response.json()
-}
+  const newlyCreatedUser = await response.json();
+  return { data: newlyCreatedUser };
+};
 
+const deleteUser = async (id) => {
+  const token = localStorage.getItem("access_token");
 
+  const response = await fetch(`${baseUrl}/users/${id}`, {
+    method: "DELETE",
+    headers: { authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  return { data: "ok, borrado" };
+};
+
+const login = async (username, password) => {
+  const response = await fetch(`${baseUrl}/users/login`, {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) return { error: response.statusText };
+
+  const token = await response.json();
+  return { data: token };
+};
+
+const getMyProfile = async (username) => {
+  const token = localStorage.getItem("access_token");
+
+  const response = await fetch(`${baseUrl}/users/${username}`, {
+    method: "GET",
+    headers: { authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  return { data: await response.json() };
+};
+
+export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile };

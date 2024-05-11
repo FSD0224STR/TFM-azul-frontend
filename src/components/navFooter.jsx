@@ -1,21 +1,27 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link } from "react-router-dom";
 // Componente del pie de página
 const NavFooter = () => {
-    const location = useLocation();
-  
-    if (location.pathname === '/registro') {
-      return (
-        <div className="footer">
-          <p>¿Ya tienes una cuenta? <Link to="/">Inicia aquí</Link></p>
-        </div>
-      );
-    }
-  
+  const location = useLocation();
+
+  if (location.pathname === "/registration") {
     return (
       <div className="footer">
-        <p>¿No tienes una cuenta? <Link to="/registro">Regístrate aquí</Link></p>
+        <p>
+          ¿Ya tienes una cuenta? <Link to="/login">Inicia aquí</Link>
+        </p>
       </div>
     );
-  };
-  
+  }
+
+  if (location.pathname === "/login") {
+    return (
+      <div className="footer">
+        <p>
+          ¿No tienes una cuenta? <Link to="/registration">Regístrate aquí</Link>
+        </p>
+      </div>
+    );
+  }
+};
+
 export default NavFooter;
