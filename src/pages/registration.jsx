@@ -63,11 +63,12 @@ const RegistrationForm = () => {
       password,
       email
     );
-    console.log(response);
-    if (response.newUser) return navigate("/");
-    else setError(response.message);
-
-    if (response.newUser) setAddedUser(response.newUser);
+    if ('error' in response) {
+      setError(response.error);
+    } else{ 
+      setAddedUser(response.data);
+      return navigate("/login");
+    }
   };
   
 
