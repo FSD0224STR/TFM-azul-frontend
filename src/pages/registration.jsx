@@ -69,6 +69,12 @@ const RegistrationForm = () => {
 
     if (response.newUser) setAddedUser(response.newUser);
   };
+  
+
+  const isFormValid = requirements.length && requirements.uppercase && 
+  requirements.lowercase && requirements.number && requirements.specialChar 
+  && !error && username && firstname && lastname && email;
+
 
   return (
     <>
@@ -162,6 +168,7 @@ const RegistrationForm = () => {
                 type="primary"
                 htmlType="submit"
                 onClick={handleRegister}
+                disabled={!isFormValid}
                 block
               >
                 Registrarse
