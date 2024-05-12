@@ -15,18 +15,14 @@ export const App = () => {
   return (
     <>
       <NavBar></NavBar>
-      <div className="container">
-        <div className="content">
-          <Routes >
-            <Route path="/home" element={<Home props></Home>}></Route>
-            <Route path="/login" element={<Login props ></Login>}></Route>
-            <Route
-              path="/registration"
-              element={<Registration props></Registration>}
-            ></Route>
-          </Routes>
-        </div>
-      </div>
+      <Routes >
+          <Route path="/home" element={<Home props></Home>}></Route>
+          <Route path="/login" element={<Login props ></Login>}></Route>
+          <Route
+            path="/registration"
+            element={<Registration props></Registration>}
+          ></Route>
+      </Routes>
     </>
   );
 };

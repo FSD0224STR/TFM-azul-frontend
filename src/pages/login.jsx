@@ -11,48 +11,52 @@ const Login = () => {
 
   return ( /* xs={24} sm={12}  md={8} lg={6}  */
     <>
-      <Card className="loginCard" >
-        <Typography.Title
-          level={2}
-          className="loginTitle"
-        >
-          Bienvenido
-        </Typography.Title>
-        <Row gutter={[16, 16]} justify="center">
-          <Col xs={24} className="inputRow">
-            <Input
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.currentTarget.value)}
+      <div className="container">
+        <div className="content">
+          <Card className="loginCard" >
+            <Typography.Title
+              level={2}
+              className="loginTitle"
+            >
+              Bienvenido
+            </Typography.Title>
+            <Row gutter={[16, 16]} justify="center">
+              <Col xs={24} className="inputRow">
+                <Input
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.currentTarget.value)}
+                />
+              </Col>
+              <Col xs={24}  className="inputRow">
+                <Input.Password
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.currentTarget.value)}
+                />
+              </Col>
+            </Row>
+            <div className="buttonContainer">
+              {loading ? (
+                <Spin />
+              ) : (
+                <Button type="primary" onClick={() => login(username, password)} block >
+                  Login
+                </Button>
+              )}
+            </div>
+          </Card>
+          {error && (
+            <Alert
+              type="error"
+              message={error}
+              closable
+              onClose={() => setError("")}
             />
-          </Col>
-          <Col xs={24}  className="inputRow">
-            <Input.Password
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.currentTarget.value)}
-            />
-          </Col>
-        </Row>
-        <div className="buttonContainer">
-          {loading ? (
-            <Spin />
-          ) : (
-            <Button type="primary" onClick={() => login(username, password)} block >
-              Login
-            </Button>
           )}
+          <NavFooter />
         </div>
-      </Card>
-      {error && (
-        <Alert
-          type="error"
-          message={error}
-          closable
-          onClose={() => setError("")}
-        />
-      )}
-      <NavFooter />
+      </div>
     </>
   );
 };
