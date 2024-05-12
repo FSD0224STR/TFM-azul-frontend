@@ -1,0 +1,4 @@
+.registerAlert > .ant-alert-banner{
+    border: 1px solid #ff4d4f !important; /* // #ffccc7 !important; */
+    border-radius: 4px;
+}

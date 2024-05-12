@@ -16,7 +16,6 @@ const Login = () => {
           <Card className="loginCard" >
             <Typography.Title
               level={2}
-              className="loginTitle"
             >
               Bienvenido
             </Typography.Title>
