@@ -5,6 +5,8 @@ import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
 import { TripCard } from "../components/TripCard";
 
+import '../styles/Home.css';
+
 function Home() {
   const [trips, setTrips] = useState([]);
   const [title, setTitle] = useState("");
@@ -28,7 +30,7 @@ function Home() {
   const addTrip = async () => {
     try {
       setLoading(true);
-      const response = await tripAPI.addTrip({ title });
+      const response = await tripAPI.addTrip({ title /*, start_date, end_date*/ });
       setTrips([...trips, response.data]);
       setTitle("");
     } catch (error) {
@@ -56,30 +58,23 @@ function Home() {
 
   return (
     <div style={{ marginTop: "10vh", maxWidth: "md" }}>
-      <Card style={{ padding: 16 }}>
-        <Typography.Title level={2} style={{ marginBottom: 24 }}>
+      <Card >
+        <Typography.Title level={2}>
           Lista de viajes
         </Typography.Title>
         {loading ? (
           <Spin />
         ) : Array.isArray(trips) && trips.length > 0 ? (
-          <div>
+          <div className='tripPanel'>
             {trips.map((trip) => (
-              <Card
+              <TripCard
                 key={trip._id}
-                style={{ marginBottom: 16, width: "100%" }}
-                xs={24}
-                sm={12}
-              >
-                <TripCard
-                  key={trip._id}
-                  title={trip.title}
-                  start_date={trip.start_date}
-                  end_date={trip.end_date}
-                  user={trip.user}
-                  onDelete={() => deleteTrip(trip._id)}
-                ></TripCard>
-              </Card>
+                title={trip.title}
+                start_date={trip.start_date}
+                end_date={trip.end_date}
+                user={trip.user}
+                onDelete={() => deleteTrip(trip._id)}
+              ></TripCard>
             ))}
           </div>
         ) : (
@@ -88,10 +83,10 @@ function Home() {
       </Card>
       {isLoggedIn ? (
         <>
-          <Typography.Title level={3} style={{ marginTop: "1em" }}>
+          <Typography.Title level={3} >
             Añadir viaje
           </Typography.Title>
-          <Row gutter={[16, 16]} style={{ marginTop: "1em" }}>
+          <Row gutter={[16, 16]} >
             <Col xs={24} sm={12}>
               <Input
                 placeholder="Title"
@@ -112,7 +107,7 @@ function Home() {
           </Row>
         </>
       ) : (
-        <Typography.Title level={3} style={{ marginTop: "1em" }}>
+        <Typography.Title level={3}>
           Para añadir viajes, por favor inicia sesión
         </Typography.Title>
       )}

@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = "http://localhost:3000" + "/users/trips/";
 
 const getAllTrips = async () => {
   const token = localStorage.getItem("access_token");
@@ -7,7 +7,7 @@ const getAllTrips = async () => {
     return { error: "No token found. Please login again." };
   }
 
-  const response = await fetch(`${baseUrl}/users/trips/`, {
+  const response = await fetch(`${baseUrl}`, {
     method: "GET",
     body: JSON.stringify(),
     headers: {
@@ -25,16 +25,16 @@ const getAllTrips = async () => {
   return { data: trips };
 };
 
-const addTrip = async (title /*, start_date, end_date*/) => {
+const addTrip = async (tripData) => {
   const token = localStorage.getItem("access_token");
 
   if (!token) {
     return { error: "No token found. Please login again." };
   }
 
-  const response = await fetch(`${baseUrl}/users/trips/add`, {
+  const response = await fetch(`${baseUrl}add`, {
     method: "POST",
-    body: JSON.stringify({ title /*, start_date, end_date*/ }),
+    body: JSON.stringify(tripData),
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const addTrip = async (title /*, start_date, end_date*/) => {
 
 //sólo puedo borrar si he creado el viaje?
 const deleteTrip = async (id) => {
-  const response = await fetch(`${baseUrl}/users/trips/${id}`, {
+  const response = await fetch(`${baseUrl}${id}`, {
     method: "DELETE",
   });
 
