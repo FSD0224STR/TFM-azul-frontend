@@ -1,0 +1,26 @@
+.cardSize {
+    width: 300px;
+    margin: 5px;
+}
+
+.cardBody{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;  
+    align-items: flex-end;
+}
+/* @media (min-width: 576px) {
+    .cardSize {
+        width: 50%;
+    }
+}
+@media (min-width: 768px) { 
+    .cardSize {
+        width: 25%;
+    }
+}
+@media (min-width: 992px) { 
+    .cardSize {
+        width: 20%;
+    }
+} */

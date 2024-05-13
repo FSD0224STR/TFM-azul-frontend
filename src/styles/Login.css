@@ -1,0 +1,23 @@
+.loginCard {
+    padding: 1em;
+    background-color: #f0f2f5;
+} 
+
+.loginTitle {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.inputRow {
+    text-align: center;
+}
+
+.inputControl {
+    text-align: center;
+}
+
+.buttonContainer {
+    margin-top: 2em;
+    text-align: center;
+}

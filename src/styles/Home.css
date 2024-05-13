@@ -1,0 +1,7 @@
+
+.tripPanel {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1300px;
+    justify-content: center
+}

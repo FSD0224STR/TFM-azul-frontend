@@ -25,8 +25,8 @@ const addUser = async (firstname, lastname, username, password, email) => {
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
+    const errorMessage = await response.json();
+    return { error: errorMessage };
   }
 
   const newlyCreatedUser = await response.json();
