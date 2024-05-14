@@ -5,7 +5,7 @@ import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
 import { TripCard } from "../components/TripCard";
 
-import '../styles/Home.css';
+import "../styles/Home.css";
 
 function Home() {
   const [trips, setTrips] = useState([]);
@@ -30,7 +30,9 @@ function Home() {
   const addTrip = async () => {
     try {
       setLoading(true);
-      const response = await tripAPI.addTrip({ title /*, start_date, end_date*/ });
+      const response = await tripAPI.addTrip({
+        title /*, start_date, end_date*/,
+      });
       setTrips([...trips, response.data]);
       setTitle("");
     } catch (error) {
@@ -58,21 +60,20 @@ function Home() {
 
   return (
     <div style={{ marginTop: "10vh", maxWidth: "md" }}>
-      <Card >
-        <Typography.Title level={2}>
-          Lista de viajes
-        </Typography.Title>
+      <Card>
+        <Typography.Title level={2}>Lista de viajes</Typography.Title>
         {loading ? (
           <Spin />
         ) : Array.isArray(trips) && trips.length > 0 ? (
-          <div className='tripPanel'>
+          <div className="tripPanel">
             {trips.map((trip) => (
               <TripCard
                 key={trip._id}
                 title={trip.title}
-                start_date={trip.start_date}
-                end_date={trip.end_date}
-                user={trip.user}
+                startDate={trip.startDate}
+                endDate={trip.endDate}
+                description={trip.description}
+                owner={trip.owner}
                 onDelete={() => deleteTrip(trip._id)}
               ></TripCard>
             ))}
@@ -83,10 +84,8 @@ function Home() {
       </Card>
       {isLoggedIn ? (
         <>
-          <Typography.Title level={3} >
-            Añadir viaje
-          </Typography.Title>
-          <Row gutter={[16, 16]} >
+          <Typography.Title level={3}>Añadir viaje</Typography.Title>
+          <Row gutter={[16, 16]}>
             <Col xs={24} sm={12}>
               <Input
                 placeholder="Title"
