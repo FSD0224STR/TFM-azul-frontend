@@ -1,13 +1,13 @@
 .cardSize {
-    width: 300px;
-    margin: 5px;
+  width: 300px;
+  margin: 5px;
 }
 
-.cardBody{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;  
-    align-items: flex-end;
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 /* @media (min-width: 576px) {
     .cardSize {
