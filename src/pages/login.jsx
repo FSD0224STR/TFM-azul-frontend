@@ -1,24 +1,21 @@
 import { useContext, useState } from "react";
-import { NavFooter } from "/src/components/NavFooter";
+import { NavFooter } from "/src/components/navFooter";
 import { Card, Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
 import { AuthContext } from "../contexts/authContext";
-import '../styles/Login.css';
+import "../styles/Login.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login, loading, error, setError } = useContext(AuthContext);
 
-  return ( /* xs={24} sm={12}  md={8} lg={6}  */
+  return (
+    /* xs={24} sm={12}  md={8} lg={6}  */
     <>
       <div className="container">
         <div className="content">
-          <Card className="loginCard" >
-            <Typography.Title
-              level={2}
-            >
-              Bienvenido
-            </Typography.Title>
+          <Card className="loginCard">
+            <Typography.Title level={2}>Bienvenido</Typography.Title>
             <Row gutter={[16, 16]} justify="center">
               <Col xs={24} className="inputRow">
                 <Input
@@ -27,7 +24,7 @@ const Login = () => {
                   onChange={(e) => setUsername(e.currentTarget.value)}
                 />
               </Col>
-              <Col xs={24}  className="inputRow">
+              <Col xs={24} className="inputRow">
                 <Input.Password
                   placeholder="Password"
                   value={password}
@@ -39,7 +36,11 @@ const Login = () => {
               {loading ? (
                 <Spin />
               ) : (
-                <Button type="primary" onClick={() => login(username, password)} block >
+                <Button
+                  type="primary"
+                  onClick={() => login(username, password)}
+                  block
+                >
                   Login
                 </Button>
               )}
