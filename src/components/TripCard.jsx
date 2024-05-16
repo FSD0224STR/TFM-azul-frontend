@@ -3,8 +3,8 @@ import "../styles/TripCard.css";
 
 export const TripCard = ({
   title,
-  start_date,
-  end_date,
+  startDate,
+  endDate,
   description,
   owner,
   onDelete,
@@ -12,11 +12,11 @@ export const TripCard = ({
   return (
     <Card className="cardSize">
       <div className="cardBody">
-        <Typography.Title level={3}>{title}</Typography.Title>
-        <Typography variant="body2">{start_date}</Typography>
-        <Typography variant="body2">{end_date}</Typography>
-        <Typography variant="body2">{description}</Typography>
-        <Typography variant="body2">{owner}</Typography>
+        <Typography.Title level={3}>{`Título: ${title}`}</Typography.Title>
+        <Typography variant="body2">{`Inicio del viaje: ${startDate}`}</Typography>
+        <Typography variant="body2">{`Fin del viaje: ${endDate}`}</Typography>
+        <Typography variant="body2">{`descripción: ${description}`}</Typography>
+        <Typography variant="body2">{`Propietario: ${owner}`}</Typography>
         <Button onClick={onDelete}>Borrar</Button>
       </div>
     </Card>

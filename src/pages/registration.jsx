@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Typography, Form, Input, Button, Alert } from "antd";
-import {NavFooter} from "/src/components/NavFooter"
+import {NavFooter} from "/src/components/navFooter"
 import userApi from "/src/apiservice/userApi.js";
 import { useNavigate } from "react-router-dom/dist";
 
