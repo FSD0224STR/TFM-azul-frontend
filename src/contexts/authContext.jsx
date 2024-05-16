@@ -42,18 +42,23 @@ export const AuthContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await userApi.login(username, password);
-      console.log ('esta es la respuesta completa', response)
+      console.log("Esta es la respuesta completa", response);
+
       if (response.error) {
-        console.log ("este es el error del login", response.error)
+        console.log("Este es el error del login", response.error);
         setError(response.error);
-      } else {
-        const token = response.data;
+      } else if (response.data && response.data.token) {
+        const token = response.data.token;
         localStorage.setItem("access_token", token);
         navigate("/home");
         setIsLoggedIn(true);
+      } else {
+        console.log("La respuesta no contiene un token esperado");
+        setError("Usuario i/o contraseña incorrectos.");
       }
     } catch (error) {
-      setError(error.message);
+      console.log("Error en la solicitud de login", error);
+      setError(error.message || "Error desconocido");
     } finally {
       setLoading(false);
     }
