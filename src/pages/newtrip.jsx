@@ -1,5 +1,5 @@
 
-import { Form, Input, Button, Alert, DatePicker } from 'antd';
+import { Form, Input, Button, Alert, } from 'antd';
 import {useState } from "react";
 import tripAPI from "../apiservice/tripApi";
 import { useNavigate } from 'react-router-dom';
@@ -88,7 +88,7 @@ return (
 
     <Form.Item>
         <Button type="primary" htmlType="submit" >
-        Añadir Viaje
+        Guardar
         </Button>
     </Form.Item>
     {error && (

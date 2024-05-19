@@ -59,9 +59,9 @@ export const AuthContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Error en la solicitud de login", error);
       setError(error.message || "Error desconocido");
-    } finally {
+    } 
       setLoading(false);
-    }
+    
   };
 
   // Function for logging out

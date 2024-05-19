@@ -77,16 +77,7 @@ const navigate = useNavigate();
       </Card>
       {isLoggedIn ? (
         <>
-          <Typography.Title level={3}>Añadir viaje</Typography.Title>
           <Row gutter={[16, 16]}>
-            <Col xs={24} sm={12}>
-              <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </Col>
-
             <Col xs={24} sm={12}>
               {loading ? (
                 <Spin />
