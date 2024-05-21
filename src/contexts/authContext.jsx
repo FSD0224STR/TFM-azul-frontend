@@ -54,7 +54,7 @@ export const AuthContextProvider = ({ children }) => {
         setIsLoggedIn(true);
       } else {
         console.log("La respuesta no contiene un token esperado");
-        setError("Usuario i/o contraseña incorrectos.");
+        setError("Usuario y/o contraseña incorrectos.");
       }
     } catch (error) {
       console.log("Error en la solicitud de login", error);
