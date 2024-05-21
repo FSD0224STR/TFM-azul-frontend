@@ -47,8 +47,8 @@ export const AuthContextProvider = ({ children }) => {
       if (response.error) {
         console.log("Este es el error del login", response.error);
         setError(response.error);
-      } else if (response.data && response.data.token) {
-        const token = response.data.token;
+      } else if (response.data && response.data) {
+        const token = response.data;
         localStorage.setItem("access_token", token);
         navigate("/home");
         setIsLoggedIn(true);
