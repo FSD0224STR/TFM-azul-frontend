@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/authContext";
 import { TripCard } from "../components/TripCard";
 
 import "../styles/Home.css";
-
+import {useNavigate } from "react-router-dom";
 function Home() {
   const [trips, setTrips] = useState([]);
   const [title, setTitle] = useState("");
@@ -14,6 +14,9 @@ function Home() {
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useContext(AuthContext);
+
+const navigate = useNavigate();
+
 
   const getTrips = async () => {
     try {
@@ -27,20 +30,10 @@ function Home() {
     }
   };
 
-  const addTrip = async () => {
-    try {
-      setLoading(true);
-      const response = await tripAPI.addTrip({
-        title /*, start_date, end_date*/,
-      });
-      setTrips([...trips, response.data]);
-      setTitle("");
-    } catch (error) {
-      setError(`Error adding trip: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const goAddTrip = () => {
+    navigate ("/newTrip")
+  }
+
 
   const deleteTrip = async (idToDelete) => {
     try {
@@ -84,21 +77,12 @@ function Home() {
       </Card>
       {isLoggedIn ? (
         <>
-          <Typography.Title level={3}>Añadir viaje</Typography.Title>
           <Row gutter={[16, 16]}>
-            <Col xs={24} sm={12}>
-              <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </Col>
-
             <Col xs={24} sm={12}>
               {loading ? (
                 <Spin />
               ) : (
-                <Button type="primary" onClick={addTrip}>
+                <Button type="primary" onClick={goAddTrip}>
                   Añadir Viaje
                 </Button>
               )}
