@@ -1,7 +1,19 @@
+.tripContainer {
+    margin: 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: auto;
+}
 
 .tripPanel {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    max-width: 1300px;
-    justify-content: center
-}
+    align-items: center;
+} 
+
+
+.btnMarging {
+    margin-top:20px;
+} 

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Card, Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
+import { Card, Typography, Spin, Row, Col, Button, Alert } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
@@ -9,7 +9,7 @@ import "../styles/Home.css";
 import {useNavigate } from "react-router-dom";
 function Home() {
   const [trips, setTrips] = useState([]);
-  const [title, setTitle] = useState("");
+  //const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -52,13 +52,14 @@ const navigate = useNavigate();
   }, []);
 
   return (
-    <div style={{ marginTop: "10vh", maxWidth: "md" }}>
+    // style={{ marginTop: "10vh", maxWidth: "md" }}
+    <div className="tripContainer">  
       <Card>
         <Typography.Title level={2}>Lista de viajes</Typography.Title>
         {loading ? (
           <Spin />
         ) : Array.isArray(trips) && trips.length > 0 ? (
-          <div className="tripPanel">
+          <div>
             {trips.map((trip) => (
               <TripCard
                 key={trip._id}
@@ -82,7 +83,7 @@ const navigate = useNavigate();
               {loading ? (
                 <Spin />
               ) : (
-                <Button type="primary" onClick={goAddTrip}>
+                <Button type="primary" onClick={goAddTrip} className="btnMarging"> 
                   Añadir Viaje
                 </Button>
               )}
