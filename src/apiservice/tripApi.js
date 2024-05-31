@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/users/trips/";
+const baseUrl = "http://localhost:3000/trips/";
 
 const getAllTrips = async () => {
   const token = localStorage.getItem("access_token");
@@ -30,13 +30,14 @@ const getAllTrips = async () => {
 
 const addTrip = async (tripData) => {
   const token = localStorage.getItem("access_token");
+  console.log('tripData: ' + tripData);
 
   if (!token) {
     return { error: "No token found. Please login again." };
   }
 
   try {
-    const response = await fetch(`${baseUrl}add`, {
+    const response = await fetch(`${baseUrl}`, {
       method: "POST",
       body: JSON.stringify(tripData),
       headers: {
