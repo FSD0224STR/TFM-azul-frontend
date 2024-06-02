@@ -1,4 +1,5 @@
-import { Button, Card, Typography } from "antd";
+import { Button, Card, Descriptions } from "antd";
+import { format } from "date-fns";
 import "../styles/TripCard.css";
 
 export const TripCard = ({
@@ -8,16 +9,45 @@ export const TripCard = ({
   description,
   owner,
   onDelete,
-}) => {
+  onEdit,
+})  => {
+  const formatDate = (date) => {
+    return date ? format(new Date(date), "dd/MM/yyyy") : "";
+  };
+
+  const items = [
+    {
+      label: "Inicio del viaje",
+      children: formatDate(startDate),
+    },
+    {
+      label: "Fin del viaje",
+      children: formatDate(endDate),
+    },
+    {
+      label: "Descripción",
+      children: description,
+    },
+    {
+      label: "Propietario",
+      children: owner,
+    },
+  ];
+
   return (
     <Card className="cardSize">
       <div className="cardBody">
-        <Typography.Title level={3}>{`Título: ${title}`}</Typography.Title>
-        <Typography variant="body2">{`Inicio del viaje: ${startDate}`}</Typography>
-        <Typography variant="body2">{`Fin del viaje: ${endDate}`}</Typography>
-        <Typography variant="body2">{`descripción: ${description}`}</Typography>
-        <Typography variant="body2">{`Propietario: ${owner}`}</Typography>
-        <Button onClick={onDelete}>Borrar</Button>
+        <Descriptions
+          title={title}
+          bordered
+          column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
+          items={items}
+        />
+        <div className="btnMarging btnPanel">
+          <Button onClick={onDelete} danger >Borrar</Button>
+          <Button onClick={onEdit} >Editar</Button>
+          <Button >Ver más</Button>
+       </div>
       </div>
     </Card>
   );
