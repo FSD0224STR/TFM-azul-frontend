@@ -18,12 +18,16 @@ export const App = () => {
       <NavBar></NavBar>
       <Routes>
         <Route path="/home" element={<Home props></Home>}></Route>
+
         <Route path="/login" element={<Login props></Login>}></Route>
+
         <Route
           path="/tripInfo/:id"
           element={<TripInfo props></TripInfo>}
         ></Route>
+
         <Route path="/tripInfo" element={<TripInfo props></TripInfo>}></Route>
+
         <Route
           path="/registration"
           element={<Registration props></Registration>}

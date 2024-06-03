@@ -21,6 +21,7 @@ function Home() {
     try {
       setLoading(true);
       const response = await tripAPI.getAllTrips();
+      //console.log(response);
       setTrips(response.data);
     } catch (error) {
       setError(`Error fetching trips: ${error.message}`);
@@ -69,7 +70,7 @@ function Home() {
                 startDate={trip.startDate}
                 endDate={trip.endDate}
                 description={trip.description}
-                owner={trip.owner}
+                owner={trip.owner.username}
                 onDelete={() => deleteTrip(trip._id)}
                 onEdit={() => updateTrip(trip._id)}
               ></TripCard>
