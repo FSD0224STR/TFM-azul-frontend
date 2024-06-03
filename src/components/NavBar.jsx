@@ -2,6 +2,7 @@ import { Layout, Menu, Button, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
+import "../styles/NavBar.css";
 
 const { Header } = Layout;
 const { Title } = Typography;
@@ -18,37 +19,35 @@ const NavBar = () => {
           {
             key: "1",
             label: (
-              <Title level={5} style={{ color: "white" }}>
+              <Title level={5}  className="navBar-title">
                 TFM GRUPO AZUL
               </Title>
             ),
           },
           {
             key: "2",
-            label: (
-              <Link to="/home">
-                <Button type="link" style={{ color: "white" }}>
+            label: isLoggedIn && (
+              <Link to="/home"  className={isLoggedIn ? '' : 'hidden-and-disabled'}>
+                <Button type="link">
                   Home
                 </Button>
               </Link>
-            ),
+              ),
           },
           {
             key: "3",
-            label: !isLoggedIn && (
-              <Link to="/login">
-                <Button type="link" style={{ color: "white" }}>
-                  Login
+            label: (
+              !isLoggedIn ? (
+                <Link to="/login">
+                  <Button type="link">
+                    Login
+                  </Button>
+                </Link>
+              ) : (
+                <Button type="link" onClick={logout}>
+                  Logout
                 </Button>
-              </Link>
-            ),
-          },
-          {
-            key: "4",
-            label: isLoggedIn && (
-              <Button type="link" onClick={logout} style={{ color: "white" }}>
-                Logout
-              </Button>
+              )
             ),
           },
         ]}

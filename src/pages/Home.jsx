@@ -1,22 +1,21 @@
 import { useContext, useEffect, useState } from "react";
-import { Card, Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
+import { Typography, Spin, Row, Col, Button, Alert } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
 import { TripCard } from "../components/TripCard";
 
 import "../styles/Home.css";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function Home() {
   const [trips, setTrips] = useState([]);
-  const [title, setTitle] = useState("");
+  //const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useContext(AuthContext);
 
-const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   const getTrips = async () => {
     try {
@@ -31,9 +30,8 @@ const navigate = useNavigate();
   };
 
   const goAddTrip = () => {
-    navigate ("/newTrip")
-  }
-
+    navigate("/tripInfo");
+  };
 
   const deleteTrip = async (idToDelete) => {
     try {
@@ -47,13 +45,18 @@ const navigate = useNavigate();
     }
   };
 
+  const updateTrip = (idToUpdate) => {
+    navigate(`/tripInfo/${idToUpdate}`);
+  };
+
   useEffect(() => {
     getTrips();
   }, []);
 
   return (
-    <div style={{ marginTop: "10vh", maxWidth: "md" }}>
-      <Card>
+    // style={{ marginTop: "10vh", maxWidth: "md" }}
+    <div className="tripContainer">
+      <div>
         <Typography.Title level={2}>Lista de viajes</Typography.Title>
         {loading ? (
           <Spin />
@@ -68,13 +71,14 @@ const navigate = useNavigate();
                 description={trip.description}
                 owner={trip.owner}
                 onDelete={() => deleteTrip(trip._id)}
+                onEdit={() => updateTrip(trip._id)}
               ></TripCard>
             ))}
           </div>
         ) : (
           <Typography.Text>No trips found.</Typography.Text>
         )}
-      </Card>
+      </div>
       {isLoggedIn ? (
         <>
           <Row gutter={[16, 16]}>
@@ -82,7 +86,11 @@ const navigate = useNavigate();
               {loading ? (
                 <Spin />
               ) : (
-                <Button type="primary" onClick={goAddTrip}>
+                <Button
+                  type="primary"
+                  onClick={goAddTrip}
+                  className="btnMarging"
+                >
                   Añadir Viaje
                 </Button>
               )}
