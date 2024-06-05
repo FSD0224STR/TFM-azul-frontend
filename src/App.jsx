@@ -9,6 +9,7 @@ import { NavBar } from "./components/NavBar";
 
 import "./styles/App.css";
 import { TripInfo } from "./pages/tripInfo";
+import { Trip } from "./pages/Trip";
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
@@ -27,6 +28,8 @@ export const App = () => {
         ></Route>
 
         <Route path="/tripInfo" element={<TripInfo props></TripInfo>}></Route>
+
+        <Route path="/:id" element={<Trip  props></Trip>}></Route>
 
         <Route
           path="/registration"

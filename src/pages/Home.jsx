@@ -50,6 +50,10 @@ function Home() {
     navigate(`/tripInfo/${idToUpdate}`);
   };
 
+  const goToTrip = (idToGo) => {
+    navigate(`/${idToGo}`)
+  }
+
   useEffect(() => {
     getTrips();
   }, []);
@@ -73,6 +77,7 @@ function Home() {
                 owner={trip.owner.username}
                 onDelete={() => deleteTrip(trip._id)}
                 onEdit={() => updateTrip(trip._id)}
+                onView={()=> goToTrip(trip._id) }
               ></TripCard>
             ))}
           </div>
