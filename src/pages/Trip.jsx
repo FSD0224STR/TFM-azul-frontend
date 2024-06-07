@@ -38,7 +38,7 @@ export function Trip () {
         console.log("Este es el getTripById ", id);
         
         try {
-            setLoading(true);
+            
             const response = await tripAPI.getTripInfo(id);
             console.log ('esta es la respuesta', response)
             if (response.data) {
@@ -54,10 +54,7 @@ export function Trip () {
             }
         } catch (error) {
             setError(`Error fetching trip: ${error.message}`);
-        } finally {
-            setLoading(false);
-        }
-        }
+        }  }
 
         //Pintamos el viaje nada más arrancar la página
         useEffect(() => {
@@ -75,16 +72,13 @@ export function Trip () {
             if (isAddingCategory) {
                 
                 try {
-                    setLoading(true);
                     const response = await tripAPI.addCategory(id, { title: newCategory });
                     console.log( 'esta es la respuesta', response);
                     setNewCategory(response.data);
                     getTripById(id);
                 } catch (error) {
                     setError(`Error al crear la nueva categoría: ${error.message}`);
-                } finally {
-                    setLoading(false);
-                }
+                } 
                 console.log("Añadiendo la categoría -----", newCategory);
             }
             setIsAddingCategory(!isAddingCategory);
@@ -113,6 +107,7 @@ export function Trip () {
                     placeholder="Nombre de la categoría"
                 />
             )}
+            {/*Este error no se si funciona */ }
             {error && (
             <Alert
                 type="error"
@@ -124,7 +119,8 @@ export function Trip () {
     </Card>
 
         {/*Aquí se reflejan las categorías del viaje */ }
-    <Carousel  afterChange={onChange} >
+        <div className='carrusel'>
+    <Carousel  autoplay arrows infinite={false} afterChange={onChange}  >
 
     {categories.map((category, index) => (
         <div key={index}>
@@ -132,7 +128,7 @@ export function Trip () {
         </div>
     ))}
     </Carousel>
-
+    </div>
         </div>
     )
 }
