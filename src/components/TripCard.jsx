@@ -10,6 +10,7 @@ export const TripCard = ({
   owner,
   onDelete,
   onEdit,
+  onView
 })  => {
   const formatDate = (date) => {
     return date ? format(new Date(date), "dd/MM/yyyy") : "";
@@ -46,8 +47,8 @@ export const TripCard = ({
         <div className="btnMarging btnPanel">
           <Button onClick={onDelete} danger >Borrar</Button>
           <Button onClick={onEdit} >Editar</Button>
-          <Button >Ver más</Button>
-       </div>
+          <Button  onClick={onView}>Ver más</Button>
+        </div>
       </div>
     </Card>
   );

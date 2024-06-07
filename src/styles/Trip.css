@@ -1,0 +1,17 @@
+.categoryStyle {
+    margin: 0;
+    height: 300px;
+    width: 100%;
+    color: #fff;
+    line-height: 160px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background: #364d79;
+}
+
+.carrusel {
+    width: 80%;
+    
+}
+
