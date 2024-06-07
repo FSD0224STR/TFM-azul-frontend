@@ -145,6 +145,34 @@ const updateTrip = async (id, tripData) => {
   }
 };
 
+const addCategory = async (tripId, categoryData) => {
+  const token = localStorage.getItem("access_token");
+
+  if (!token) {
+    return { error: "No token found. Please login again." };
+  }
+  try {
+    const response = await fetch(`${baseUrl}${tripId}`, {
+      method: "POST",
+      body: JSON.stringify(categoryData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return { error: error.message };
+    }
+
+    return { data: "ok, actualizado" };
+  } catch (error) {
+    return { error: error.message };
+  }
+
+}
 
 
-export default { getAllTrips, getTripInfo, addTrip, deleteTrip, updateTrip };
+
+export default { getAllTrips, getTripInfo, addTrip, deleteTrip, updateTrip, addCategory };
