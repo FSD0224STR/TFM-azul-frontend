@@ -1,4 +1,9 @@
-import { Button, Card, Descriptions } from "antd";
+import { Card, Descriptions } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  FileSearchOutlined,
+} from "@ant-design/icons";
 import { format } from "date-fns";
 import "../styles/TripCard.css";
 
@@ -10,8 +15,8 @@ export const TripCard = ({
   owner,
   onDelete,
   onEdit,
-  onView
-})  => {
+  onView,
+}) => {
   const formatDate = (date) => {
     return date ? format(new Date(date), "dd/MM/yyyy") : "";
   };
@@ -36,19 +41,41 @@ export const TripCard = ({
   ];
 
   return (
-    <Card className="cardSize">
+    <Card
+      title={title}
+      className="cardSize"
+      extra={
+        <>
+          <div className="btnPanel">
+            <DeleteOutlined
+              onClick={onDelete}
+              className="icon-size danger-color"
+            />
+            <EditOutlined
+              onClick={onEdit}
+              className="icon-size icon-margin-left"
+            />
+            <FileSearchOutlined
+              onClick={onView}
+              className="icon-size icon-margin-left"
+            />
+          </div>
+        </>
+      }
+    >
       <div className="cardBody">
         <Descriptions
-          title={title}
           bordered
           column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
           items={items}
         />
-        <div className="btnMarging btnPanel">
-          <Button onClick={onDelete} danger >Borrar</Button>
-          <Button onClick={onEdit} >Editar</Button>
-          <Button  onClick={onView}>Ver más</Button>
-        </div>
+        {/* <div className="btnMarging btnPanel">
+          <Button onClick={onDelete} danger>
+            Borrar
+          </Button>
+          <Button onClick={onEdit}>Editar</Button>
+          <Button onClick={onView}>Ver más</Button>
+        </div> */}
       </div>
     </Card>
   );
