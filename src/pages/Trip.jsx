@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
-import "../styles/Trip.css";
-import { Typography, Card, Button, Carousel, Alert } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
+import { Typography, Button, Carousel, Alert } from "antd";
 import { format } from "date-fns";
 import tripAPI from "../apiservice/tripApi";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FileSearchOutlined,
-} from "@ant-design/icons";
+import { CategoryCard } from "../components/CategoryCard";
+import "../styles/Trip.css";
 
 export function Trip() {
   const [title, setTitle] = useState("");
@@ -119,31 +115,20 @@ export function Trip() {
           />
         )}
 
-        {/* <Card
-          title={title}
-          className="categoryCardSize"
-          extra={
-            <>
-              <div className="btnPanel">
-                <DeleteOutlined
-                  //   onClick={onDelete}
-                  className="icon-size danger-color"
-                />
-                <EditOutlined
-                  //onClick={onEdit}
-                  className="icon-size icon-margin-left"
-                />
-                <FileSearchOutlined
-                  //onClick={onView}
-                  className="icon-size icon-margin-left"
-                />
-              </div>
-            </>
-          }
-        ></Card> */}
+        {/* */}
       </div>
 
       {/*Aquí se reflejan las categorías del viaje */}
+
+      <div className="categoryCardList">
+        {categories.map((categoria) => (
+          <CategoryCard
+            key={categoria._id}
+            title={categoria.title}
+          ></CategoryCard>
+        ))}
+      </div>
+      {/* onNavigate={changeToDone} onDelete={()=>deleteTaskAndSync(tarea._id)} onEdit={viewEditTarea} */}
       <div className="carrusel">
         <Carousel autoplay arrows infinite={false} afterChange={onChange}>
           {categories.map((category, index) => (
