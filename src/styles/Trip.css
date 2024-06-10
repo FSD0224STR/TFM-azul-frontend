@@ -30,12 +30,12 @@
     justify-content: space-between;
 }
 
-.ant-card-body {
+.categoryCardList .ant-card-body {
     /* azulitos 
     background-color: #e1f2ff;
     border: 1px solid #b2dbfd;    */
-    background-color: #ffdabb;
-    border: 1px solid #b2dbfd;
+    background-color: #ffe9d6;
+    border: 1px solid #f9b780;
     border-radius: 8px !important;
     padding: 15px !important;
 }
