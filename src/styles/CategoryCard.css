@@ -1,0 +1,27 @@
+.categoryCardSize {
+    margin:20px 0;
+    width: 100%;
+}
+
+.categoryPanel {
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.cardTitle {
+ margin-top: 10px;
+}
+
+
+@media (min-width: 992px) { 
+    .categoryCardSize {
+        width: 49%;
+    }
+}
+/* @media (min-width: 1200px) {
+    .categoryCardSize {
+        width: 32%;
+    }
+} */

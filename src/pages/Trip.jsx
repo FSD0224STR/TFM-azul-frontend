@@ -1,134 +1,143 @@
-
-import  { useState, useEffect } from 'react'
-import "../styles/Trip.css";
-import { Card, Button, Carousel, Alert } from 'antd';
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Typography, Button, Carousel, Alert } from "antd";
 import { format } from "date-fns";
 import tripAPI from "../apiservice/tripApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { CategoryCard } from "../components/CategoryCard";
+import "../styles/Trip.css";
 
+export function Trip() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [users, setUsers] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const [newCategory, setNewCategory] = useState("");
 
+  const [error, setError] = useState("");
+  //   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  //Formatear la fecha
+  const formatDate = (date) => {
+    return date ? format(new Date(date), "yyyy-MM-dd") : "";
+  };
 
+  //recogemos el id de la ruta
+  const { id } = useParams();
 
-export function Trip () {
+  //llamada a la api para obtener los datos de ese viaje
+  const getTripById = async (id) => {
+    console.log("Este es el getTripById ", id);
 
-    const [title, setTitle] = useState ('')
-    const [description, setDescription] = useState ('')
-    const [startDate, setStartDate] = useState ('')
-    const [endDate, setEndDate] = useState ('')
-    const [users, setUsers] = useState ([])
-    const [categories, setCategories] = useState ([])
-    const [isAddingCategory, setIsAddingCategory] = useState(false);
-    const [newCategory, setNewCategory] = useState("");
+    try {
+      const response = await tripAPI.getTripInfo(id);
+      console.log("esta es la respuesta", response);
+      if (response.data) {
+        setTitle(response.data.title);
+        setDescription(response.data.description);
+        setStartDate(formatDate(response.data.startDate));
+        setEndDate(formatDate(response.data.endDate));
+        setUsers(response.data.users);
+        setCategories(response.data.categories);
+      } else if (response.error) {
+        setError(response.error);
+      }
+    } catch (error) {
+      setError(`Error fetching trip: ${error.message}`);
+    }
+  };
 
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate() 
+  //Pintamos el viaje nada más arrancar la página
+  useEffect(() => {
+    getTripById(id);
+  }, []);
 
-    //Formatear la fecha
-    const formatDate = (date) => {
-        return date ? format(new Date(date), "yyyy-MM-dd") : "";
-    };
+  //Función para actualizar el viaje, que te redirige a la página de editar
+  const updateTrip = (idToUpdate) => {
+    navigate(`/tripInfo/${idToUpdate}`);
+  };
 
-    //recogemos el id de la ruta
-    const { id } = useParams();
+  //Función para añadir una nueva categoría al viaje
+  const handleAddCategoryClick = async () => {
+    if (isAddingCategory) {
+      try {
+        const response = await tripAPI.addCategory(id, { title: newCategory });
+        console.log("esta es la respuesta", response);
+        setNewCategory(response.data);
+        getTripById(id);
+      } catch (error) {
+        setError(`Error al crear la nueva categoría: ${error.message}`);
+      }
+      console.log("Añadiendo la categoría -----", newCategory);
+    }
+    setIsAddingCategory(!isAddingCategory);
+    setNewCategory("");
+  };
 
-    //llamada a la api para obtener los datos de ese viaje
-    const getTripById = async (id) => {
-        console.log("Este es el getTripById ", id);
-        
-        try {
-            
-            const response = await tripAPI.getTripInfo(id);
-            console.log ('esta es la respuesta', response)
-            if (response.data) {
+  //Por ahora solo cuenta en que número del índice de la categoría estas, no sirve para nada por ahora, pero quizas pueda ser útil en el futuro
+  const onChange = (currentSlide) => {
+    console.log(currentSlide);
+  };
 
-                setTitle (response.data.title )
-                setDescription (response.data.description)
-                setStartDate (formatDate(response.data.startDate) ) 
-                setEndDate(formatDate(response.data.endDate)) 
-                setUsers(response.data.users)
-                setCategories(response.data.categories)
-            } else if (response.error) {
-            setError(response.error);
-            }
-        } catch (error) {
-            setError(`Error fetching trip: ${error.message}`);
-        }  }
+  return (
+    <div>
+      {/*Aquí se refleja la información más relevante del viaje */}
+      <div>
+        <div className="travelTitle">
+          <Typography.Title level={2}>{title}</Typography.Title>
+          <p>{formatDate(startDate) + " - " + formatDate(endDate)}</p>
+        </div>
+        <p>{description}</p>
+        <p>
+          Integrantes del grupo: {users.map((user) => user.username).join(", ")}
+        </p>
+        <Button onClick={() => updateTrip(id)}>editar</Button>
+        <Button>añadir integrantes</Button>
 
-        //Pintamos el viaje nada más arrancar la página
-        useEffect(() => {
-            getTripById(id);
-        }, []);
-        
-        //Función para actualizar el viaje, que te redirige a la página de editar
-        const updateTrip = (idToUpdate) => {
-            navigate(`/tripInfo/${idToUpdate}`);
-        };
-
-
-            //Función para añadir una nueva categoría al viaje
-        const handleAddCategoryClick = async () => {
-            if (isAddingCategory) {
-                
-                try {
-                    const response = await tripAPI.addCategory(id, { title: newCategory });
-                    console.log( 'esta es la respuesta', response);
-                    setNewCategory(response.data);
-                    getTripById(id);
-                } catch (error) {
-                    setError(`Error al crear la nueva categoría: ${error.message}`);
-                } 
-                console.log("Añadiendo la categoría -----", newCategory);
-            }
-            setIsAddingCategory(!isAddingCategory);
-            setNewCategory("");
-        };
-
-        //Por ahora solo cuenta en que número del índice de la categoría estas, no sirve para nada por ahora, pero quizas pueda ser útil en el futuro
-        const onChange = (currentSlide) => {
-            console.log(currentSlide);
-        };
-
-    return (
-        <div>
-            {/*Aquí se refleja la información más relevante del viaje */ }
-        <Card title= {title} extra={startDate + ' - ' + endDate} style={{ width: "100%" }}>
-            <p>{description}</p>
-            <p>Integrantes del grupo: {users.map(user => user.username).join(', ')}</p>
-            <Button onClick={() => updateTrip(id)}>editar</Button>
-            <Button>añadir integrantes</Button>
-            
-            <Button onClick={handleAddCategoryClick}>añadir categoría</Button>
-            {isAddingCategory && (
-                <input
-                    value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value)}
-                    placeholder="Nombre de la categoría"
-                />
-            )}
-            {/*Este error no se si funciona */ }
-            {error && (
-            <Alert
-                type="error"
-                message={error}
-                closable
-                onClose={() => setError("")}
-            />
+        <Button onClick={handleAddCategoryClick}>añadir categoría</Button>
+        {isAddingCategory && (
+          <input
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+            placeholder="Nombre de la categoría"
+          />
         )}
-    </Card>
+        {/*Este error no se si funciona */}
+        {error && (
+          <Alert
+            type="error"
+            message={error}
+            closable
+            onClose={() => setError("")}
+          />
+        )}
 
-        {/*Aquí se reflejan las categorías del viaje */ }
-        <div className='carrusel'>
-    <Carousel  autoplay arrows infinite={false} afterChange={onChange}  >
+        {/* */}
+      </div>
 
-    {categories.map((category, index) => (
-        <div key={index}>
-            <h3 className='categoryStyle'>{category.title}</h3>
-        </div>
-    ))}
-    </Carousel>
+      {/*Aquí se reflejan las categorías del viaje */}
+
+      <div className="categoryCardList">
+        {categories.map((categoria) => (
+          <CategoryCard
+            key={categoria._id}
+            title={categoria.title}
+          ></CategoryCard>
+        ))}
+      </div>
+      {/* onNavigate={changeToDone} onDelete={()=>deleteTaskAndSync(tarea._id)} onEdit={viewEditTarea} */}
+      <div className="carrusel">
+        <Carousel autoplay arrows infinite={false} afterChange={onChange}>
+          {categories.map((category, index) => (
+            <div key={index}>
+              <h3 className="categoryStyle">{category.title}</h3>
+            </div>
+          ))}
+        </Carousel>
+      </div>
     </div>
-        </div>
-    )
+  );
 }
