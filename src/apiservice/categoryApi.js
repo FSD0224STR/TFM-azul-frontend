@@ -29,4 +29,17 @@ try {
 
 };
 
-export default {updateCategory};
+const deleteCategory = async (categoryId) => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+    return { error: "No token found. Please login again." };
+    }
+
+    const response = await fetch(`${baseUrl}${categoryId}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` }} );
+    if (!response.ok) return { error: response.message };
+    const data = await response.json();
+    return { data };
+}
+
+export default {updateCategory, deleteCategory};

@@ -53,7 +53,7 @@ export function Trip() {
   //Pintamos el viaje nada más arrancar la página
   useEffect(() => {
     getTripById(id);
-  }, [categories]);
+  }, []);
 
   //Función para actualizar el viaje, que te redirige a la página de editar
   const updateTrip = (idToUpdate) => {
@@ -126,6 +126,7 @@ export function Trip() {
             key={categoria._id}
             id={categoria._id}
             title={categoria.title}
+            refreshCategories={() => getTripById(id)} // Pasar la función de actualización como prop
           ></CategoryCard>
         ))}
       </div>

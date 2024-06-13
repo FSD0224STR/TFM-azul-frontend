@@ -10,19 +10,22 @@ import categoryApi from "../apiservice/categoryApi";
 
 
 
-export const CategoryCard = ({ id, title }) => {
+export const CategoryCard = ({ id, title, refreshCategories }) => {
 
   const [updatingCategory, setUpdatingCategory] = useState(false);
   const [error, setError] = useState("");
   const [newTitle, setNewTitle] = useState(title);
+  const [loading, setLoading] = useState(false);
 
   const onEdit = async () => {
     if (updatingCategory) {
       try {
+        setLoading (true);
         const response = await categoryApi.updateCategory(id, {title: newTitle});
         console.log("Esta es la respuesta de actualizar la categoría:", response.message);
         setUpdatingCategory(!updatingCategory); // Mover esta línea aquí
-        
+        refreshCategories();
+        setLoading (false);
       } catch (error) {
         setError(error.message);
         console.log(error.message);
@@ -32,6 +35,15 @@ export const CategoryCard = ({ id, title }) => {
     }
   };
   
+  const onDelete = async () => {
+    setLoading (true);
+    const response = await categoryApi.deleteCategory(id);
+    console.log("Esta es la respuesta de eliminar la categoría:", response.message);
+    if (response.error) setError(response.error);
+    refreshCategories();
+    setLoading (false);
+  };
+
 
   return (
     <Card className="categoryCardSize">
@@ -46,7 +58,7 @@ export const CategoryCard = ({ id, title }) => {
         )}
         <div className="">
           <DeleteOutlined
-            //   onClick={onDelete}
+            onClick={onDelete}
             className="icon-size danger-color"
           />
           <EditOutlined
