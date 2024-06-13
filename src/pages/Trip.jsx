@@ -53,7 +53,7 @@ export function Trip() {
   //Pintamos el viaje nada más arrancar la página
   useEffect(() => {
     getTripById(id);
-  }, []);
+  }, [categories]);
 
   //Función para actualizar el viaje, que te redirige a la página de editar
   const updateTrip = (idToUpdate) => {
@@ -124,6 +124,7 @@ export function Trip() {
         {categories.map((categoria) => (
           <CategoryCard
             key={categoria._id}
+            id={categoria._id}
             title={categoria.title}
           ></CategoryCard>
         ))}
@@ -131,8 +132,8 @@ export function Trip() {
       {/* onNavigate={changeToDone} onDelete={()=>deleteTaskAndSync(tarea._id)} onEdit={viewEditTarea} */}
       <div className="carrusel">
         <Carousel autoplay arrows infinite={false} afterChange={onChange}>
-          {categories.map((category, index) => (
-            <div key={index}>
+          {categories.map((category) => (
+            <div key={category._id}>
               <h3 className="categoryStyle">{category.title}</h3>
             </div>
           ))}
@@ -141,3 +142,4 @@ export function Trip() {
     </div>
   );
 }
+
