@@ -12,18 +12,29 @@
 
 .carrusel {
     width: 80%;
-    
 }
 
-.travelTitle{
+.panelTripInfo{
+    background-color: #e1f2ff;
+    padding: 15px;
+    /*padding-top: 0;*/
+}
+
+/* .travelTitle{
+} */
+
+.columns {
     display: flex;
-    flex-direction: row;    
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.panelTripButtons{
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .categoryCardList{
-    margin: 10px 0;
+    /*margin: 10px 0;*/
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

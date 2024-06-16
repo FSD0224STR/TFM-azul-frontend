@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Typography, Button, Carousel, Alert } from "antd";
+import { Typography, Button, Alert } from "antd";
 import { format } from "date-fns";
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
@@ -23,6 +23,9 @@ export function Trip() {
   //Formatear la fecha
   const formatDate = (date) => {
     return date ? format(new Date(date), "yyyy-MM-dd") : "";
+  };
+  const formatDatePanel = (date) => {
+    return date ? format(new Date(date), "dd/MM/yyyy") : "";
   };
 
   //recogemos el id de la ruta
@@ -85,19 +88,31 @@ export function Trip() {
   return (
     <div>
       {/*Aquí se refleja la información más relevante del viaje */}
-      <div>
-        <div className="travelTitle">
-          <Typography.Title level={2}>{title}</Typography.Title>
-          <p>{formatDate(startDate) + " - " + formatDate(endDate)}</p>
+      <div className="panelTripInfo">
+        <div className="columns">
+          <div className="column">
+            <div className="travelTitle">
+              <Typography.Title level={2}>{title}</Typography.Title>
+            </div>
+            <p>
+              {format(startDate, "dd/MM/yyyy") +
+                " - " +
+                formatDatePanel(endDate)}
+            </p>
+            <p>{description}</p>
+          </div>
+          <div className="column">
+            <Typography.Title level={4}>
+              Integrantes del grupo:
+            </Typography.Title>
+            <p>{users.map((user) => user.username).join(", ")}</p>
+          </div>
         </div>
-        <p>{description}</p>
-        <p>
-          Integrantes del grupo: {users.map((user) => user.username).join(", ")}
-        </p>
-        <Button onClick={() => updateTrip(id)}>editar</Button>
-        <Button>añadir integrantes</Button>
-
-        <Button onClick={handleAddCategoryClick}>añadir categoría</Button>
+        <div className="panelTripButtons">
+          <Button onClick={() => updateTrip(id)}>editar</Button>
+          <Button>añadir integrantes</Button>
+          <Button onClick={handleAddCategoryClick}>añadir categoría</Button>
+        </div>
         {isAddingCategory && (
           <input
             value={newCategory}
@@ -128,7 +143,7 @@ export function Trip() {
           ></CategoryCard>
         ))}
       </div>
-      {/* onNavigate={changeToDone} onDelete={()=>deleteTaskAndSync(tarea._id)} onEdit={viewEditTarea} */}
+      {/* onNavigate={changeToDone} onDelete={()=>deleteTaskAndSync(tarea._id)} onEdit={viewEditTarea} 
       <div className="carrusel">
         <Carousel autoplay arrows infinite={false} afterChange={onChange}>
           {categories.map((category, index) => (
@@ -137,7 +152,7 @@ export function Trip() {
             </div>
           ))}
         </Carousel>
-      </div>
+      </div>*/}
     </div>
   );
 }

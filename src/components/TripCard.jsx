@@ -2,7 +2,7 @@ import { Card, Descriptions } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
-  FileSearchOutlined,
+  PlusCircleOutlined,
 } from "@ant-design/icons";
 import { format } from "date-fns";
 import "../styles/TripCard.css";
@@ -55,7 +55,7 @@ export const TripCard = ({
               onClick={onEdit}
               className="icon-size icon-margin-left"
             />
-            <FileSearchOutlined
+            <PlusCircleOutlined
               onClick={onView}
               className="icon-size icon-margin-left"
             />
