@@ -10,6 +10,45 @@
     background: #008cff; /*  #1b98ff;    */
 }
 
+.cardInfoTrip {
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+    background-color: #E1F2FF;
+    padding-left: 15px;
+    border-radius: 0px 0px 15px 15px;
+}
+
+.description {
+    font-size: 20px;
+}
+
+.tripButton {
+    height: 40px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: rgb(241, 241, 236);
+}
+
+.newCategoryInput {
+        height: 40px;
+        font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+        font-size: 20px;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        border-radius: 15px;
+        background-color: beige;
+
+}
+
+.tripDate {
+    margin-right: 10px;
+    font-size: 20px;
+}
 .carrusel {
     width: 80%;
     
@@ -103,3 +142,4 @@ button.slick-arrow.slick-next{
 .ant-carousel .slick-next::after {
     transform: rotate(135deg) !important;
 }  */
+
