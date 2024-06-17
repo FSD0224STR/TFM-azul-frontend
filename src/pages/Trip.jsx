@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Typography, Button, Carousel, Alert } from "antd";
+import { Typography, Button, Alert } from "antd";
 import { format } from "date-fns";
+import es from "date-fns/locale/es";
+import {
+  UserAddOutlined,
+  EditOutlined,
+  PlusCircleOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
@@ -21,8 +28,20 @@ export function Trip() {
   const navigate = useNavigate();
 
   //Formatear la fecha
-  const formatDate = (date) => {
-    return date ? format(new Date(date), "yyyy-MM-dd") : "";
+  //const formatDate = (date) => {
+  // return date ? format(new Date(date), "yyyy-MM-dd") : "";
+  //};
+
+  const startDateFormatted = (date) => {
+    return date ? format(new Date(date), "d MMM", { locale: es }) : "";
+  };
+
+  const endDateFormatted = (date) => {
+    return date ? format(new Date(date), "d MMM", { locale: es }) : "";
+  };
+
+  const yearDateFormatted = (date) => {
+    return date ? format(new Date(date), "yyyy", { locale: es }) : "";
   };
 
   //recogemos el id de la ruta
@@ -38,8 +57,8 @@ export function Trip() {
       if (response.data) {
         setTitle(response.data.title);
         setDescription(response.data.description);
-        setStartDate(formatDate(response.data.startDate));
-        setEndDate(formatDate(response.data.endDate));
+        setStartDate(response.data.startDate);
+        setEndDate(response.data.endDate);
         setUsers(response.data.users);
         setCategories(response.data.categories);
       } else if (response.error) {
@@ -85,21 +104,45 @@ export function Trip() {
   return (
     <div>
       {/*Aquí se refleja la información más relevante del viaje */}
-      <div>
+      <div className="cardInfoTrip">
         <div className="travelTitle">
-          <Typography.Title level={2}>{title}</Typography.Title>
-          <p>{formatDate(startDate) + " - " + formatDate(endDate)}</p>
+          <Typography.Title level={1}>{title}</Typography.Title>
+          <p className="tripDate">
+            {"Del " +
+              startDateFormatted(startDate) +
+              " al " +
+              endDateFormatted(endDate) +
+              " de " +
+              yearDateFormatted(endDate)}
+          </p>
         </div>
-        <p>{description}</p>
-        <p>
-          Integrantes del grupo: {users.map((user) => user.username).join(", ")}
+        <p className="description">{description}</p>
+        <p className="description">
+          <TeamOutlined /> {users.map((user) => user.username).join(", ")}
         </p>
-        <Button onClick={() => updateTrip(id)}>editar</Button>
-        <Button>añadir integrantes</Button>
+        <Button
+          className="tripButton"
+          onClick={() => updateTrip(id)}
+          icon={<EditOutlined />}
+        >
+          Editar
+        </Button>
 
-        <Button onClick={handleAddCategoryClick}>añadir categoría</Button>
+        <Button className="tripButton" icon={<UserAddOutlined />}>
+          Añadir viajero
+        </Button>
+
+        <Button
+          className="tripButton"
+          onClick={handleAddCategoryClick}
+          icon={<PlusCircleOutlined />}
+        >
+          Añadir categoría
+        </Button>
+
         {isAddingCategory && (
           <input
+            className="newCategoryInput"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             placeholder="Nombre de la categoría"
@@ -124,20 +167,12 @@ export function Trip() {
         {categories.map((categoria) => (
           <CategoryCard
             key={categoria._id}
+            id={categoria._id}
             title={categoria.title}
+            refreshCategories={() => getTripById(id)} // Pasar la función de actualización como prop
           ></CategoryCard>
         ))}
       </div>
-      {/* onNavigate={changeToDone} onDelete={()=>deleteTaskAndSync(tarea._id)} onEdit={viewEditTarea} 
-      <div className="carrusel">
-        <Carousel autoplay arrows infinite={false} afterChange={onChange}>
-          {categories.map((category, index) => (
-            <div key={index}>
-              <h3 className="categoryStyle">{category.title}</h3>
-            </div>
-          ))}
-        </Carousel>
-      </div>*/}
     </div>
   );
 }
