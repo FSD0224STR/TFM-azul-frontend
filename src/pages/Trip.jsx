@@ -95,9 +95,7 @@ export function Trip() {
               <Typography.Title level={2}>{title}</Typography.Title>
             </div>
             <p>
-              {format(startDate, "dd/MM/yyyy") +
-                " - " +
-                formatDatePanel(endDate)}
+              {formatDatePanel(startDate) + " - " + formatDatePanel(endDate)}
             </p>
             <p>{description}</p>
           </div>
