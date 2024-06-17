@@ -51,10 +51,18 @@
 }
 .carrusel {
     width: 80%;
+
+}
+
+.travelTitle{
+    display: flex;
+    flex-direction: row;    
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .categoryCardList{
-    /*margin: 10px 0;*/
+    margin: 10px 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
