@@ -117,6 +117,9 @@ export const ViewCategory = () => {
             key={proposal._id}
             id={proposal._id}
             title={proposal.title}
+            description={proposal.description}
+            address={proposal.address}
+            owner={proposal.owner}
             refreshProposals={() => getCategoryById(id)} // Pasar la función de actualización como prop
           ></ProposalCard>
         ))}
