@@ -1,28 +1,27 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
-import { Alert, Button, Typography } from "antd";
-import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import proposalApi from "../apiservice/proposalApi";
+import { Alert, Button, Typography, Modal, Form, Input } from "antd";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
+
+const { TextArea } = Input;
 
 export const ViewCategory = () => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [proposals, setProposals] = useState([]);
-  const [isAddingProposal, setIsAddingProposal] = useState(false);
-  const [newProposal, setNewProposal] = useState("");
   const [error, setError] = useState("");
-  //   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [form] = Form.useForm();
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentProposal, setCurrentProposal] = useState(null);
 
-  //llamada a la api para obtener los datos de esa categoría
   const getCategoryById = async (id) => {
-    console.log("Este es el getCategoryById ", id);
-
     try {
       const response = await categoryApi.getCategoryInfo(id);
-      console.log("esta es la respuesta", response);
       if (response.data) {
         setTitle(response.data.title);
         setDescription(response.data.description);
@@ -35,50 +34,78 @@ export const ViewCategory = () => {
     }
   };
 
-  //Pintamos la categoría nada más arrancar la página
   useEffect(() => {
     getCategoryById(id);
-  }, []);
+  }, [id]);
 
-  //Función para actualizar la categoría, que te redirige a la página de editar
-  const updateCategory = (idToUpdate) => {
-    navigate(`/updateCategory/${idToUpdate}`);
+  const handleAddProposalClick = () => {
+    setIsEditing(false);
+    setVisibleModal(true);
   };
 
-  //Función para añadir una nueva propuesta a la categoría
-  const handleAddProposalClick = async () => {
-    if (isAddingProposal) {
-      try {
-        const response = await categoryApi.addProposal(id, {
-          title: newProposal,
-        });
-        console.log("esta es la respuesta", response);
-        setNewProposal(response.data);
-        getCategoryById(id);
-      } catch (error) {
-        setError(`Error al crear la nueva propuesta: ${error.message}`);
-      }
-      console.log("Añadiendo la propuesta -----", newProposal);
+  const handleModalClose = () => {
+    setVisibleModal(false);
+    form.resetFields();
+    setCurrentProposal(null);
+  };
+
+  const handleAddProposal = async (values) => {
+    try {
+      const response = await categoryApi.addProposal(id, {
+        title: values.title,
+        description: values.description,
+        address: values.address,
+      });
+      console.log("Respuesta de añadir propuesta:", response);
+      getCategoryById(id);
+      handleModalClose();
+    } catch (error) {
+      setError(`Error al crear la nueva propuesta: ${error.message}`);
     }
-    setIsAddingProposal(!isAddingProposal);
-    setNewProposal("");
+  };
+
+  const handleEditProposal = async (values) => {
+    try {
+      const response = await proposalApi.updateProposal(currentProposal._id, {
+        title: values.title,
+        description: values.description,
+        address: values.address,
+      });
+      console.log("Respuesta de editar propuesta:", response);
+      getCategoryById(id);
+      handleModalClose();
+    } catch (error) {
+      setError(`Error al editar la propuesta: ${error.message}`);
+    }
+  };
+
+  const handleDeleteProposal = async (proposalId) => {
+    try {
+      await proposalApi.deleteProposal(proposalId);
+      getCategoryById(id);
+    } catch (error) {
+      setError(`Error al eliminar la propuesta: ${error.message}`);
+    }
+  };
+
+  const handleEditClick = (proposal) => {
+    setIsEditing(true);
+    setCurrentProposal(proposal);
+    setVisibleModal(true);
+    form.setFieldsValue({
+      title: proposal.title,
+      description: proposal.description,
+      address: proposal.address,
+    });
   };
 
   return (
     <div>
-      {/*Aquí se refleja la información más relevante de la categoría */}
       <div className="cardInfoTrip">
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
         </div>
         <p className="description">{description}</p>
-        <Button
-          className="tripButton"
-          onClick={() => updateCategory(id)}
-          icon={<EditOutlined />}
-        >
-          Editar
-        </Button>
 
         <Button
           className="tripButton"
@@ -88,15 +115,60 @@ export const ViewCategory = () => {
           Añadir propuesta
         </Button>
 
-        {isAddingProposal && (
-          <input
-            className="newCategoryInput"
-            value={newProposal}
-            onChange={(e) => setNewProposal(e.target.value)}
-            placeholder="Nombre de la propuesta"
-          />
-        )}
-        {/*Este error no se si funciona */}
+        <Modal
+          title={isEditing ? "Editar Propuesta" : "Añadir Propuesta"}
+          visible={visibleModal}
+          onCancel={handleModalClose}
+          footer={null}
+        >
+          <Form
+            form={form}
+            onFinish={isEditing ? handleEditProposal : handleAddProposal}
+          >
+            <Form.Item
+              name="title"
+              label="Título"
+              rules={[
+                {
+                  required: true,
+                  message: "Por favor ingresa el título de la propuesta",
+                },
+              ]}
+            >
+              <Input placeholder="Título de la propuesta" />
+            </Form.Item>
+            <Form.Item
+              name="description"
+              label="Descripción"
+              rules={[
+                {
+                  required: true,
+                  message: "Por favor ingresa la descripción de la propuesta",
+                },
+              ]}
+            >
+              <TextArea rows={4} placeholder="Descripción de la propuesta" />
+            </Form.Item>
+            <Form.Item
+              name="address"
+              label="Dirección"
+              rules={[
+                {
+                  required: true,
+                  message: "Por favor ingresa la dirección de la propuesta",
+                },
+              ]}
+            >
+              <Input placeholder="Dirección de la propuesta" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                {isEditing ? "Guardar" : "Añadir"}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+
         {error && (
           <Alert
             type="error"
@@ -105,11 +177,7 @@ export const ViewCategory = () => {
             onClose={() => setError("")}
           />
         )}
-
-        {/* */}
       </div>
-
-      {/*Aquí se reflejan las propuestas del viaje */}
 
       <div className="categoryCardList">
         {proposals.map((proposal) => (
@@ -120,7 +188,9 @@ export const ViewCategory = () => {
             description={proposal.description}
             address={proposal.address}
             owner={proposal.owner}
-            refreshProposals={() => getCategoryById(id)} // Pasar la función de actualización como prop
+            onEdit={() => handleEditClick(proposal)}
+            onDelete={() => handleDeleteProposal(proposal._id)} // Asegúrate de pasar el ID correcto de la propuesta
+            refreshProposals={() => getCategoryById(id)}
           ></ProposalCard>
         ))}
       </div>
