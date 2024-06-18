@@ -12,10 +12,6 @@ export const ProposalCard = ({
 }) => {
   const items = [
     {
-      label: "Título de la propuesta",
-      children: title,
-    },
-    {
       label: "Dirección",
       children: address,
     },

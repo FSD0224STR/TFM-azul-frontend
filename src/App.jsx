@@ -33,7 +33,7 @@ export const App = () => {
         <Route path="/:id" element={<Trip props></Trip>}></Route>
 
         <Route
-          path="/:id"
+          path="categories/:id"
           element={<ViewCategory props></ViewCategory>}
         ></Route>
 
