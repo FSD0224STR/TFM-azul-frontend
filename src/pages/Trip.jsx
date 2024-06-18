@@ -2,8 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Typography, Button, Alert } from "antd";
 import { format } from "date-fns";
-import es from 'date-fns/locale/es';
-import { UserAddOutlined, EditOutlined, PlusCircleOutlined, TeamOutlined } from "@ant-design/icons";
+import es from "date-fns/locale/es";
+import {
+  UserAddOutlined,
+  EditOutlined,
+  PlusCircleOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
@@ -24,20 +29,20 @@ export function Trip() {
 
   //Formatear la fecha
   //const formatDate = (date) => {
-   // return date ? format(new Date(date), "yyyy-MM-dd") : "";
+  // return date ? format(new Date(date), "yyyy-MM-dd") : "";
   //};
 
   const startDateFormatted = (date) => {
-    return date ? format(new Date(date), 'd MMM', { locale: es }) : "";
-  }
+    return date ? format(new Date(date), "d MMM", { locale: es }) : "";
+  };
 
   const endDateFormatted = (date) => {
-    return date ? format(new Date(date), 'd MMM', { locale: es }) : "";
-  }
+    return date ? format(new Date(date), "d MMM", { locale: es }) : "";
+  };
 
   const yearDateFormatted = (date) => {
-    return date ? format(new Date(date), 'yyyy', { locale: es }) : "";
-  }
+    return date ? format(new Date(date), "yyyy", { locale: es }) : "";
+  };
 
   //recogemos el id de la ruta
   const { id } = useParams();
@@ -102,17 +107,38 @@ export function Trip() {
       <div className="cardInfoTrip">
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
-          <p className="tripDate">{"Del " + startDateFormatted(startDate) + " al " + endDateFormatted(endDate)+ " de " +yearDateFormatted(endDate) }</p>
+          <p className="tripDate">
+            {"Del " +
+              startDateFormatted(startDate) +
+              " al " +
+              endDateFormatted(endDate) +
+              " de " +
+              yearDateFormatted(endDate)}
+          </p>
         </div>
         <p className="description">{description}</p>
         <p className="description">
-        <TeamOutlined /> {users.map((user) => user.username).join(", ")}
+          <TeamOutlined /> {users.map((user) => user.username).join(", ")}
         </p>
-        <Button className="tripButton" onClick={() => updateTrip(id)} icon = {<EditOutlined/>}>Editar</Button>
+        <Button
+          className="tripButton"
+          onClick={() => updateTrip(id)}
+          icon={<EditOutlined />}
+        >
+          Editar
+        </Button>
 
-        <Button className="tripButton" icon={<UserAddOutlined />}>Añadir viajero</Button>
+        <Button className="tripButton" icon={<UserAddOutlined />}>
+          Añadir viajero
+        </Button>
 
-        <Button className="tripButton" onClick={handleAddCategoryClick} icon={<PlusCircleOutlined />}>Añadir categoría</Button>
+        <Button
+          className="tripButton"
+          onClick={handleAddCategoryClick}
+          icon={<PlusCircleOutlined />}
+        >
+          Añadir categoría
+        </Button>
 
         {isAddingCategory && (
           <input
@@ -147,9 +173,6 @@ export function Trip() {
           ></CategoryCard>
         ))}
       </div>
-      {/* onNavigate={changeToDone} onDelete={()=>deleteTaskAndSync(tarea._id)} onEdit={viewEditTarea} */}
-      
     </div>
   );
 }
-
