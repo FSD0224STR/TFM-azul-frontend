@@ -1,4 +1,4 @@
-import { useState  } from "react";
+import { useState } from "react";
 import { Card, Typography, Input } from "antd";
 import {
   DeleteOutlined,
@@ -7,25 +7,29 @@ import {
 } from "@ant-design/icons";
 import "../styles/CategoryCard.css";
 import categoryApi from "../apiservice/categoryApi";
-
-
+import { useNavigate } from "react-router-dom";
 
 export const CategoryCard = ({ id, title, refreshCategories }) => {
-
   const [updatingCategory, setUpdatingCategory] = useState(false);
   const [error, setError] = useState("");
   const [newTitle, setNewTitle] = useState(title);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onEdit = async () => {
     if (updatingCategory) {
       try {
-        setLoading (true);
-        const response = await categoryApi.updateCategory(id, {title: newTitle});
-        console.log("Esta es la respuesta de actualizar la categoría:", response.message);
+        setLoading(true);
+        const response = await categoryApi.updateCategory(id, {
+          title: newTitle,
+        });
+        console.log(
+          "Esta es la respuesta de actualizar la categoría:",
+          response.message
+        );
         setUpdatingCategory(!updatingCategory); // Mover esta línea aquí
         refreshCategories();
-        setLoading (false);
+        setLoading(false);
       } catch (error) {
         setError(error.message);
         console.log(error.message);
@@ -34,27 +38,38 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
       setUpdatingCategory(!updatingCategory);
     }
   };
-  
+
   const onDelete = async () => {
-    setLoading (true);
+    setLoading(true);
     const response = await categoryApi.deleteCategory(id);
-    console.log("Esta es la respuesta de eliminar la categoría:", response.message);
+    console.log(
+      "Esta es la respuesta de eliminar la categoría:",
+      response.message
+    );
     if (response.error) setError(response.error);
     refreshCategories();
-    setLoading (false);
+    setLoading(false);
   };
 
+  const onView = () => {
+    navigate(`/categories/${id}`);
+  };
 
   return (
     <Card className="categoryCardSize">
       <div className="categoryPanel">
-
         {updatingCategory ? (
-          <Input value = {newTitle} placeholder= {title} onChange={(e) => setNewTitle(e.target.value)} variant="borderless" className="titleInput"  />
-        ): (
+          <Input
+            value={newTitle}
+            placeholder={title}
+            onChange={(e) => setNewTitle(e.target.value)}
+            variant="borderless"
+            className="titleInput"
+          />
+        ) : (
           <Typography.Title level={4} className="cardTitle">
-          {title}
-        </Typography.Title>
+            {title}
+          </Typography.Title>
         )}
         <div className="">
           <DeleteOutlined
@@ -66,7 +81,7 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
             className="icon-size icon-margin-left"
           />
           <FileSearchOutlined
-            //onClick={onView}
+            onClick={onView}
             className="icon-size icon-margin-left"
           />
         </div>
