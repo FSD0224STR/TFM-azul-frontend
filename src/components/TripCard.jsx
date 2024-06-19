@@ -1,8 +1,12 @@
 import { Card, Descriptions } from "antd";
 import {
+  AlignRightOutlined,
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
   DeleteOutlined,
   EditOutlined,
-  PlusCircleOutlined,
+  EyeOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { format } from "date-fns";
 import "../styles/TripCard.css";
@@ -23,19 +27,19 @@ export const TripCard = ({
 
   const items = [
     {
-      label: "Inicio del viaje",
+      label: <ArrowRightOutlined />,
       children: formatDate(startDate),
     },
     {
-      label: "Fin del viaje",
+      label: <ArrowLeftOutlined />,
       children: formatDate(endDate),
     },
     {
-      label: "Descripción",
+      label: <AlignRightOutlined />,
       children: description,
     },
     {
-      label: "Propietario",
+      label: <UserOutlined />,
       children: owner,
     },
   ];
@@ -55,7 +59,7 @@ export const TripCard = ({
               onClick={onEdit}
               className="icon-size icon-margin-left"
             />
-            <PlusCircleOutlined
+            <EyeOutlined
               onClick={onView}
               className="icon-size icon-margin-left"
             />
