@@ -8,6 +8,7 @@ import { TripCard } from "../components/TripCard";
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
 import { PlusOutlined } from "@ant-design/icons";
+import CreateTripModal from "../components/CreateTripModal";
 function Home() {
   const [trips, setTrips] = useState([]);
   //const [title, setTitle] = useState("");
@@ -90,21 +91,7 @@ function Home() {
         <>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={12}>
-              {loading ? (
-                <Spin />
-              ) : (
-                <div style={{ position: "fixed", bottom: 20, right: 20 }}>
-                  <Button
-                    type="primary"
-                    shape="circle"
-                    size="large"
-                    onClick={goAddTrip}
-                    className="btnMarging"
-                  >
-                    <PlusOutlined />
-                  </Button>
-                </div>
-              )}
+              {loading ? <Spin /> : <CreateTripModal />}
             </Col>
           </Row>
         </>
