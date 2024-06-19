@@ -46,7 +46,7 @@ export const TripCard = ({
 
   return (
     <Card
-      title={title}
+      title={<div className="centered-uppercase-blue">{title}</div>}
       className="cardSize"
       extra={
         <>
