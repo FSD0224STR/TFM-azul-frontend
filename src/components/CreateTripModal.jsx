@@ -35,14 +35,18 @@ const CreateTripModal = () => {
         console.error("Error:", response.error);
         setError(response.error);
       } else if (response.data) {
-        navigate("/home");
+        // Limpiar campos del formulario y cerrar modal
+        form.resetFields();
+        setVisible(false);
+
+        // Actualizar la página para mostrar el viaje agregado
+        window.location.reload(); // Otra opción es navegar a la página de inicio
       }
     } catch (error) {
       console.error("Error al procesar la solicitud:", error);
       setError(`Error ${id ? "updating" : "adding"} trip: ${error.message}`);
     } finally {
       setLoading(false);
-      setVisible(false); // Cerrar el modal después de enviar el formulario
     }
   };
 
