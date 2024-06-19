@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Typography, Spin, Row, Col, Button, Alert } from "antd";
+import { Typography, Spin, Row, Col, Alert, Button } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
@@ -7,6 +7,7 @@ import { TripCard } from "../components/TripCard";
 
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
+import { PlusOutlined } from "@ant-design/icons";
 function Home() {
   const [trips, setTrips] = useState([]);
   //const [title, setTitle] = useState("");
@@ -51,8 +52,8 @@ function Home() {
   };
 
   const goToTrip = (idToGo) => {
-    navigate(`/${idToGo}`)
-  }
+    navigate(`/${idToGo}`);
+  };
 
   useEffect(() => {
     getTrips();
@@ -77,7 +78,7 @@ function Home() {
                 owner={trip.owner.username}
                 onDelete={() => deleteTrip(trip._id)}
                 onEdit={() => updateTrip(trip._id)}
-                onView={()=> goToTrip(trip._id) }
+                onView={() => goToTrip(trip._id)}
               ></TripCard>
             ))}
           </div>
@@ -92,13 +93,17 @@ function Home() {
               {loading ? (
                 <Spin />
               ) : (
-                <Button
-                  type="primary"
-                  onClick={goAddTrip}
-                  className="btnMarging"
-                >
-                  Añadir Viaje
-                </Button>
+                <div style={{ position: "fixed", bottom: 20, right: 20 }}>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    size="large"
+                    onClick={goAddTrip}
+                    className="btnMarging"
+                  >
+                    <PlusOutlined />
+                  </Button>
+                </div>
               )}
             </Col>
           </Row>
