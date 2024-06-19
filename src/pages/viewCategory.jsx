@@ -117,7 +117,7 @@ export const ViewCategory = () => {
 
         <Modal
           title={isEditing ? "Editar Propuesta" : "Añadir Propuesta"}
-          visible={visibleModal}
+          open={visibleModal}
           onCancel={handleModalClose}
           footer={null}
         >
@@ -189,7 +189,7 @@ export const ViewCategory = () => {
             address={proposal.address}
             owner={proposal.owner}
             onEdit={() => handleEditClick(proposal)}
-            onDelete={() => handleDeleteProposal(proposal._id)} // Asegúrate de pasar el ID correcto de la propuesta
+            onDelete={() => handleDeleteProposal(proposal._id)}
             refreshProposals={() => getCategoryById(id)}
           ></ProposalCard>
         ))}
