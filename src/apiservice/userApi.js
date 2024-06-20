@@ -15,7 +15,7 @@ const baseUrl = "http://localhost:3000";
 const addUser = async (firstname, lastname, username, password, email) => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${baseUrl}/users/add`, {
+  const response = await fetch(`${baseUrl}/users/`, {
     method: "POST",
     body: JSON.stringify({ firstname, lastname, username, password, email }),
     headers: {
@@ -55,14 +55,13 @@ const login = async (username, password) => {
     body: JSON.stringify({ username, password }),
     headers: { "Content-Type": "application/json" },
   });
-  
+
   if (!response.ok) {
-    const error = await response.json ()
-    return {error: error.message}
-  } 
-  const logged = await response.json()
-  return {data: logged }
-  
+    const error = await response.json();
+    return { error: error.message };
+  }
+  const logged = await response.json();
+  return { data: logged };
 };
 
 const getMyProfile = async (username) => {

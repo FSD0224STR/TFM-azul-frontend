@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, Form, Input, DatePicker, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import TripApi from "../apiservice/tripApi"; // Importa tu API para manejar los viajes
 
 const CreateTripModal = () => {
@@ -9,7 +9,6 @@ const CreateTripModal = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
   const { id } = useParams();
   const [form] = Form.useForm();
 

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Typography, Spin, Row, Col, Alert, Button } from "antd";
+import { Typography, Spin, Row, Col, Alert } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
@@ -7,8 +7,8 @@ import { TripCard } from "../components/TripCard";
 
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
-import { PlusOutlined } from "@ant-design/icons";
 import CreateTripModal from "../components/CreateTripModal";
+
 function Home() {
   const [trips, setTrips] = useState([]);
   //const [title, setTitle] = useState("");
@@ -32,9 +32,9 @@ function Home() {
     }
   };
 
-  const goAddTrip = () => {
-    navigate("/tripInfo");
-  };
+  // const goAddTrip = () => {
+  //   navigate("/tripInfo");
+  // };
 
   const deleteTrip = async (idToDelete) => {
     try {
