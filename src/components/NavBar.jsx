@@ -1,15 +1,25 @@
 import { Layout, Menu, Button, Typography, Tooltip } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/authContext";
 import "../styles/NavBar.css";
-import { HomeOutlined, LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  HomeOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 
 const { Header } = Layout;
 const { Title } = Typography;
 
 const NavBar = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   return (
     <Header>
@@ -17,6 +27,16 @@ const NavBar = () => {
         theme="dark"
         mode="horizontal"
         items={[
+          {
+            key: "1",
+            label: (
+              <Tooltip title="Regresar">
+                <Button type="link" onClick={handleGoBack}>
+                  <ArrowLeftOutlined className="icon-size" />
+                </Button>
+              </Tooltip>
+            ),
+          },
           {
             key: "1",
             label: (
