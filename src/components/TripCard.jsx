@@ -57,11 +57,11 @@ export const TripCard = ({
             />
             <EditOutlined
               onClick={onEdit}
-              className="icon-size icon-margin-left"
+              className="icon-size icon-margin-left "
             />
             <EyeOutlined
               onClick={onView}
-              className="icon-size icon-margin-left"
+              className="icon-size icon-margin-left blue"
             />
           </div>
         </>

@@ -64,7 +64,7 @@ function Home() {
     // style={{ marginTop: "10vh", maxWidth: "md" }}
     <div className="tripContainer">
       <div>
-        <Typography.Title level={2}>Lista de viajes</Typography.Title>
+        {/* <Typography.Title level={2}>Lista de viajes</Typography.Title> */}
         {loading ? (
           <Spin />
         ) : Array.isArray(trips) && trips.length > 0 ? (

@@ -1,6 +1,7 @@
 .cardSize {
   width: 100%;
   margin: 5px;
+  background-color: #0e77da13;
 }
 
 .cardBody {
@@ -8,6 +9,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  background-color: #0e77da13;
 }
 
 .ant-descriptions.ant-descriptions-bordered {
@@ -32,6 +34,9 @@
   color: #0e77da;
 }
 
+.blue {
+  color: #0e77da;
+}
 @media (min-width: 992px) {
   .cardSize {
     width: 49%;

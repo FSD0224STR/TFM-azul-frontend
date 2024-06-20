@@ -1,5 +1,10 @@
 import { Card, Descriptions } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  DislikeOutlined,
+  EditOutlined,
+  LikeOutlined,
+} from "@ant-design/icons";
 import "../styles/ProposalCard.css";
 
 export const ProposalCard = ({
@@ -9,6 +14,8 @@ export const ProposalCard = ({
   owner,
   onDelete,
   onEdit,
+  like,
+  dislike,
 }) => {
   const items = [
     {
@@ -39,6 +46,14 @@ export const ProposalCard = ({
             <EditOutlined
               onClick={onEdit}
               className="icon-size icon-margin-left"
+            />
+            <LikeOutlined
+              onClick={like}
+              className="icon-size icon-margin-left blue"
+            />
+            <DislikeOutlined
+              onClick={dislike}
+              className="icon-size icon-margin-left blue"
             />
           </div>
         </>
