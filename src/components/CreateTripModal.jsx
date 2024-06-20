@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal, Form, Input, DatePicker } from "antd";
+import { Button, Modal, Form, Input, DatePicker, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import TripApi from "../apiservice/tripApi"; // Importa tu API para manejar los viajes
@@ -52,19 +52,21 @@ const CreateTripModal = () => {
 
   return (
     <div style={{ position: "fixed", bottom: 20, right: 20 }}>
-      <Button
-        type="primary"
-        shape="circle"
-        size="large"
-        icon={<PlusOutlined />}
-        onClick={showModal}
-        style={{
-          width: "64px",
-          height: "64px",
-          lineHeight: "64px",
-          textAlign: "center",
-        }}
-      />
+      <Tooltip title="Crear Nuevo Viaje">
+        <Button
+          type="primary"
+          shape="circle"
+          size="large"
+          icon={<PlusOutlined />}
+          onClick={showModal}
+          style={{
+            width: "64px",
+            height: "64px",
+            lineHeight: "64px",
+            textAlign: "center",
+          }}
+        />
+      </Tooltip>
       <Modal
         title="Crear Nuevo Viaje"
         open={visible}
