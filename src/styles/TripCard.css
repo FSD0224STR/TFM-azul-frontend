@@ -37,6 +37,7 @@
 .blue {
   color: #0e77da;
 }
+
 @media (min-width: 992px) {
   .cardSize {
     width: 49%;

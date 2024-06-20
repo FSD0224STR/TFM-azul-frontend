@@ -1,8 +1,7 @@
-import { Card, Descriptions } from "antd";
+import { Card, Descriptions, Tooltip } from "antd";
 import {
   AlignRightOutlined,
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
+  CalendarOutlined,
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
@@ -27,13 +26,13 @@ export const TripCard = ({
 
   const items = [
     {
-      label: <ArrowRightOutlined />,
-      children: formatDate(startDate),
+      label: <CalendarOutlined />,
+      children: `del ${formatDate(startDate)} al ${formatDate(endDate)}`,
     },
-    {
-      label: <ArrowLeftOutlined />,
-      children: formatDate(endDate),
-    },
+    // {
+    //   label: <ArrowLeftOutlined />,
+    //   children: formatDate(endDate),
+    // },
     {
       label: <AlignRightOutlined />,
       children: description,
@@ -51,18 +50,24 @@ export const TripCard = ({
       extra={
         <>
           <div className="btnPanel">
-            <DeleteOutlined
-              onClick={onDelete}
-              className="icon-size danger-color"
-            />
-            <EditOutlined
-              onClick={onEdit}
-              className="icon-size icon-margin-left "
-            />
-            <EyeOutlined
-              onClick={onView}
-              className="icon-size icon-margin-left blue"
-            />
+            <Tooltip title="Borrar">
+              <DeleteOutlined
+                onClick={onDelete}
+                className="icon-size danger-color "
+              />
+            </Tooltip>
+            <Tooltip title="Editar">
+              <EditOutlined
+                onClick={onEdit}
+                className="icon-size icon-margin-left "
+              />
+            </Tooltip>
+            <Tooltip title="Ver más">
+              <EyeOutlined
+                onClick={onView}
+                className="icon-size icon-margin-left blue eye"
+              />
+            </Tooltip>
           </div>
         </>
       }
