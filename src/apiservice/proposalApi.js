@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/proposals/";
+const baseUrl = import.meta.env.VITE_BACKEND+"/proposals/";
 
 const updateProposal = async (proposalId, updates) => {
   const token = localStorage.getItem("access_token");

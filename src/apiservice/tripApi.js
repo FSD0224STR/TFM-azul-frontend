@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/trips/";
+const baseUrl = import.meta.env.VITE_BACKEND+"/trips/";
 
 const getAllTrips = async () => {
   const token = localStorage.getItem("access_token");
