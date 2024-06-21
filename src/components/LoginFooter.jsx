@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 // Componente del pie de página
-export const NavFooter = () => {
+export const LoginFooter = () => {
   const location = useLocation();
 
   if (location.pathname === "/registration") {
@@ -20,11 +20,10 @@ export const NavFooter = () => {
           ¿No tienes una cuenta? <Link to="/registration">Regístrate aquí</Link>
         </p>
         <p>
-          ¿Has olvidado la contraseña? <Link to= ""> Recupera tu contraseña </Link>
+          ¿Has olvidado la contraseña?{" "}
+          <Link to=""> Recupera tu contraseña </Link>
         </p>
       </div>
     );
   }
 };
-
-
