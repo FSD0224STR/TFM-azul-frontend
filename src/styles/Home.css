@@ -1,26 +1,25 @@
 .tripContainer {
-    margin: 0 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    width: auto;
+  margin: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: auto;
 }
 
 .tripPanel {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-} 
-
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
 .btnMarging {
-    margin-top:20px;
-} 
+  margin-top: 20px;
+}
 
 .btnPanel {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: -webkit-fill-available;
-} 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: -webkit-fill-available;
+}

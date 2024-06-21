@@ -10,6 +10,7 @@ import { NavBar } from "./components/NavBar";
 import "./styles/App.css";
 import { TripInfo } from "./pages/tripInfo";
 import { Trip } from "./pages/Trip";
+import { ViewCategory } from "./pages/viewCategory";
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
@@ -29,7 +30,12 @@ export const App = () => {
 
         <Route path="/tripInfo" element={<TripInfo props></TripInfo>}></Route>
 
-        <Route path="/:id" element={<Trip  props></Trip>}></Route>
+        <Route path="/:id" element={<Trip props></Trip>}></Route>
+
+        <Route
+          path="categories/:id"
+          element={<ViewCategory props></ViewCategory>}
+        ></Route>
 
         <Route
           path="/registration"

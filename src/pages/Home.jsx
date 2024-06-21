@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Typography, Spin, Row, Col, Button, Alert } from "antd";
+import { Typography, Spin, Row, Col, Alert } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
@@ -7,6 +7,8 @@ import { TripCard } from "../components/TripCard";
 
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
+import CreateTripModal from "../components/CreateTripModal";
+
 function Home() {
   const [trips, setTrips] = useState([]);
   //const [title, setTitle] = useState("");
@@ -30,9 +32,9 @@ function Home() {
     }
   };
 
-  const goAddTrip = () => {
-    navigate("/tripInfo");
-  };
+  // const goAddTrip = () => {
+  //   navigate("/tripInfo");
+  // };
 
   const deleteTrip = async (idToDelete) => {
     try {
@@ -51,8 +53,8 @@ function Home() {
   };
 
   const goToTrip = (idToGo) => {
-    navigate(`/${idToGo}`)
-  }
+    navigate(`/${idToGo}`);
+  };
 
   useEffect(() => {
     getTrips();
@@ -62,7 +64,7 @@ function Home() {
     // style={{ marginTop: "10vh", maxWidth: "md" }}
     <div className="tripContainer">
       <div>
-        <Typography.Title level={2}>Lista de viajes</Typography.Title>
+        {/* <Typography.Title level={2}>Lista de viajes</Typography.Title> */}
         {loading ? (
           <Spin />
         ) : Array.isArray(trips) && trips.length > 0 ? (
@@ -77,7 +79,7 @@ function Home() {
                 owner={trip.owner.username}
                 onDelete={() => deleteTrip(trip._id)}
                 onEdit={() => updateTrip(trip._id)}
-                onView={()=> goToTrip(trip._id) }
+                onView={() => goToTrip(trip._id)}
               ></TripCard>
             ))}
           </div>
@@ -89,17 +91,7 @@ function Home() {
         <>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={12}>
-              {loading ? (
-                <Spin />
-              ) : (
-                <Button
-                  type="primary"
-                  onClick={goAddTrip}
-                  className="btnMarging"
-                >
-                  Añadir Viaje
-                </Button>
-              )}
+              {loading ? <Spin /> : <CreateTripModal />}
             </Col>
           </Row>
         </>

@@ -1,8 +1,11 @@
-import { Card, Descriptions } from "antd";
+import { Card, Descriptions, Tooltip } from "antd";
 import {
+  AlignRightOutlined,
+  CalendarOutlined,
   DeleteOutlined,
   EditOutlined,
-  PlusCircleOutlined,
+  EyeOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { format } from "date-fns";
 import "../styles/TripCard.css";
@@ -23,42 +26,48 @@ export const TripCard = ({
 
   const items = [
     {
-      label: "Inicio del viaje",
-      children: formatDate(startDate),
+      label: <CalendarOutlined />,
+      children: `del ${formatDate(startDate)} al ${formatDate(endDate)}`,
     },
+    // {
+    //   label: <ArrowLeftOutlined />,
+    //   children: formatDate(endDate),
+    // },
     {
-      label: "Fin del viaje",
-      children: formatDate(endDate),
-    },
-    {
-      label: "Descripción",
+      label: <AlignRightOutlined />,
       children: description,
     },
     {
-      label: "Propietario",
+      label: <UserOutlined />,
       children: owner,
     },
   ];
 
   return (
     <Card
-      title={title}
+      title={<div className="centered-uppercase-blue">{title}</div>}
       className="cardSize"
       extra={
         <>
           <div className="btnPanel">
-            <DeleteOutlined
-              onClick={onDelete}
-              className="icon-size danger-color"
-            />
-            <EditOutlined
-              onClick={onEdit}
-              className="icon-size icon-margin-left"
-            />
-            <PlusCircleOutlined
-              onClick={onView}
-              className="icon-size icon-margin-left"
-            />
+            <Tooltip title="Borrar">
+              <DeleteOutlined
+                onClick={onDelete}
+                className="icon-size danger-color "
+              />
+            </Tooltip>
+            <Tooltip title="Editar">
+              <EditOutlined
+                onClick={onEdit}
+                className="icon-size icon-margin-left "
+              />
+            </Tooltip>
+            <Tooltip title="Ver más">
+              <EyeOutlined
+                onClick={onView}
+                className="icon-size icon-margin-left blue eye"
+              />
+            </Tooltip>
           </div>
         </>
       }
