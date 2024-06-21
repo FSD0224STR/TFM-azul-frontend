@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { NavFooter } from "/src/components/NavFooter";
+import { LoginFooter } from "/src/components/LoginFooter";
 import { Card, Typography, Spin, Row, Col, Input, Button, Alert } from "antd";
 import { AuthContext } from "../contexts/authContext";
 import "../styles/Login.css";
@@ -54,7 +54,7 @@ const Login = () => {
               onClose={() => setError("")}
             />
           )}
-          <NavFooter />
+          <LoginFooter />
         </div>
       </div>
     </>
