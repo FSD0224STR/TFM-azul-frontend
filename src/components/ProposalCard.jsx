@@ -1,4 +1,4 @@
-import { Card, Descriptions } from "antd";
+import { Card, Descriptions, message, Popconfirm } from "antd";
 import {
   DeleteOutlined,
   DislikeOutlined,
@@ -32,6 +32,16 @@ export const ProposalCard = ({
     },
   ];
 
+  const confirm = (e) => {
+    console.log(e);
+    message.success('Un viaje menos, una depresión más');
+    onDelete();
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error('Una retirada a tiempo es una victoria');
+  };
+
   return (
     <Card
       title={title}
@@ -39,10 +49,17 @@ export const ProposalCard = ({
       extra={
         <>
           <div className="btnPanel">
-            <DeleteOutlined
-              onClick={onDelete}
-              className="icon-size danger-color"
-            />
+          <Popconfirm
+              title="Borrar el viaje"
+              description="¿Estás seguro que quieres borrar este viaje?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Sí"
+              cancelText="No"
+              >
+              <DeleteOutlined className="icon-size danger-color "/>
+              </Popconfirm>
+
             <EditOutlined
               onClick={onEdit}
               className="icon-size icon-margin-left"

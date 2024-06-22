@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, Typography, Input } from "antd";
+import { Card, Typography, Input, Modal, message, Popconfirm } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -15,6 +15,13 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
   const [newTitle, setNewTitle] = useState(title);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  
+  const showErrorModal = (message) => {
+    Modal.error({
+      title: 'Error',
+      content: message,
+    });
+  };
 
   const onEdit = async () => {
     if (updatingCategory) {
@@ -23,16 +30,23 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
         const response = await categoryApi.updateCategory(id, {
           title: newTitle,
         });
+        if (response.error) {
+          setError(response.error);
+          console.log(response.error);
+          showErrorModal(response.error);
+        } else {
         console.log(
           "Esta es la respuesta de actualizar la categoría:",
           response.message
         );
         setUpdatingCategory(!updatingCategory); // Mover esta línea aquí
         refreshCategories();
-        setLoading(false);
-      } catch (error) {
+        setLoading(false); 
+      }
+    } catch (error) {
         setError(error.message);
         console.log(error.message);
+        showErrorModal(error.message);
       }
     } else {
       setUpdatingCategory(!updatingCategory);
@@ -41,19 +55,41 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
 
   const onDelete = async () => {
     setLoading(true);
-    const response = await categoryApi.deleteCategory(id);
-    console.log(
-      "Esta es la respuesta de eliminar la categoría:",
-      response.message
-    );
-    if (response.error) setError(response.error);
-    refreshCategories();
+    try {
+      const response = await categoryApi.deleteCategory(id);
+      console.log("La respuesta de borrar es:", response);
+      if (response.error) {
+        setError(response.error);
+        console.log(response.error);
+        showErrorModal(response.error);
+      }  else {
+        console.log(
+          "Esta es la respuesta de eliminar la categoría:",
+          response.message
+        ); 
+        refreshCategories()
+      }
+    } catch (error) {
+      setError(error.message);
+      showErrorModal(error.message);
+    }
     setLoading(false);
   };
 
+  const confirm = (e) => {
+    console.log(e);
+    message.success('Un viaje menos, una depresión más');
+    onDelete();
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error('Una retirada a tiempo es una victoria');
+  };
   const onView = () => {
     navigate(`/categories/${id}`);
   };
+
+  
 
   return (
     <Card className="categoryCardSize">
@@ -72,10 +108,17 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
           </Typography.Title>
         )}
         <div className="">
-          <DeleteOutlined
-            onClick={onDelete}
-            className="icon-size danger-color"
-          />
+        <Popconfirm
+              title="Borrar el viaje"
+              description="¿Estás seguro que quieres borrar este viaje?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Sí"
+              cancelText="No"
+              >
+              <DeleteOutlined className="icon-size danger-color "/>
+              </Popconfirm>
+
           <EditOutlined
             onClick={onEdit}
             className="icon-size icon-margin-left"

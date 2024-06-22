@@ -38,7 +38,10 @@ const deleteProposal = async (proposalId) => {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!response.ok) return { error: response.message };
+  if (!response.ok)  {
+    const error = await response.json();
+    return { error: error.message };
+  } 
   const data = await response.json();
   return { data };
 };
