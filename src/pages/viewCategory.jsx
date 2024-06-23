@@ -18,12 +18,13 @@ export const ViewCategory = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [currentProposal, setCurrentProposal] = useState(null);
-  
+
   const showErrorModal = (message) => {
     Modal.error({
-      title: 'Error',
+      title: "Error",
       content: message,
-    });}
+    });
+  };
 
   const getCategoryById = async (id) => {
     try {
@@ -70,12 +71,11 @@ export const ViewCategory = () => {
         setError(response.error);
         console.log(response.error);
         showErrorModal(response.error);
-      } else { 
+      } else {
         console.log("Respuesta de añadir propuesta:", response);
-      getCategoryById(id);
-      handleModalClose();
+        getCategoryById(id);
+        handleModalClose();
       }
-      
     } catch (error) {
       setError(`Error al crear la nueva propuesta: ${error.message}`);
     }
@@ -93,7 +93,7 @@ export const ViewCategory = () => {
         setError(response.error);
         console.log(response.error);
         showErrorModal(response.error);
-      } else { 
+      } else {
         getCategoryById(id);
         handleModalClose();
       }
@@ -129,9 +129,6 @@ export const ViewCategory = () => {
       address: proposal.address,
     });
   };
-
-  
-  
 
   return (
     <div>
@@ -216,7 +213,7 @@ export const ViewCategory = () => {
       <div className="categoryCardList">
         {proposals.map((proposal) => (
           <ProposalCard
-            key={proposal._id}
+            key={`${proposal._id}-${proposal.title}`}
             id={proposal._id}
             title={proposal.title}
             description={proposal.description}
@@ -227,6 +224,10 @@ export const ViewCategory = () => {
             refreshProposals={() => getCategoryById(id)}
           ></ProposalCard>
         ))}
+        {console.log(
+          "IDs de propuestas:",
+          proposals.map((p) => p._id)
+        )}
       </div>
     </div>
   );

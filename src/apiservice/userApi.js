@@ -80,4 +80,48 @@ const getMyProfile = async (username) => {
   return { data: await response.json() };
 };
 
-export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile };
+
+const addNewImage = async (formData) => {
+  
+  console.log('formData', formData);
+
+  const response = await fetch(`${baseUrl}/upload`,{
+    method: "POST",
+    body: formData,
+    // headers: {
+    //   "Content-Type": "multipart/form-data", //// Elimino del Encabezado Content-Type, ya que FormData gestiona este encabezado automáticamente.
+    // },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  return { data: await response.json() };
+};
+
+
+const updateUser = async (id, userData) => {
+  const token = localStorage.getItem("access_token");
+
+  const response = await fetch(`${baseUrl}/users/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(userData),
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorMessage = await response.json();
+    return { error: errorMessage };
+  }
+
+  const newlyCreatedUser = await response.json();
+  return { data: newlyCreatedUser };
+};
+
+
+export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile, addNewImage };
