@@ -18,19 +18,28 @@ export const ViewCategory = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [currentProposal, setCurrentProposal] = useState(null);
+  
+  const showErrorModal = (message) => {
+    Modal.error({
+      title: 'Error',
+      content: message,
+    });}
 
   const getCategoryById = async (id) => {
     try {
       const response = await categoryApi.getCategoryInfo(id);
+
       if (response.data) {
         setTitle(response.data.title);
         setDescription(response.data.description);
         setProposals(response.data.proposals);
       } else if (response.error) {
         setError(response.error);
+        showErrorModal(response.error);
       }
     } catch (error) {
       setError(`Error fetching category: ${error.message}`);
+      showErrorModal(error.message);
     }
   };
 
@@ -56,9 +65,17 @@ export const ViewCategory = () => {
         description: values.description,
         address: values.address,
       });
-      console.log("Respuesta de añadir propuesta:", response);
+
+      if (response.error) {
+        setError(response.error);
+        console.log(response.error);
+        showErrorModal(response.error);
+      } else { 
+        console.log("Respuesta de añadir propuesta:", response);
       getCategoryById(id);
       handleModalClose();
+      }
+      
     } catch (error) {
       setError(`Error al crear la nueva propuesta: ${error.message}`);
     }
@@ -72,19 +89,33 @@ export const ViewCategory = () => {
         address: values.address,
       });
       console.log("Respuesta de editar propuesta:", response);
-      getCategoryById(id);
-      handleModalClose();
+      if (response.error) {
+        setError(response.error);
+        console.log(response.error);
+        showErrorModal(response.error);
+      } else { 
+        getCategoryById(id);
+        handleModalClose();
+      }
     } catch (error) {
       setError(`Error al editar la propuesta: ${error.message}`);
+      showErrorModal(error.message);
     }
   };
 
   const handleDeleteProposal = async (proposalId) => {
     try {
-      await proposalApi.deleteProposal(proposalId);
+      const response = await proposalApi.deleteProposal(proposalId);
+      console.log("Respuesta de eliminar propuesta:", response.data);
       getCategoryById(id);
+      if (response.error) {
+        setError(response.error);
+        console.log(response.error);
+        showErrorModal(response.error);
+      }
     } catch (error) {
       setError(`Error al eliminar la propuesta: ${error.message}`);
+      showErrorModal(error.message);
     }
   };
 
@@ -98,6 +129,9 @@ export const ViewCategory = () => {
       address: proposal.address,
     });
   };
+
+  
+  
 
   return (
     <div>

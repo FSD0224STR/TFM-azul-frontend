@@ -15,7 +15,7 @@ const Login = () => {
       <div className="container">
         <div className="content">
           <Card className="loginCard">
-            {import.meta.env.VITE_BACKEND} ZZZ
+            {/* {import.meta.env.VITE_BACKEND} ZZZ */}
             <Typography.Title level={2}>Bienvenido</Typography.Title>
             <Row gutter={[16, 16]} justify="center">
               <Col xs={24} className="inputRow">

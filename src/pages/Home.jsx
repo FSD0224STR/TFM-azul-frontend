@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Typography, Spin, Row, Col, Alert } from "antd";
+import { Typography, Spin, Row, Col, Alert, Modal } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
@@ -19,6 +19,14 @@ function Home() {
 
   const navigate = useNavigate();
 
+  const showErrorModal = (message) => {
+    Modal.error({
+      title: 'Error',
+      content: message,
+    });
+  };
+
+  
   const getTrips = async () => {
     try {
       setLoading(true);
@@ -39,10 +47,19 @@ function Home() {
   const deleteTrip = async (idToDelete) => {
     try {
       setLoading(true);
-      await tripAPI.deleteTrip(idToDelete);
-      setTrips(trips.filter((trip) => trip._id !== idToDelete));
-    } catch (error) {
+      const response = await tripAPI.deleteTrip(idToDelete);
+
+      if (response.error) {
+        setError(response.error);
+        console.log(response.error);
+        showErrorModal(response.error);
+      } else {
+        console.log(response.data);
+        setTrips(trips.filter((trip) => trip._id !== idToDelete));
+      }
+      } catch (error) {
       setError(`Error deleting trip: ${error.message}`);
+      showErrorModal(error.message);
     } finally {
       setLoading(false);
     }
