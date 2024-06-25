@@ -21,7 +21,7 @@ export const App = () => {
       <Routes>
         <Route path="/home" element={<Home props></Home>}></Route>
 
-        <Route path="/login" element={<Login props></Login>}></Route>
+        <Route path="/" element={<Login props></Login>}></Route>
 
         <Route
           path="/tripInfo/:id"
