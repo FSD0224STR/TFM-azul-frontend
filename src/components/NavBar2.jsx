@@ -67,7 +67,7 @@ export const NavBar2 = () => {
                   <a href="/perfil">Perfil</a>
                 </li>
                 <li>
-                  <a href="/login" onClick={logout}>
+                  <a href="/" onClick={logout}>
                     Cerrar sesión
                   </a>
                 </li>
