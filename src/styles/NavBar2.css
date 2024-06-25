@@ -37,6 +37,7 @@
   text-align: center;
   color: white;
   font-size: 24px;
+  align-content: center;
 }
 .container22 {
   background-color: rgba(0, 81, 255, 0.694);
@@ -81,6 +82,7 @@
   color: white; /* Texto en blanco */
   background-color: transparent; /* Fondo transparente */
   margin-left: 20px; /* Añadido margen izquierdo */
+  border-radius: 10px;
 }
 .input::placeholder {
   color: white; /* Color del texto del placeholder */
@@ -94,6 +96,7 @@ button {
   color: white; /* Texto en blanco */
   border: none;
   cursor: pointer;
+  border-radius: 10px;
   transition: background-color 0.3s ease; /* Transición suave */
 }
 

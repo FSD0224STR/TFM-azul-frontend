@@ -121,7 +121,10 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
             okText="Sí"
             cancelText="No"
           >
-            <DeleteOutlined className="icon-size danger-color " />
+            <DeleteOutlined
+              className="icon-size danger-color "
+              onClick={onDelete}
+            />
           </Popconfirm>
 
           <EditOutlined
