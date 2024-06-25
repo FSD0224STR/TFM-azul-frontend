@@ -74,17 +74,17 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
   };
 
   const confirmDelete = (e) => {
-    e.stopPropagation(); // Detener la propagación del evento hacia arriba
+    e.stopPropagation();
     onDelete();
   };
 
   const cancelDelete = (e) => {
-    e.stopPropagation(); // Detener la propagación del evento hacia arriba
+    e.stopPropagation();
     message.info("Operación cancelada");
   };
 
   const onView = (e) => {
-    e.stopPropagation(); // Detener la propagación del evento hacia arriba
+    e.stopPropagation();
     navigate(`/categories/${id}`);
   };
 
@@ -111,7 +111,8 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
               placeholder={title}
               onChange={(e) => setNewTitle(e.target.value)}
               className="titleInput"
-              onClick={(e) => e.stopPropagation()} // Evitar que el clic se propague hacia arriba
+              onClick={(e) => e.stopPropagation()}
+              style={{ fontSize: "1.5rem", color: "#333", textAlign: "center" }}
             />
           ) : (
             <Typography.Title level={4} className="cardTitle">

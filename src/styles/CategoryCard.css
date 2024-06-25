@@ -7,8 +7,6 @@
 .categoryTitle {
   font-size: 20px;
   font-weight: 600;
-  margin-top: 10px;
-  margin-bottom: 10px;
   width: 100%;
   text-align: center;
 }
@@ -18,5 +16,4 @@
   flex-direction: column-reverse;
   justify-content: flex-end;
   width: 100%;
-  background-color: ;
 }

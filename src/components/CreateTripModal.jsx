@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { Button, Modal, Form, Input, DatePicker, Tooltip } from "antd";
-import moment from "moment"; // Asegúrate de importar moment si no lo has hecho
-import TripApi from "../apiservice/tripApi"; // Importa tu API para manejar los viajes
+import { Button, Modal, Form, Input, DatePicker } from "antd";
+import moment from "moment";
+import TripApi from "../apiservice/tripApi";
 
 const CreateTripModal = ({ visible, onCancel, editingTrip, onUpdate }) => {
   const [loading, setLoading] = useState(false);
