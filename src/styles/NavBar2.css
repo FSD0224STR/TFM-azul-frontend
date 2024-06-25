@@ -28,7 +28,11 @@
 .container2 {
   height: 100px;
   width: 100%;
-  text-align-last: left;
+  text-align-last: right;
+}
+
+.login-btn {
+  margin-right: 10%;
 }
 .container21 {
   background-color: rgba(0, 81, 255, 0.489);
@@ -71,35 +75,43 @@
 }
 
 .logo {
-  width: 170px;
+  width: 50%;
   height: auto;
 }
 
 .input {
-  width: 200px; /* Ancho ajustado para los inputs */
-  padding: 8px; /* Añadido padding interno */
-  border: 1px solid white; /* Borde blanco */
-  color: white; /* Texto en blanco */
-  background-color: transparent; /* Fondo transparente */
-  margin-left: 20px; /* Añadido margen izquierdo */
+  border: 0px solid rgba(0, 81, 255, 0.694);
+  color: rgba(0, 81, 255, 0.694);
   border-radius: 10px;
 }
+
 .input::placeholder {
-  color: white; /* Color del texto del placeholder */
+  color: rgba(0, 81, 255, 0.349); /* Color del texto del placeholder */
   opacity: 0.8; /* Opacidad del placeholder */
 }
 
 button {
-  margin-left: 10px; /* Añadido margen izquierdo al botón */
-  padding: 10px 20px; /* Ajustado el padding del botón */
-  background-color: #6eb2ff; /* Color de fondo azul claro */
-  color: white; /* Texto en blanco */
   border: none;
   cursor: pointer;
   border-radius: 10px;
   transition: background-color 0.3s ease; /* Transición suave */
 }
 
+.modal-content .input {
+  padding: 10px;
+  width: 90%;
+  margin-top: 20px;
+  background-color: #4b8dff38;
+}
+
+.error-container {
+  margin-top: 1rem;
+}
+
 button:hover {
   background-color: #4b8cff; /* Color de fondo más oscuro al hacer hover */
+}
+
+.ant-modal-footer {
+  margin-right: 30px;
 }

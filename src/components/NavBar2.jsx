@@ -1,14 +1,22 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/authContext";
-import { Spin, Alert } from "antd";
+import { Button, Spin, Alert } from "antd";
+import LoginModal from "./LoginModal"; // Asegúrate de que la ruta sea correcta
 import "../styles/NavBar2.css";
 
 export const NavBar2 = () => {
-  const { isLoggedIn, login, logout, loading, error, setError } =
+  const { isLoggedIn, logout, loading, error, setError } =
     useContext(AuthContext);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    setError(""); // Clear any existing error message when closing the modal
+  };
 
   return (
     <nav className="navbar">
@@ -22,29 +30,16 @@ export const NavBar2 = () => {
       <div className="container2">
         {!isLoggedIn && (
           <>
-            <div className="container21">
-              <input
-                className="input"
-                type="text"
-                placeholder="Usuario"
-                value={username}
-                onChange={(e) => setUsername(e.currentTarget.value)}
-              />
-            </div>
+            <div className="container21"></div>
             <div className="container22">
-              <form>
-                <input
-                  className="input"
-                  type="password"
-                  placeholder="Contraseña"
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
-                />
-                <button type="submit" onClick={() => login(username, password)}>
-                  {loading ? <Spin /> : "Iniciar sesión"}
-                </button>
-              </form>
+              <Button className="login-btn" type="primary" onClick={showModal}>
+                {loading ? <Spin /> : "Iniciar sesión"}
+              </Button>
             </div>
+            <LoginModal
+              isModalVisible={isModalVisible}
+              handleCancel={handleCancel}
+            />
             {error && (
               <div className="error-container">
                 <Alert
@@ -61,24 +56,22 @@ export const NavBar2 = () => {
           <div className="container2">
             <div className="container21"></div>
             <div className="container22">
-              {isLoggedIn && (
-                <ul className="navbar-links">
-                  <li>
-                    <a href="/home">Mis viajes</a>
-                  </li>
-                  <li>
-                    <a href="/como-funciona">Cómo funciona</a>
-                  </li>
-                  <li>
-                    <a href="/perfil">Perfil</a>
-                  </li>
-                  <li>
-                    <a href="/login" onClick={logout}>
-                      Cerrar sesión
-                    </a>
-                  </li>
-                </ul>
-              )}
+              <ul className="navbar-links">
+                <li>
+                  <a href="/home">Mis viajes</a>
+                </li>
+                <li>
+                  <a href="/como-funciona">Cómo funciona</a>
+                </li>
+                <li>
+                  <a href="/perfil">Perfil</a>
+                </li>
+                <li>
+                  <a href="/login" onClick={logout}>
+                    Cerrar sesión
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         )}

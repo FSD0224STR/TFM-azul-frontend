@@ -15,6 +15,11 @@ html {
   height: 100vh;
 }
 
+.footer {
+  background-color: rgb(255, 94, 0);
+  color: white;
+}
+
 .content {
   width: 400px;
   background-color: #f0f2f5;
@@ -26,7 +31,7 @@ html {
 ::selection {
   background-color: rgb(
     255,
-    115,
+    94,
     0
   ); /* Cambia el color de fondo de la selección a naranja */
   color: white; /* Cambia el color del texto seleccionado a blanco */
