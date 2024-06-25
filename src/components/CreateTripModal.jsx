@@ -53,7 +53,7 @@ const CreateTripModal = ({ visible, onCancel, editingTrip, onUpdate }) => {
   return (
     <Modal
       title={editingTrip ? "Editar Viaje" : "Crear Nuevo Viaje"}
-      visible={visible}
+      open={visible}
       onCancel={onCancel}
       footer={[
         <Button key="cancel" onClick={onCancel}>

@@ -122,7 +122,7 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
         </div>
         <div className="btns">
           <Popconfirm
-            title="¿Estás seguro que quieres borrar este viaje?"
+            title="¿Estás seguro que quieres borrar esta categoría?"
             onConfirm={confirmDelete}
             onCancel={cancelDelete}
             okText="Sí"

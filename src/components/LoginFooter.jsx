@@ -17,7 +17,7 @@ export const LoginFooter = () => {
     return (
       <div className="footer">
         <p>
-          ¿No tienes una cuenta? <Link to="/registration">Regístrate aquí</Link>
+          ¿No tienes cuenta? <Link to="/registration"> Regístrate aquí</Link>
         </p>
         <p>
           ¿Has olvidado la contraseña?{" "}
