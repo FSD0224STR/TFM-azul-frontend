@@ -5,6 +5,9 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
+      input: {
+        main: "./index.html",
+      },
       // No externalizar moment
       // external: ['moment'],
     },
