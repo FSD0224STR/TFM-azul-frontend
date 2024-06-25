@@ -15,11 +15,6 @@ html {
   height: 100vh;
 }
 
-.footer {
-  background-color: rgb(255, 94, 0);
-  color: white;
-}
-
 .content {
   width: 400px;
   background-color: #f0f2f5;
