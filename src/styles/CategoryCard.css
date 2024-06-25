@@ -1,33 +1,22 @@
-.categoryCardSize {
-    margin:20px 0;
-    width: 100%;
+.categoryCard {
+  height: 200px;
+  display: block;
+  flex-direction: column;
+}
+
+.categoryTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
 }
 
 .categoryPanel {
-    display: flex;
-    align-items: baseline;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.cardTitle {
- margin-top: 10px;
-}
-
-
-@media (min-width: 992px) { 
-    .categoryCardSize {
-        width: 49%;
-    }
-}
-/* @media (min-width: 1200px) {
-    .categoryCardSize {
-        width: 32%;
-    }
-} */
-
-.titleInput {
-    font-size: 20px;
-    margin-bottom: 10px;
-    width: min-content;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  width: 100%;
+  background-color: ;
 }

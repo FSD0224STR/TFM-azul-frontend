@@ -1,0 +1,102 @@
+/* Estilos básicos para el navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #0084ffbe; */
+  padding: 0px 0px;
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  top: 0;
+  z-index: 1;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.468);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.container1 {
+  background-color: rgba(0, 81, 255, 0.836);
+  height: 100px;
+  width: 30%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  align-content: center;
+}
+
+.container2 {
+  height: 100px;
+  width: 100%;
+  text-align-last: left;
+}
+.container21 {
+  background-color: rgba(0, 81, 255, 0.489);
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+}
+.container22 {
+  background-color: rgba(0, 81, 255, 0.694);
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  align-content: center;
+}
+.navbar-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding-right: 150px;
+  justify-content: space-around;
+}
+
+.navbar-links li {
+  margin: 0 15px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  width: 170px;
+  height: auto;
+}
+
+.input {
+  width: 200px; /* Ancho ajustado para los inputs */
+  padding: 8px; /* Añadido padding interno */
+  border: 1px solid white; /* Borde blanco */
+  color: white; /* Texto en blanco */
+  background-color: transparent; /* Fondo transparente */
+  margin-left: 20px; /* Añadido margen izquierdo */
+}
+.input::placeholder {
+  color: white; /* Color del texto del placeholder */
+  opacity: 0.8; /* Opacidad del placeholder */
+}
+
+button {
+  margin-left: 10px; /* Añadido margen izquierdo al botón */
+  padding: 10px 20px; /* Ajustado el padding del botón */
+  background-color: #6eb2ff; /* Color de fondo azul claro */
+  color: white; /* Texto en blanco */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Transición suave */
+}
+
+button:hover {
+  background-color: #4b8cff; /* Color de fondo más oscuro al hacer hover */
+}

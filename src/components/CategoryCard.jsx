@@ -3,7 +3,7 @@ import { Card, Typography, Input } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
-  FileSearchOutlined,
+  // FileSearchOutlined,
 } from "@ant-design/icons";
 import "../styles/CategoryCard.css";
 import categoryApi from "../apiservice/categoryApi";
@@ -16,7 +16,8 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const onEdit = async () => {
+  const onEdit = async (e) => {
+    e.stopPropagation();
     if (updatingCategory) {
       try {
         setLoading(true);
@@ -39,7 +40,8 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
     }
   };
 
-  const onDelete = async () => {
+  const onDelete = async (e) => {
+    e.stopPropagation();
     setLoading(true);
     const response = await categoryApi.deleteCategory(id);
     console.log(
@@ -56,22 +58,27 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
   };
 
   return (
-    <Card className="categoryCardSize">
+    <Card
+      className="cardSize categoryCard"
+      style={{ margin: "25px", width: "20%" }}
+      onClick={onView}
+    >
       <div className="categoryPanel">
-        {updatingCategory ? (
-          <Input
-            value={newTitle}
-            placeholder={title}
-            onChange={(e) => setNewTitle(e.target.value)}
-            variant="borderless"
-            className="titleInput"
-          />
-        ) : (
-          <Typography.Title level={4} className="cardTitle">
-            {title}
-          </Typography.Title>
-        )}
-        <div className="">
+        <div className="categoryTitle">
+          {updatingCategory ? (
+            <Input
+              value={newTitle}
+              placeholder={title}
+              onChange={(e) => setNewTitle(e.target.value)}
+              className="titleInput"
+            />
+          ) : (
+            <Typography.Title level={4} className="cardTitle">
+              {title}
+            </Typography.Title>
+          )}
+        </div>
+        <div className="btns">
           <DeleteOutlined
             onClick={onDelete}
             className="icon-size danger-color"
@@ -80,10 +87,10 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
             onClick={onEdit}
             className="icon-size icon-margin-left"
           />
-          <FileSearchOutlined
+          {/* <FileSearchOutlined
             onClick={onView}
             className="icon-size icon-margin-left"
-          />
+          /> */}
         </div>
       </div>
     </Card>

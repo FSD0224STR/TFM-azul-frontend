@@ -1,16 +1,11 @@
 .tripContainer {
-  margin: 40px 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: auto;
+  margin: 10%;
 }
 
 .tripPanel {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: space-around;
 }
 
 .btnMarging {

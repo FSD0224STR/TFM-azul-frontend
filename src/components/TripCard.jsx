@@ -4,7 +4,7 @@ import {
   CalendarOutlined,
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
+  // EyeOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { format } from "date-fns";
@@ -22,6 +22,16 @@ export const TripCard = ({
 }) => {
   const formatDate = (date) => {
     return date ? format(new Date(date), "dd/MM/yyyy") : "";
+  };
+
+  const handleDelete = (e) => {
+    e.stopPropagation(); // Detener la propagación del evento
+    onDelete(); // Llamar a la función onDelete
+  };
+
+  const handleEdit = (e) => {
+    e.stopPropagation(); // Detener la propagación del evento
+    onEdit(); // Llamar a la función onEdit
   };
 
   const items = [
@@ -45,32 +55,34 @@ export const TripCard = ({
 
   return (
     <Card
-      title={<div className="centered-uppercase-blue">{title}</div>}
+      title={<div className="centered-uppercase">{title}</div>}
       className="cardSize"
+      style={{ margin: "25px", width: "80%" }}
       extra={
         <>
           <div className="btnPanel">
             <Tooltip title="Borrar">
               <DeleteOutlined
-                onClick={onDelete}
+                onClick={handleDelete}
                 className="icon-size danger-color "
               />
             </Tooltip>
             <Tooltip title="Editar">
               <EditOutlined
-                onClick={onEdit}
+                onClick={handleEdit}
                 className="icon-size icon-margin-left "
               />
             </Tooltip>
-            <Tooltip title="Ver más">
+            {/* <Tooltip title="Ver más">
               <EyeOutlined
                 onClick={onView}
                 className="icon-size icon-margin-left blue eye"
               />
-            </Tooltip>
+            </Tooltip> */}
           </div>
         </>
       }
+      onClick={onView}
     >
       <div className="cardBody">
         <Descriptions

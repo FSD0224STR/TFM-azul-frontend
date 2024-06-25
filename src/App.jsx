@@ -5,7 +5,7 @@ import Registration from "./pages/registration";
 
 import { AuthContext } from "./contexts/authContext";
 import { useContext } from "react";
-import { NavBar } from "./components/NavBar";
+import { NavBar2 } from "./components/NavBar2";
 
 import "./styles/App.css";
 import { TripInfo } from "./pages/tripInfo";
@@ -17,7 +17,7 @@ export const App = () => {
   if (loading) return <h1>Loading...</h1>;
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar2></NavBar2>
       <Routes>
         <Route path="/home" element={<Home props></Home>}></Route>
 

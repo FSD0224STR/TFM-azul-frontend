@@ -96,18 +96,18 @@ export function Trip() {
     setNewCategory("");
   };
 
-  //Por ahora solo cuenta en que número del índice de la categoría estas, no sirve para nada por ahora, pero quizas pueda ser útil en el futuro
-  const onChange = (currentSlide) => {
-    console.log(currentSlide);
-  };
+  // //Por ahora solo cuenta en que número del índice de la categoría estas, no sirve para nada por ahora, pero quizas pueda ser útil en el futuro
+  // const onChange = (currentSlide) => {
+  //   console.log(currentSlide);
+  // };
 
   return (
     <div>
       {/*Aquí se refleja la información más relevante del viaje */}
       <div className="cardInfoTrip">
-        <div className="travelTitle">
+        <div className=" ">
           <Typography.Title level={1}>{title}</Typography.Title>
-          <p className="tripDate">
+          <p className="tripInfo">
             {"Del " +
               startDateFormatted(startDate) +
               " al " +
@@ -116,24 +116,24 @@ export function Trip() {
               yearDateFormatted(endDate)}
           </p>
         </div>
-        <p className="description">{description}</p>
-        <p className="description">
+        <p className="tripInfo">{description}</p>
+        <p className="tripInfo">
           <TeamOutlined /> {users.map((user) => user.username).join(", ")}
         </p>
         <Button
-          className="tripButton"
+          className="tripButton tripInfo"
           onClick={() => updateTrip(id)}
           icon={<EditOutlined />}
         >
           Editar
         </Button>
 
-        <Button className="tripButton" icon={<UserAddOutlined />}>
+        <Button className="tripButton tripInfo" icon={<UserAddOutlined />}>
           Añadir viajero
         </Button>
 
         <Button
-          className="tripButton"
+          className="tripButton tripInfo"
           onClick={handleAddCategoryClick}
           icon={<PlusCircleOutlined />}
         >
@@ -142,7 +142,7 @@ export function Trip() {
 
         {isAddingCategory && (
           <input
-            className="newCategoryInput"
+            className="newCategoryInput tripInfo"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             placeholder="Nombre de la categoría"
@@ -163,7 +163,7 @@ export function Trip() {
 
       {/*Aquí se reflejan las categorías del viaje */}
 
-      <div className="categoryCardList">
+      <div className="categoryCardList ">
         {categories.map((categoria) => (
           <CategoryCard
             key={categoria._id}
