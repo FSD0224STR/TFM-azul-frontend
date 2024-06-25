@@ -1,16 +1,11 @@
 .tripContainer {
-  margin: 40px 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: auto;
+  margin: 10%;
 }
 
 .tripPanel {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: space-around;
 }
 
 .btnMarging {
@@ -22,4 +17,13 @@
   flex-direction: row;
   justify-content: space-between;
   width: -webkit-fill-available;
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  border-radius: 50%; /* Hace que el botón sea redondo */
+  font-size: 20px; /* Ajusta el tamaño del icono si es necesario */
+  z-index: 1000; /* Asegúrate de que el botón esté por encima de otros elementos */
 }

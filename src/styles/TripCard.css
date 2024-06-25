@@ -1,15 +1,15 @@
 .cardSize {
-  width: 100%;
-  margin: 5px;
-  background-color: #0e77da13;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.468);
+}
+
+.cardSize:hover {
+  transform: scale(1.03);
 }
 
 .cardBody {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  background-color: #0e77da13;
 }
 
 .ant-descriptions.ant-descriptions-bordered {
@@ -24,25 +24,20 @@
   margin-left: 15px;
 }
 
-.danger-color {
-  color: #ff4d4f;
-}
-.centered-uppercase-blue {
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 30px;
-  color: #0e77da;
+.centered-uppercase {
+  font-size: 25px;
+  color: #000000;
 }
 
 .blue {
   color: #0e77da;
 }
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   .cardSize {
     width: 49%;
   }
-}
+} */
 /* @media (min-width: 576px) {
     .cardSize {
         width: 50%;
