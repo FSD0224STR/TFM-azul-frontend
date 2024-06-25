@@ -1,37 +1,45 @@
 import { useContext, useEffect, useState } from "react";
-import { Typography, Spin, Row, Col, Alert, Modal } from "antd";
+import {
+  Typography,
+  Spin,
+  Row,
+  Col,
+  Alert,
+  Modal,
+  Button,
+  Tooltip,
+} from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
 import { TripCard } from "../components/TripCard";
+import CreateTripModal from "../components/CreateTripModal";
 
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
-import CreateTripModal from "../components/CreateTripModal";
 
 function Home() {
   const [trips, setTrips] = useState([]);
-  //const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
+  const [editingTrip, setEditingTrip] = useState(null); // Estado para el viaje que se está editando
 
   const { isLoggedIn } = useContext(AuthContext);
-
   const navigate = useNavigate();
 
   const showErrorModal = (message) => {
     Modal.error({
-      title: 'Error',
+      title: "Error",
       content: message,
     });
   };
 
-  
   const getTrips = async () => {
     try {
       setLoading(true);
       const response = await tripAPI.getAllTrips();
-      //console.log(response);
       setTrips(response.data);
     } catch (error) {
       setError(`Error fetching trips: ${error.message}`);
@@ -40,10 +48,6 @@ function Home() {
     }
   };
 
-  // const goAddTrip = () => {
-  //   navigate("/tripInfo");
-  // };
-
   const deleteTrip = async (idToDelete) => {
     try {
       setLoading(true);
@@ -51,13 +55,11 @@ function Home() {
 
       if (response.error) {
         setError(response.error);
-        console.log(response.error);
         showErrorModal(response.error);
       } else {
-        console.log(response.data);
         setTrips(trips.filter((trip) => trip._id !== idToDelete));
       }
-      } catch (error) {
+    } catch (error) {
       setError(`Error deleting trip: ${error.message}`);
       showErrorModal(error.message);
     } finally {
@@ -66,11 +68,29 @@ function Home() {
   };
 
   const updateTrip = (idToUpdate) => {
-    navigate(`/tripInfo/${idToUpdate}`);
+    const tripToUpdate = trips.find((trip) => trip._id === idToUpdate);
+    if (tripToUpdate) {
+      setEditingTrip(tripToUpdate); // Actualiza el estado con el viaje que se está editando
+      setIsModalVisible(true); // Abre el modal de edición
+    }
   };
 
   const goToTrip = (idToGo) => {
     navigate(`/${idToGo}`);
+  };
+
+  const handleCreateTrip = () => {
+    setEditingTrip(null); // Asegura que no haya ningún viaje en edición cuando se cree uno nuevo
+    setIsModalVisible(true); // Abre el modal de creación
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false); // Cierra el modal
+  };
+
+  const handleTripUpdate = async () => {
+    setIsModalVisible(false); // Cierra el modal después de actualizar
+    await getTrips(); // Vuelve a obtener la lista de viajes actualizada
   };
 
   useEffect(() => {
@@ -78,10 +98,8 @@ function Home() {
   }, []);
 
   return (
-    // style={{ marginTop: "10vh", maxWidth: "md" }}
     <div className="tripContainer">
       <div>
-        {/* <Typography.Title level={2}>Lista de viajes</Typography.Title> */}
         {loading ? (
           <Spin />
         ) : Array.isArray(trips) && trips.length > 0 ? (
@@ -108,9 +126,33 @@ function Home() {
         <>
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={12}>
-              {loading ? <Spin /> : <CreateTripModal />}
+              <CreateTripModal
+                visible={isModalVisible}
+                onCancel={handleModalCancel}
+                editingTrip={editingTrip}
+                onUpdate={handleTripUpdate}
+              />
             </Col>
           </Row>
+          {/* Botón flotante para abrir modal de creación */}
+          <Tooltip title="Crear Nuevo Viaje">
+            <Button
+              type="primary"
+              shape="circle"
+              size="large"
+              icon={<PlusOutlined />}
+              onClick={handleCreateTrip}
+              style={{
+                width: "64px",
+                height: "64px",
+                lineHeight: "64px",
+                textAlign: "center",
+                position: "fixed",
+                bottom: 20,
+                right: 20,
+              }}
+            />{" "}
+          </Tooltip>
         </>
       ) : (
         <Typography.Title level={3}>
