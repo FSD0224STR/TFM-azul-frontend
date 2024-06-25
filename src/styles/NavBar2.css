@@ -86,7 +86,7 @@
 }
 
 .input::placeholder {
-  color: rgba(0, 81, 255, 0.349); /* Color del texto del placeholder */
+  color: #1677ff; /* Color del texto del placeholder */
   opacity: 0.8; /* Opacidad del placeholder */
 }
 
