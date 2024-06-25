@@ -10,15 +10,19 @@ const CreateTripModal = ({ visible, onCancel, editingTrip, onUpdate }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (editingTrip) {
-      form.setFieldsValue({
-        title: editingTrip.title,
-        startDate: moment(editingTrip.startDate),
-        endDate: moment(editingTrip.endDate),
-        description: editingTrip.description,
-      });
+    if (visible) {
+      if (editingTrip) {
+        form.setFieldsValue({
+          title: editingTrip.title,
+          startDate: moment(editingTrip.startDate),
+          endDate: moment(editingTrip.endDate),
+          description: editingTrip.description,
+        });
+      } else {
+        form.resetFields(); // Resetear el formulario cuando se crea un nuevo viaje
+      }
     }
-  }, [editingTrip, form]);
+  }, [visible, editingTrip, form]);
 
   const onFinish = async (tripData) => {
     setLoading(true);
@@ -34,7 +38,7 @@ const CreateTripModal = ({ visible, onCancel, editingTrip, onUpdate }) => {
         console.error("Error:", response.error);
         setError(response.error);
       } else if (response.data) {
-        form.resetFields();
+        form.resetFields(); // Resetear el formulario después de guardar
         if (onUpdate) {
           onUpdate();
         }
@@ -46,7 +50,7 @@ const CreateTripModal = ({ visible, onCancel, editingTrip, onUpdate }) => {
       );
     } finally {
       setLoading(false);
-      onCancel(); // Cierra el modal después de guardar
+      onCancel(); // Cierra el modal después de guardar o cancelar
     }
   };
 
