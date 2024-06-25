@@ -5,12 +5,8 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ["moment"],
-      output: {
-        globals: {
-          moment: "moment",
-        },
-      },
+      // No externalizar moment
+      // external: ['moment'],
     },
   },
 });
