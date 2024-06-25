@@ -1,4 +1,4 @@
-import { Card, Descriptions, Tooltip } from "antd";
+import { Card, Descriptions, Tooltip, message, Popconfirm } from "antd";
 import {
   AlignRightOutlined,
   CalendarOutlined,
@@ -20,6 +20,16 @@ export const TripCard = ({
   onEdit,
   onView,
 }) => {
+  const confirm = (e) => {
+    console.log(e);
+    message.success("Un viaje menos, una depresión más");
+    onDelete();
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("Una retirada a tiempo es una victoria");
+  };
+
   const formatDate = (date) => {
     return date ? format(new Date(date), "dd/MM/yyyy") : "";
   };
@@ -62,10 +72,19 @@ export const TripCard = ({
         <>
           <div className="btnPanel">
             <Tooltip title="Borrar">
-              <DeleteOutlined
-                onClick={handleDelete}
-                className="icon-size danger-color "
-              />
+              <Popconfirm
+                title="Borrar el viaje"
+                description="¿Estás seguro que quieres borrar este viaje?"
+                onConfirm={confirm}
+                onCancel={cancel}
+                okText="Sí"
+                cancelText="No"
+              >
+                <DeleteOutlined
+                  className="icon-size danger-color "
+                  onClick={handleDelete}
+                />
+              </Popconfirm>
             </Tooltip>
             <Tooltip title="Editar">
               <EditOutlined

@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/proposals/";
+const baseUrl = import.meta.env.VITE_BACKEND+"/proposals/";
 
 const updateProposal = async (proposalId, updates) => {
   const token = localStorage.getItem("access_token");
@@ -38,7 +38,10 @@ const deleteProposal = async (proposalId) => {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
-  if (!response.ok) return { error: response.message };
+  if (!response.ok)  {
+    const error = await response.json();
+    return { error: error.message };
+  } 
   const data = await response.json();
   return { data };
 };

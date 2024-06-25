@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = import.meta.env.VITE_BACKEND;
 
 // const getAllUsers = async () => {
 //   const response = await window.fetch(`${baseUrl}/users`);

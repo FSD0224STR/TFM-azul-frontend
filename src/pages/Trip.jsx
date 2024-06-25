@@ -22,7 +22,7 @@ export function Trip() {
   const [categories, setCategories] = useState([]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
-
+ 
   const [error, setError] = useState("");
   //   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

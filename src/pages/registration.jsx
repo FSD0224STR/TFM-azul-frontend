@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Typography, Form, Input, Button, Alert } from "antd";
-import {NavFooter} from "/src/components/NavFooter"
+import { LoginFooter } from "/src/components/LoginFooter";
 import userApi from "/src/apiservice/userApi.js";
 import { useNavigate } from "react-router-dom/dist";
 
-import '../styles/Registration.css';
+import "../styles/Registration.css";
 
 const RegistrationForm = () => {
   const [password, setPassword] = useState("");
@@ -39,7 +39,6 @@ const RegistrationForm = () => {
     });
   };
 
-  
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
@@ -63,19 +62,25 @@ const RegistrationForm = () => {
       password,
       email
     );
-    if ('error' in response) {
+    if ("error" in response) {
       setError(response.error);
-    } else{ 
+    } else {
       setAddedUser(response.data);
       return navigate("/login");
     }
   };
-  
 
-  const isFormValid = requirements.length && requirements.uppercase && 
-  requirements.lowercase && requirements.number && requirements.specialChar 
-  && !error && username && firstname && lastname && email;
-
+  const isFormValid =
+    requirements.length &&
+    requirements.uppercase &&
+    requirements.lowercase &&
+    requirements.number &&
+    requirements.specialChar &&
+    !error &&
+    username &&
+    firstname &&
+    lastname &&
+    email;
 
   return (
     <>
@@ -83,10 +88,7 @@ const RegistrationForm = () => {
         <div className="content">
           <Form name="register" onSubmit={handleRegister} layout="vertical">
             <h2></h2>
-            <Typography.Title
-              level={2}
-              className="registrationTitle"
-            >
+            <Typography.Title level={2} className="registrationTitle">
               Registro
             </Typography.Title>
             <Form.Item
@@ -108,7 +110,9 @@ const RegistrationForm = () => {
             <Form.Item
               label="Nombre"
               name="name"
-              rules={[{ required: true, message: "Por favor ingresa tu nombre" }]}
+              rules={[
+                { required: true, message: "Por favor ingresa tu nombre" },
+              ]}
             >
               <Input
                 value={firstname}
@@ -139,10 +143,7 @@ const RegistrationForm = () => {
                 },
               ]}
             >
-              <Input
-                value={email}
-                onChange={handleEmailChange}
-              />
+              <Input value={email} onChange={handleEmailChange} />
             </Form.Item>
 
             <Form.Item
@@ -156,8 +157,12 @@ const RegistrationForm = () => {
             </Form.Item>
             <ul>
               <li>{requirements.length ? "✅" : "❌"} Al menos 8 caracteres</li>
-              <li>{requirements.uppercase ? "✅" : "❌"} Al menos 1 mayúscula</li>
-              <li>{requirements.lowercase ? "✅" : "❌"} Al menos 1 minúscula</li>
+              <li>
+                {requirements.uppercase ? "✅" : "❌"} Al menos 1 mayúscula
+              </li>
+              <li>
+                {requirements.lowercase ? "✅" : "❌"} Al menos 1 minúscula
+              </li>
               <li>{requirements.number ? "✅" : "❌"} Al menos 1 número</li>
               <li>
                 {requirements.specialChar ? "✅" : "❌"} Al menos un caracter
@@ -177,7 +182,7 @@ const RegistrationForm = () => {
             </Form.Item>
             {error && (
               <div className="registerAlert">
-                <Alert 
+                <Alert
                   type="error"
                   message={`Error al crear usuario: ${error}`}
                   banner
@@ -192,8 +197,7 @@ const RegistrationForm = () => {
               />
             )}
           </Form>
-          < NavFooter/>
-      
+          <LoginFooter />
         </div>
       </div>
     </>
