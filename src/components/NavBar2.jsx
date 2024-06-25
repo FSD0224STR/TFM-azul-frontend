@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/authContext";
 import { Button, Spin, Alert } from "antd";
 import LoginModal from "./LoginModal"; // Asegúrate de que la ruta sea correcta
+import logo from "../images/logo.png";
 import "../styles/NavBar2.css";
 
 export const NavBar2 = () => {
@@ -21,11 +22,7 @@ export const NavBar2 = () => {
   return (
     <nav className="navbar">
       <div className="container1">
-        <img
-          className="logo"
-          src="src/images/logo.png"
-          alt="Logo de la Aplicación"
-        />
+        <img className="logo" src={logo} alt="Logo de la Aplicación" />
       </div>
       <div className="container2">
         {!isLoggedIn && (
