@@ -22,7 +22,7 @@ export function Trip() {
   const [categories, setCategories] = useState([]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
- 
+
   const [error, setError] = useState("");
   //   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -67,6 +67,18 @@ export function Trip() {
     } catch (error) {
       setError(`Error fetching trip: ${error.message}`);
     }
+  };
+
+  const generateInvitationLink = () => {
+    const inviteLink = `${window.location.origin}/join-trip/${id}`;
+    navigator.clipboard
+      .writeText(inviteLink)
+      .then(() => {
+        alert("Enlace copiado al portapapeles: " + inviteLink);
+      })
+      .catch((err) => {
+        console.error("No se pudo copiar al portapapeles: ", err);
+      });
   };
 
   //Pintamos el viaje nada más arrancar la página
@@ -128,7 +140,11 @@ export function Trip() {
           Editar
         </Button>
 
-        <Button className="tripButton tripInfo" icon={<UserAddOutlined />}>
+        <Button
+          className="tripButton tripInfo"
+          icon={<UserAddOutlined />}
+          onClick={generateInvitationLink}
+        >
           Añadir viajero
         </Button>
 

@@ -11,6 +11,7 @@ import "./styles/App.css";
 import { TripInfo } from "./pages/tripInfo";
 import { Trip } from "./pages/Trip";
 import { ViewCategory } from "./pages/viewCategory";
+import JoinTripPage from "./pages/JoinTrip";
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
@@ -41,6 +42,7 @@ export const App = () => {
           path="/registration"
           element={<Registration props></Registration>}
         ></Route>
+        <Route path="/join-trip/:id" element={<JoinTripPage />}></Route>
       </Routes>
     </>
   );

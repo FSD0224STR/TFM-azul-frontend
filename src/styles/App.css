@@ -31,3 +31,7 @@ html {
   ); /* Cambia el color de fondo de la selección a naranja */
   color: white; /* Cambia el color del texto seleccionado a blanco */
 }
+
+.joinTripPage {
+  margin-top: 300px;
+}

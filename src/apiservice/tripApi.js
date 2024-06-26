@@ -1,4 +1,4 @@
-const baseUrl = import.meta.env.VITE_BACKEND+"/trips/";
+const baseUrl = import.meta.env.VITE_BACKEND + "/trips/";
 
 const getAllTrips = async () => {
   const token = localStorage.getItem("access_token");
@@ -24,7 +24,7 @@ const getAllTrips = async () => {
     const trips = await response.json();
     return { data: trips };
   } catch (error) {
-    console.log('error', error.message);
+    console.log("error", error.message);
     return { error: error.message };
   }
 };
@@ -53,14 +53,14 @@ const getTripInfo = async (id) => {
     const tripInfo = await response.json();
     return { data: tripInfo };
   } catch (error) {
-    console.log('error', error.message);
+    console.log("error", error.message);
     return { error: error.message };
   }
 };
 
 const addTrip = async (tripData) => {
   const token = localStorage.getItem("access_token");
-  console.log('estoy en addTrip y esto es tripData: ' + tripData);
+  console.log("estoy en addTrip y esto es tripData: " + tripData);
 
   if (!token) {
     return { error: "No token found. Please login again." };
@@ -170,9 +170,41 @@ const addCategory = async (tripId, categoryData) => {
   } catch (error) {
     return { error: error.message };
   }
+};
 
-}
+const linkUserToTrip = async (tripId) => {
+  const token = localStorage.getItem("access_token");
 
+  if (!token) {
+    return { error: "No token found. Please login again." };
+  }
 
+  try {
+    const response = await fetch(`${baseUrl}${tripId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-export default { getAllTrips, getTripInfo, addTrip, deleteTrip, updateTrip, addCategory };
+    if (!response.ok) {
+      const error = await response.json();
+      return { error: error.message };
+    }
+
+    return `/join-trip/${tripId}`; // Devuelve la returnUrl correcta
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+export default {
+  getAllTrips,
+  getTripInfo,
+  addTrip,
+  deleteTrip,
+  updateTrip,
+  addCategory,
+  linkUserToTrip,
+};

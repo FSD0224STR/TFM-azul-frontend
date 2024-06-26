@@ -1,15 +1,24 @@
 import { useState, useContext } from "react";
 import { Modal, Button, Spin, Alert } from "antd";
 import { AuthContext } from "../contexts/authContext";
-//import "../styles/LoginModal.css";
 
-const LoginModal = ({ isModalVisible, handleCancel }) => {
+const LoginModal = ({
+  isModalVisible,
+  handleCancel,
+  handleLoginSuccess,
+  returnUrl,
+}) => {
   const { login, loading, error, setError } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleOk = () => {
-    login(username, password);
+  const handleOk = async () => {
+    try {
+      await login(username, password);
+      handleLoginSuccess(returnUrl); // Llamar a handleLoginSuccess con returnUrl
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
