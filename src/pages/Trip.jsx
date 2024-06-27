@@ -89,17 +89,22 @@ export function Trip() {
             />
           </Tooltip>
         </div>
-        <p className="tripInfo">
-          {"Del " +
-            startDateFormatted(startDate) +
-            " al " +
-            endDateFormatted(endDate) +
-            " de " +
-            yearDateFormatted(endDate)}
-        </p>
-        <UnlinkUser tripId={id} />
-        <p className="tripInfo">{description}</p>
-        <p className="tripInfo">
+        <div className="unlink-btn">
+          <UnlinkUser tripId={id} />
+        </div>
+        <div className="description">
+          <p>
+            {"Del " +
+              startDateFormatted(startDate) +
+              " al " +
+              endDateFormatted(endDate) +
+              " de " +
+              yearDateFormatted(endDate)}
+          </p>
+
+          <p>{description}</p>
+        </div>
+        <p>
           <TeamOutlined /> {users.map((user) => user.username).join(", ")}
         </p>
         <div className="categoryCardList ">

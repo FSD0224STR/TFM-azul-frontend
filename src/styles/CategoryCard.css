@@ -1,19 +1,13 @@
-.categoryCard {
-  height: 200px;
-  display: block;
-  flex-direction: column;
+.content-card {
+  display: flex;
+  justify-content: space-between;
 }
 
 .categoryTitle {
   font-size: 20px;
-  font-weight: 600;
-  width: 100%;
   text-align: center;
 }
 
-.categoryPanel {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
-  width: 100%;
+.category-btn {
+  margin-left: 10px;
 }

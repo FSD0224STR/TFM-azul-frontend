@@ -100,11 +100,11 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
 
   return (
     <Card
-      className="cardSize categoryCard"
-      style={{ margin: "25px", width: "20%" }}
+      className="cardSize"
+      style={{ margin: "10px", padding: "0", width: "90%" }}
     >
-      <div className="categoryPanel" onClick={onView}>
-        <div className="categoryTitle">
+      <div className="content-card" onClick={onView}>
+        <div className="category-title">
           {updatingCategory ? (
             <Input
               value={newTitle}
@@ -120,7 +120,7 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
             </Typography.Title>
           )}
         </div>
-        <div className="btns">
+        <div className="category-btns">
           <Popconfirm
             title="¿Estás seguro que quieres borrar esta categoría?"
             onConfirm={confirmDelete}
@@ -129,18 +129,18 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
             cancelText="No"
           >
             <DeleteOutlined
-              className="icon-size danger-color"
+              className="icon-size category-btn danger-color"
               onClick={(e) => e.stopPropagation()}
             />
           </Popconfirm>
 
           {updatingCategory ? (
-            <span className="icon-size icon-margin-left" onClick={toggleEdit}>
+            <span className="icon-size " onClick={toggleEdit}>
               {editIcon}
             </span>
           ) : (
             <EditOutlined
-              className="icon-size icon-margin-left"
+              className="icon-size category-btn"
               onClick={toggleEdit}
             />
           )}
