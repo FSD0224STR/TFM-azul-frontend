@@ -9,10 +9,11 @@ const JoinTripPage = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const [joining, setJoining] = useState(false);
   const [joinError, setJoinError] = useState(null);
-  const navigate = useNavigate();
+  const [tripTitle, setTripTitle] = useState("");
+  const [tripOwner, setTripOwner] = useState("");
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-  const [pendingJoinTrip, setPendingJoinTrip] = useState(null);
   const [returnUrl, setReturnUrl] = useState("");
+  const navigate = useNavigate();
 
   const showLoginModal = () => {
     setIsLoginModalVisible(true);
@@ -62,18 +63,26 @@ const JoinTripPage = () => {
     }
   };
 
-  useEffect(() => {
-    const returnUrl = new URLSearchParams(window.location.search).get(
-      "returnUrl"
-    );
-    if (returnUrl) {
-      setPendingJoinTrip(returnUrl);
+  const fetchTripDetails = async () => {
+    try {
+      const response = await tripApi.getTripInfo(id);
+      if (response.data) {
+        setTripTitle(response.data.title);
+        setTripOwner(response.data.owner.username); // Suponiendo que la respuesta contiene el nombre del propietario en response.data.owner.username
+      }
+    } catch (error) {
+      console.error("Error fetching trip details:", error);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchTripDetails();
+  }, [id]);
 
   return (
-    <div className="joinTripPage">
-      <h2>Unirse al viaje</h2>
+    <div className="joinTripPage cardInfoTrip">
+      <h4>Parece que {tripOwner} quiere organizar un viaje contigo a...</h4>
+      <h2>{tripTitle}</h2>
       {!isLoggedIn ? (
         <div>
           <p>Debes iniciar sesión o registrarte para unirte al viaje.</p>
@@ -84,9 +93,12 @@ const JoinTripPage = () => {
         </div>
       ) : (
         <div>
-          <p>¡Haz clic en el botón para unirte al viaje!</p>
+          <p>
+            Haz clic en el botón si quieres unirte al viaje y empezar a añadir
+            propuestas:
+          </p>
           <button onClick={handleJoinTrip} disabled={joining}>
-            {joining ? "Uniendo..." : "Unirse al viaje"}
+            {joining ? "Uniendo..." : "Sí, quiero"}
           </button>
           {joinError && <p>{joinError}</p>}
         </div>
