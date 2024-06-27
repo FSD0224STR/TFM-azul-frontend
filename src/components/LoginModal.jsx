@@ -15,7 +15,7 @@ const LoginModal = ({
   const handleOk = async () => {
     try {
       await login(username, password);
-      handleLoginSuccess(returnUrl); // Llamar a handleLoginSuccess con returnUrl
+      handleLoginSuccess(returnUrl);
     } catch (error) {
       setError(error.message);
     }

@@ -17,19 +17,17 @@ export const NavBar2 = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    setError(""); // Clear any existing error message when closing the modal
+    setError("");
+  };
+  const handleLoginSuccess = (returnUrl) => {
+    console.log(returnUrl);
   };
 
   return (
     <nav className="navbar">
       <div className="container1">
         <Link to="/">
-          <img
-            onClick=""
-            className="logo"
-            src={logo}
-            alt="Logo de la Aplicación"
-          />
+          <img className="logo" src={logo} alt="Logo de la Aplicación" />
         </Link>
       </div>
 
@@ -45,6 +43,7 @@ export const NavBar2 = () => {
             <LoginModal
               isModalVisible={isModalVisible}
               handleCancel={handleCancel}
+              handleLoginSuccess={handleLoginSuccess}
             />
             {error && (
               <div className="error-container">
