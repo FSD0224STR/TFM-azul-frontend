@@ -3,6 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import tripApi from "../apiservice/tripApi";
 import LoginModal from "../components/LoginModal";
+import { Typography, Button } from "antd";
+import "../styles/JoinTrip.css";
+
+const { Title, Text } = Typography;
 
 const JoinTripPage = () => {
   const { id } = useParams();
@@ -30,9 +34,7 @@ const JoinTripPage = () => {
 
       if (response.error) {
         console.error("Error al vincular usuario al viaje:", response.error);
-        setJoinError(
-          "Error al unirse al viaje. Por favor, intenta nuevamente."
-        );
+        setJoinError("Ups... " + response.error);
       } else {
         console.log("Éxito:", response);
         // Redirigir al usuario a la página del viaje correspondiente
@@ -81,26 +83,34 @@ const JoinTripPage = () => {
 
   return (
     <div className="joinTripPage cardInfoTrip">
-      <h4>Parece que {tripOwner} quiere organizar un viaje contigo a...</h4>
-      <h2>{tripTitle}</h2>
+      <Title level={5}>
+        Parece que {tripOwner ? tripOwner : "alguien"} quiere organizar un viaje
+        contigo a...
+      </Title>
+      <Title className="joinTrip" level={2}>
+        {tripTitle ? tripTitle : "algún lugar"}
+      </Title>
       {!isLoggedIn ? (
-        <div>
-          <p>Debes iniciar sesión o registrarte para unirte al viaje.</p>
-          <button onClick={handleLoginAndJoin}>
-            Iniciar sesión / Registrarse
-          </button>
-          {/* Aquí podrías agregar botones para iniciar sesión o registrarse */}
+        <div className="joinTripContent">
+          <Text>Debes iniciar sesión o registrarte para unirte al viaje.</Text>
+          <div className="joinTrip-btn">
+            <Button type="primary" onClick={handleLoginAndJoin}>
+              Iniciar sesión / Registrarse
+            </Button>
+          </div>
         </div>
       ) : (
-        <div>
-          <p>
+        <div className="joinTripContent">
+          <Text>
             Haz clic en el botón si quieres unirte al viaje y empezar a añadir
             propuestas:
-          </p>
-          <button onClick={handleJoinTrip} disabled={joining}>
-            {joining ? "Uniendo..." : "Sí, quiero"}
-          </button>
-          {joinError && <p>{joinError}</p>}
+          </Text>
+          <div className="joinTrip-btn">
+            <Button type="primary" onClick={handleJoinTrip} disabled={joining}>
+              {joining ? "Uniendo..." : "Sí, quiero"}
+            </Button>
+          </div>
+          {joinError && <Text type="danger">{joinError}</Text>}
         </div>
       )}
 
