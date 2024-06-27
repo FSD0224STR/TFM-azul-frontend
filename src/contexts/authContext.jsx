@@ -59,16 +59,15 @@ export const AuthContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Error en la solicitud de login", error);
       setError(error.message || "Error desconocido");
-    } 
-      setLoading(false);
-    
+    }
+    setLoading(false);
   };
 
   // Function for logging out
   const logout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("access_token");
-    navigate("/login");
+    navigate("/");
   };
 
   // Value object to be provided by the context
