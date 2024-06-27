@@ -34,12 +34,12 @@ export const ProposalCard = ({
 
   const confirm = (e) => {
     console.log(e);
-    message.success('Un viaje menos, una depresión más');
+    message.success("Un viaje menos, una depresión más");
     onDelete();
   };
   const cancel = (e) => {
     console.log(e);
-    message.error('Una retirada a tiempo es una victoria');
+    message.error("Una retirada a tiempo es una victoria");
   };
 
   return (
@@ -49,16 +49,16 @@ export const ProposalCard = ({
       extra={
         <>
           <div className="btnPanel">
-          <Popconfirm
+            <Popconfirm
               title="Borrar el viaje"
-              description="¿Estás seguro que quieres borrar este viaje?"
+              description="¿Estás seguro que quieres borrar esta propuesta?"
               onConfirm={confirm}
               onCancel={cancel}
               okText="Sí"
               cancelText="No"
-              >
-              <DeleteOutlined className="icon-size danger-color "/>
-              </Popconfirm>
+            >
+              <DeleteOutlined className="icon-size danger-color " />
+            </Popconfirm>
 
             <EditOutlined
               onClick={onEdit}

@@ -1,0 +1,117 @@
+/* Estilos básicos para el navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: #0084ffbe; */
+  padding: 0px 0px;
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  top: 0;
+  z-index: 1;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.468);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.container1 {
+  background-color: rgba(0, 81, 255, 0.836);
+  height: 100px;
+  width: 30%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  align-content: center;
+}
+
+.container2 {
+  height: 100px;
+  width: 100%;
+  text-align-last: right;
+}
+
+.login-btn {
+  margin-right: 10%;
+}
+.container21 {
+  background-color: rgba(0, 81, 255, 0.489);
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  align-content: center;
+}
+.container22 {
+  background-color: rgba(0, 81, 255, 0.694);
+  height: 50%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  align-content: center;
+}
+.navbar-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding-right: 150px;
+  justify-content: space-around;
+}
+
+.navbar-links li {
+  margin: 0 15px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  width: 50%;
+  height: auto;
+}
+
+.input {
+  border: 0px solid rgba(0, 81, 255, 0.694);
+  color: rgba(0, 81, 255, 0.694);
+  border-radius: 10px;
+}
+
+.input::placeholder {
+  color: #1677ff; /* Color del texto del placeholder */
+  opacity: 0.8; /* Opacidad del placeholder */
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.modal-content .input {
+  padding: 10px;
+  width: 90%;
+  margin-top: 20px;
+  background-color: #4b8dff38;
+}
+
+.error-container {
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #4b8cff; /* Color de fondo más oscuro al hacer hover */
+}
+
+.ant-modal-footer {
+  margin-right: 30px;
+}

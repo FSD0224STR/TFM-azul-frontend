@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { Card, Typography, Input, Modal, message, Popconfirm } from "antd";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  FileSearchOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, CheckOutlined } from "@ant-design/icons";
 import "../styles/CategoryCard.css";
 import categoryApi from "../apiservice/categoryApi";
 import { useNavigate } from "react-router-dom";
@@ -14,16 +10,18 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
   const [error, setError] = useState("");
   const [newTitle, setNewTitle] = useState(title);
   const [loading, setLoading] = useState(false);
+  const [editIcon, setEditIcon] = useState(<EditOutlined />);
   const navigate = useNavigate();
-  
+
   const showErrorModal = (message) => {
     Modal.error({
-      title: 'Error',
+      title: "Error",
       content: message,
     });
   };
 
-  const onEdit = async () => {
+  const onEdit = async (e) => {
+    e.stopPropagation();
     if (updatingCategory) {
       try {
         setLoading(true);
@@ -35,21 +33,22 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
           console.log(response.error);
           showErrorModal(response.error);
         } else {
-        console.log(
-          "Esta es la respuesta de actualizar la categoría:",
-          response.message
-        );
-        setUpdatingCategory(!updatingCategory); // Mover esta línea aquí
-        refreshCategories();
-        setLoading(false); 
-      }
-    } catch (error) {
+          console.log(
+            "Respuesta de actualizar la categoría:",
+            response.message
+          );
+          setUpdatingCategory(false);
+          refreshCategories();
+        }
+      } catch (error) {
         setError(error.message);
         console.log(error.message);
         showErrorModal(error.message);
+      } finally {
+        setLoading(false);
       }
     } else {
-      setUpdatingCategory(!updatingCategory);
+      setUpdatingCategory(true);
     }
   };
 
@@ -57,76 +56,94 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
     setLoading(true);
     try {
       const response = await categoryApi.deleteCategory(id);
-      console.log("La respuesta de borrar es:", response);
+      console.log("Respuesta de borrar la categoría:", response);
       if (response.error) {
         setError(response.error);
         console.log(response.error);
         showErrorModal(response.error);
-      }  else {
-        console.log(
-          "Esta es la respuesta de eliminar la categoría:",
-          response.message
-        ); 
-        refreshCategories()
+      } else {
+        message.success("Categoría eliminada");
+        refreshCategories();
       }
     } catch (error) {
       setError(error.message);
       showErrorModal(error.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const confirm = (e) => {
-    console.log(e);
-    message.success('Un viaje menos, una depresión más');
+  const confirmDelete = (e) => {
+    e.stopPropagation();
     onDelete();
   };
-  const cancel = (e) => {
-    console.log(e);
-    message.error('Una retirada a tiempo es una victoria');
+
+  const cancelDelete = (e) => {
+    e.stopPropagation();
+    message.error("Operación cancelada");
   };
-  const onView = () => {
+
+  const onView = (e) => {
+    e.stopPropagation();
     navigate(`/categories/${id}`);
   };
 
-  
+  const toggleEdit = (e) => {
+    e.stopPropagation();
+    if (updatingCategory) {
+      onEdit(e);
+    } else {
+      setUpdatingCategory(true);
+      setEditIcon(<CheckOutlined />);
+    }
+  };
 
   return (
-    <Card className="categoryCardSize">
-      <div className="categoryPanel">
-        {updatingCategory ? (
-          <Input
-            value={newTitle}
-            placeholder={title}
-            onChange={(e) => setNewTitle(e.target.value)}
-            variant="borderless"
-            className="titleInput"
-          />
-        ) : (
-          <Typography.Title level={4} className="cardTitle">
-            {title}
-          </Typography.Title>
-        )}
-        <div className="">
-        <Popconfirm
-              title="Borrar el viaje"
-              description="¿Estás seguro que quieres borrar este viaje?"
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Sí"
-              cancelText="No"
-              >
-              <DeleteOutlined className="icon-size danger-color "/>
-              </Popconfirm>
+    <Card
+      className="cardSize"
+      style={{ margin: "10px", padding: "0", width: "100%" }}
+    >
+      <div className="content-card" onClick={onView}>
+        <div className="category-title">
+          {updatingCategory ? (
+            <Input
+              value={newTitle}
+              placeholder={title}
+              onChange={(e) => setNewTitle(e.target.value)}
+              className="titleInput"
+              onClick={(e) => e.stopPropagation()}
+              style={{ fontSize: "20px", color: "#333", textAlign: "" }}
+            />
+          ) : (
+            <Typography.Title level={4} className="cardTitle">
+              {title}
+            </Typography.Title>
+          )}
+        </div>
+        <div className="category-btns">
+          <Popconfirm
+            title="¿Estás seguro que quieres borrar esta categoría?"
+            onConfirm={confirmDelete}
+            onCancel={cancelDelete}
+            okText="Sí"
+            cancelText="No"
+          >
+            <DeleteOutlined
+              className="icon-size category-btn danger-color"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </Popconfirm>
 
-          <EditOutlined
-            onClick={onEdit}
-            className="icon-size icon-margin-left"
-          />
-          <FileSearchOutlined
-            onClick={onView}
-            className="icon-size icon-margin-left"
-          />
+          {updatingCategory ? (
+            <span className="icon-size category-btn" onClick={toggleEdit}>
+              {editIcon}
+            </span>
+          ) : (
+            <EditOutlined
+              className="icon-size category-btn"
+              onClick={toggleEdit}
+            />
+          )}
         </div>
       </div>
     </Card>

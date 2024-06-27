@@ -1,0 +1,17 @@
+.joinTripContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.joinTripPage {
+  align-items: center;
+}
+
+.joinTrip-btn {
+  margin-top: 20px;
+}
+
+h2.joinTrip {
+  text-shadow: 1px 2px 0px blue;
+}

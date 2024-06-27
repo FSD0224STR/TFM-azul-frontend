@@ -1,24 +1,26 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/login";
-import Registration from "./pages/registration";
+//import Registration from "./pages/registration";
 import UserDetails from "./pages/UserDetails";
 
 import { AuthContext } from "./contexts/authContext";
 import { useContext } from "react";
-import { NavBar } from "./components/NavBar";
+import { NavBar2 } from "./components/NavBar2";
 
 import "./styles/App.css";
-import { TripInfo } from "./pages/tripInfo";
 import { Trip } from "./pages/Trip";
 import { ViewCategory } from "./pages/viewCategory";
+import JoinTripPage from "./pages/JoinTrip";
+import FAQs from "./pages/Faqs";
+import RegistrationForm2 from "./pages/registration2";
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
   if (loading) return <h1>Loading...</h1>;
   return (
     <>
-      <NavBar></NavBar>
+      <NavBar2></NavBar2>
       <Routes>
         <Route path="/home" element={<Home props></Home>}></Route>
 
@@ -26,12 +28,12 @@ export const App = () => {
 
         <Route path="/login" element={<Login props></Login>}></Route>
 
-        <Route
+        {/* <Route
           path="/tripInfo/:id"
           element={<TripInfo props></TripInfo>}
         ></Route>
 
-        <Route path="/tripInfo" element={<TripInfo props></TripInfo>}></Route>
+        <Route path="/tripInfo" element={<TripInfo props></TripInfo>}></Route> */}
 
         <Route path="/:id" element={<Trip props></Trip>}></Route>
 
@@ -42,8 +44,10 @@ export const App = () => {
 
         <Route
           path="/registration"
-          element={<Registration props></Registration>}
+          element={<RegistrationForm2 props></RegistrationForm2>}
         ></Route>
+        <Route path="/join-trip/:id" element={<JoinTripPage />}></Route>
+        <Route path="/faqs" element={<FAQs />}></Route>
       </Routes>
     </>
   );

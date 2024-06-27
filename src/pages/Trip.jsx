@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Typography, Button, Alert } from "antd";
+import { useParams } from "react-router-dom";
+import { Typography, Alert, Tooltip } from "antd";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
-import {
-  UserAddOutlined,
-  EditOutlined,
-  PlusCircleOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
+import { TeamOutlined, UserAddOutlined } from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
+import UnlinkUser from "../components/UnlinkUserFromTrip";
+import AddCategoryModal from "../components/CreateCategoryModal";
 
 export function Trip() {
   const [title, setTitle] = useState("");
@@ -22,15 +19,8 @@ export function Trip() {
   const [categories, setCategories] = useState([]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
- 
-  const [error, setError] = useState("");
-  //   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  //Formatear la fecha
-  //const formatDate = (date) => {
-  // return date ? format(new Date(date), "yyyy-MM-dd") : "";
-  //};
+  const [error, setError] = useState("");
 
   const startDateFormatted = (date) => {
     return date ? format(new Date(date), "d MMM", { locale: es }) : "";
@@ -69,45 +59,41 @@ export function Trip() {
     }
   };
 
+  const generateInvitationLink = () => {
+    const inviteLink = `${window.location.origin}/join-trip/${id}`;
+    navigator.clipboard
+      .writeText(inviteLink)
+      .then(() => {
+        alert("Enlace copiado al portapapeles: " + inviteLink);
+      })
+      .catch((err) => {
+        console.error("No se pudo copiar al portapapeles: ", err);
+      });
+  };
+
   //Pintamos el viaje nada más arrancar la página
   useEffect(() => {
     getTripById(id);
   }, []);
 
-  //Función para actualizar el viaje, que te redirige a la página de editar
-  const updateTrip = (idToUpdate) => {
-    navigate(`/tripInfo/${idToUpdate}`);
-  };
-
-  //Función para añadir una nueva categoría al viaje
-  const handleAddCategoryClick = async () => {
-    if (isAddingCategory) {
-      try {
-        const response = await tripAPI.addCategory(id, { title: newCategory });
-        console.log("esta es la respuesta", response);
-        setNewCategory(response.data);
-        getTripById(id);
-      } catch (error) {
-        setError(`Error al crear la nueva categoría: ${error.message}`);
-      }
-      console.log("Añadiendo la categoría -----", newCategory);
-    }
-    setIsAddingCategory(!isAddingCategory);
-    setNewCategory("");
-  };
-
-  //Por ahora solo cuenta en que número del índice de la categoría estas, no sirve para nada por ahora, pero quizas pueda ser útil en el futuro
-  const onChange = (currentSlide) => {
-    console.log(currentSlide);
-  };
-
   return (
     <div>
-      {/*Aquí se refleja la información más relevante del viaje */}
+      <AddCategoryModal tripId={id} getTripById={getTripById} />
       <div className="cardInfoTrip">
-        <div className="travelTitle">
-          <Typography.Title level={1}>{title}</Typography.Title>
-          <p className="tripDate">
+        <div className="cabecera">
+          <Typography.Title level={2}>{title}</Typography.Title>
+          <Tooltip title="Copiar enlace de invitación">
+            <UserAddOutlined
+              onClick={generateInvitationLink}
+              className="icon-size"
+            />
+          </Tooltip>
+        </div>
+        <div className="unlink-btn">
+          <UnlinkUser tripId={id} />
+        </div>
+        <div className="description">
+          <p>
             {"Del " +
               startDateFormatted(startDate) +
               " al " +
@@ -115,40 +101,31 @@ export function Trip() {
               " de " +
               yearDateFormatted(endDate)}
           </p>
+
+          <p>{description}</p>
         </div>
-        <p className="description">{description}</p>
-        <p className="description">
+        <p>
           <TeamOutlined /> {users.map((user) => user.username).join(", ")}
         </p>
-        <Button
-          className="tripButton"
-          onClick={() => updateTrip(id)}
-          icon={<EditOutlined />}
-        >
-          Editar
-        </Button>
-
-        <Button className="tripButton" icon={<UserAddOutlined />}>
-          Añadir viajero
-        </Button>
-
-        <Button
-          className="tripButton"
-          onClick={handleAddCategoryClick}
-          icon={<PlusCircleOutlined />}
-        >
-          Añadir categoría
-        </Button>
-
+        <div className="categoryCardList ">
+          {categories.map((categoria) => (
+            <CategoryCard
+              key={categoria._id}
+              id={categoria._id}
+              title={categoria.title}
+              refreshCategories={() => getTripById(id)} // Pasar la función de actualización como prop
+            ></CategoryCard>
+          ))}
+        </div>
         {isAddingCategory && (
           <input
-            className="newCategoryInput"
+            className="newCategoryInput tripInfo"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             placeholder="Nombre de la categoría"
           />
         )}
-        {/*Este error no se si funciona */}
+
         {error && (
           <Alert
             type="error"
@@ -157,21 +134,6 @@ export function Trip() {
             onClose={() => setError("")}
           />
         )}
-
-        {/* */}
-      </div>
-
-      {/*Aquí se reflejan las categorías del viaje */}
-
-      <div className="categoryCardList">
-        {categories.map((categoria) => (
-          <CategoryCard
-            key={categoria._id}
-            id={categoria._id}
-            title={categoria.title}
-            refreshCategories={() => getTripById(id)} // Pasar la función de actualización como prop
-          ></CategoryCard>
-        ))}
       </div>
     </div>
   );

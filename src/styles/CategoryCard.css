@@ -1,33 +1,17 @@
-.categoryCardSize {
-    margin:20px 0;
-    width: 100%;
+.content-card {
+  display: flex;
+  justify-content: space-between;
 }
 
-.categoryPanel {
-    display: flex;
-    align-items: baseline;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-.cardTitle {
- margin-top: 10px;
+.categoryTitle {
+  font-size: 20px;
+  text-align: center;
 }
 
-
-@media (min-width: 992px) { 
-    .categoryCardSize {
-        width: 49%;
-    }
+.category-btn {
+  margin-left: 10px;
 }
-/* @media (min-width: 1200px) {
-    .categoryCardSize {
-        width: 32%;
-    }
-} */
 
-.titleInput {
-    font-size: 20px;
-    margin-bottom: 10px;
-    width: min-content;
+h4 {
+  margin: 0;
 }
