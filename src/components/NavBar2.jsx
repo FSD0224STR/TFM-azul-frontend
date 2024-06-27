@@ -58,7 +58,7 @@ export const NavBar2 = () => {
                   <a href="/home">Mis viajes</a>
                 </li>
                 <li>
-                  <a href="/como-funciona">Cómo funciona</a>
+                  <a href="/FAQs">FAQs</a>
                 </li>
                 <li>
                   <a href="/perfil">Perfil</a>
