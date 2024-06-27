@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/login";
-import Registration from "./pages/registration";
+//import Registration from "./pages/registration";
 
 import { AuthContext } from "./contexts/authContext";
 import { useContext } from "react";
@@ -12,6 +12,7 @@ import { Trip } from "./pages/Trip";
 import { ViewCategory } from "./pages/viewCategory";
 import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
+import RegistrationForm2 from "./pages/registration2";
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
@@ -40,7 +41,7 @@ export const App = () => {
 
         <Route
           path="/registration"
-          element={<Registration props></Registration>}
+          element={<RegistrationForm2 props></RegistrationForm2>}
         ></Route>
         <Route path="/join-trip/:id" element={<JoinTripPage />}></Route>
         <Route path="/faqs" element={<FAQs />}></Route>
