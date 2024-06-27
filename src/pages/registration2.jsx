@@ -133,7 +133,7 @@ const RegistrationForm2 = () => {
       {error && (
         <Alert
           type="error"
-          message={`Error al crear usuario: ${error}`}
+          message={error.error}
           style={{ marginBottom: 24 }}
           showIcon
         />

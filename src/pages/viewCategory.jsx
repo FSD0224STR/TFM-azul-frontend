@@ -18,12 +18,13 @@ export const ViewCategory = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [currentProposal, setCurrentProposal] = useState(null);
-  
+
   const showErrorModal = (message) => {
     Modal.error({
-      title: 'Error',
+      title: "Error",
       content: message,
-    });}
+    });
+  };
 
   const getCategoryById = async (id) => {
     try {
@@ -70,12 +71,11 @@ export const ViewCategory = () => {
         setError(response.error);
         console.log(response.error);
         showErrorModal(response.error);
-      } else { 
+      } else {
         console.log("Respuesta de añadir propuesta:", response);
-      getCategoryById(id);
-      handleModalClose();
+        getCategoryById(id);
+        handleModalClose();
       }
-      
     } catch (error) {
       setError(`Error al crear la nueva propuesta: ${error.message}`);
     }
@@ -93,7 +93,7 @@ export const ViewCategory = () => {
         setError(response.error);
         console.log(response.error);
         showErrorModal(response.error);
-      } else { 
+      } else {
         getCategoryById(id);
         handleModalClose();
       }
@@ -129,9 +129,6 @@ export const ViewCategory = () => {
       address: proposal.address,
     });
   };
-
-  
-  
 
   return (
     <div>
@@ -211,22 +208,22 @@ export const ViewCategory = () => {
             onClose={() => setError("")}
           />
         )}
-      </div>
 
-      <div className="categoryCardList">
-        {proposals.map((proposal) => (
-          <ProposalCard
-            key={proposal._id}
-            id={proposal._id}
-            title={proposal.title}
-            description={proposal.description}
-            address={proposal.address}
-            owner={proposal.owner}
-            onEdit={() => handleEditClick(proposal)}
-            onDelete={() => handleDeleteProposal(proposal._id)}
-            refreshProposals={() => getCategoryById(id)}
-          ></ProposalCard>
-        ))}
+        <div className="categoryCardList">
+          {proposals.map((proposal) => (
+            <ProposalCard
+              key={proposal._id}
+              id={proposal._id}
+              title={proposal.title}
+              description={proposal.description}
+              address={proposal.address}
+              owner={proposal.owner}
+              onEdit={() => handleEditClick(proposal)}
+              onDelete={() => handleDeleteProposal(proposal._id)}
+              refreshProposals={() => getCategoryById(id)}
+            ></ProposalCard>
+          ))}
+        </div>
       </div>
     </div>
   );

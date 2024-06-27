@@ -21,16 +21,9 @@ export const App = () => {
     <>
       <NavBar2></NavBar2>
       <Routes>
-        <Route path="/home" element={<Home props></Home>}></Route>
-
         <Route path="/" element={<Login props></Login>}></Route>
 
-        {/* <Route
-          path="/tripInfo/:id"
-          element={<TripInfo props></TripInfo>}
-        ></Route>
-
-        <Route path="/tripInfo" element={<TripInfo props></TripInfo>}></Route> */}
+        <Route path="/home" element={<Home props></Home>}></Route>
 
         <Route path="/:id" element={<Trip props></Trip>}></Route>
 
@@ -43,7 +36,9 @@ export const App = () => {
           path="/registration"
           element={<RegistrationForm2 props></RegistrationForm2>}
         ></Route>
+
         <Route path="/join-trip/:id" element={<JoinTripPage />}></Route>
+
         <Route path="/faqs" element={<FAQs />}></Route>
       </Routes>
     </>
