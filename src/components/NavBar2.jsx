@@ -4,6 +4,7 @@ import { Button, Spin, Alert } from "antd";
 import LoginModal from "./LoginModal"; // Asegúrate de que la ruta sea correcta
 import logo from "../images/logo.png";
 import "../styles/NavBar2.css";
+import { Link } from "react-router-dom";
 
 export const NavBar2 = () => {
   const { isLoggedIn, logout, loading, error, setError } =
@@ -22,8 +23,16 @@ export const NavBar2 = () => {
   return (
     <nav className="navbar">
       <div className="container1">
-        <img className="logo" src={logo} alt="Logo de la Aplicación" />
+        <Link to="/">
+          <img
+            onClick=""
+            className="logo"
+            src={logo}
+            alt="Logo de la Aplicación"
+          />
+        </Link>
       </div>
+
       <div className="container2">
         {!isLoggedIn && (
           <>
