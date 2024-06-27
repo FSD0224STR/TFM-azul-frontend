@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Typography, Alert, Tooltip } from "antd";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
-import { TeamOutlined, ShareAltOutlined } from "@ant-design/icons";
+import { TeamOutlined, UserAddOutlined } from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
@@ -83,7 +83,7 @@ export function Trip() {
         <div className="cabecera">
           <Typography.Title level={2}>{title}</Typography.Title>
           <Tooltip title="Copiar enlace de invitación">
-            <ShareAltOutlined
+            <UserAddOutlined
               onClick={generateInvitationLink}
               className="icon-size"
             />
