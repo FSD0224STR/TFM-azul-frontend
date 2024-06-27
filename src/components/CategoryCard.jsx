@@ -80,7 +80,7 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
 
   const cancelDelete = (e) => {
     e.stopPropagation();
-    message.info("Operación cancelada");
+    message.error("Operación cancelada");
   };
 
   const onView = (e) => {
@@ -135,7 +135,7 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
           </Popconfirm>
 
           {updatingCategory ? (
-            <span className="icon-size " onClick={toggleEdit}>
+            <span className="icon-size category-btn" onClick={toggleEdit}>
               {editIcon}
             </span>
           ) : (
