@@ -151,7 +151,7 @@ function Home() {
                 bottom: 20,
                 right: 20,
               }}
-            />{" "}
+            />
           </Tooltip>
         </>
       ) : (

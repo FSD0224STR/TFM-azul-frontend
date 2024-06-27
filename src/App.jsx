@@ -8,7 +8,6 @@ import { useContext } from "react";
 import { NavBar2 } from "./components/NavBar2";
 
 import "./styles/App.css";
-import { TripInfo } from "./pages/tripInfo";
 import { Trip } from "./pages/Trip";
 import { ViewCategory } from "./pages/viewCategory";
 import JoinTripPage from "./pages/JoinTrip";
