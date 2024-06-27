@@ -112,7 +112,7 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
               onChange={(e) => setNewTitle(e.target.value)}
               className="titleInput"
               onClick={(e) => e.stopPropagation()}
-              style={{ fontSize: "1.5rem", color: "#333", textAlign: "center" }}
+              style={{ fontSize: "20px", color: "#333", textAlign: "" }}
             />
           ) : (
             <Typography.Title level={4} className="cardTitle">

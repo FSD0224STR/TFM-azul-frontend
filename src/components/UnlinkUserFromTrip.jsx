@@ -50,7 +50,7 @@ const UnlinkUser = ({ tripId }) => {
       okText="Sí"
       cancelText="No"
     >
-      <button>Desvincularme del viaje</button>
+      <button className="unlink-btn">Desvincularme del viaje</button>
     </Popconfirm>
   );
 };
