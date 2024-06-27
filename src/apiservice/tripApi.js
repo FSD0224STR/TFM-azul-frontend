@@ -199,6 +199,27 @@ const linkUserToTrip = async (tripId) => {
   }
 };
 
+const unlinkUserFromTrip = async (tripId, userId) => {
+  const token = localStorage.getItem("access_token");
+
+  try {
+    const response = await fetch(`${baseUrl}/${tripId}/${userId}`, {
+      method: "DELETE",
+      headers: { authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error al desvincular al usuario del viaje:", error);
+    return null;
+  }
+};
+
 export default {
   getAllTrips,
   getTripInfo,
@@ -207,4 +228,5 @@ export default {
   updateTrip,
   addCategory,
   linkUserToTrip,
+  unlinkUserFromTrip,
 };

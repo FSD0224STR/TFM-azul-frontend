@@ -12,6 +12,7 @@ import {
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
+import UnlinkUser from "../components/UnlinkUserFromTrip";
 
 export function Trip() {
   const [title, setTitle] = useState("");
@@ -119,6 +120,7 @@ export function Trip() {
       <div className="cardInfoTrip">
         <div className=" ">
           <Typography.Title level={1}>{title}</Typography.Title>
+          <UnlinkUser tripId={id} />
           <p className="tripInfo">
             {"Del " +
               startDateFormatted(startDate) +
