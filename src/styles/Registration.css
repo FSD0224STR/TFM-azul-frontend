@@ -1,4 +1,15 @@
-.registerAlert > .ant-alert-banner{
-    border: 1px solid #ff4d4f !important; /* // #ffccc7 !important; */
-    border-radius: 4px;
+.registerAlert > .ant-alert-banner {
+  border: 1px solid #ff4d4f !important; /* // #ffccc7 !important; */
+  border-radius: 4px;
+}
+
+.registration-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.registration-btn {
+  display: flex;
+  justify-content: center;
 }
