@@ -13,10 +13,16 @@ import { ViewCategory } from "./pages/viewCategory";
 import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
 import RegistrationForm2 from "./pages/registration2";
+import { Spin } from "antd";
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
-  if (loading) return <h1>Loading...</h1>;
+  if (loading)
+    return (
+      <div className="cardInfoTrip">
+        <Spin size="large" />;
+      </div>
+    );
   return (
     <>
       <NavBar2></NavBar2>
