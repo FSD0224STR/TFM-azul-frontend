@@ -43,7 +43,7 @@ const RegistrationForm2 = () => {
         form={form}
         name="register"
         onFinish={onFinish}
-        layout="horitzontal"
+        layout="vertical"
         style={{
           maxWidth: 600,
           margin: "auto",
