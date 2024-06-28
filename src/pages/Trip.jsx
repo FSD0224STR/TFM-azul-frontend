@@ -83,7 +83,7 @@ export function Trip() {
   //Pintamos el viaje nada más arrancar la página
   useEffect(() => {
     getTripById(id);
-  }, []);
+  }, [id]);
 
   return (
     <div>
