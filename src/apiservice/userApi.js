@@ -124,4 +124,4 @@ const updateUser = async (id, userData) => {
 };
 
 
-export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile, addNewImage };
+export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile, addNewImage, updateUser };

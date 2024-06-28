@@ -66,10 +66,10 @@ export const NavBar2 = () => {
                   <a href="/home">Mis viajes</a>
                 </li>
                 <li>
-                  <a href="/FAQs">FAQs</a>
+                  <a href="/perfil">Perfil</a>
                 </li>
                 <li>
-                  <a href="/perfil">Perfil</a>
+                  <a href="/FAQs">FAQs</a>
                 </li>
                 <li>
                   <a href="/" onClick={logout}>
