@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
 import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
-import { PlusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
+import "../styles/ViewCategory.css";
 
 const { TextArea } = Input;
 
@@ -136,7 +137,7 @@ export const ViewCategory = () => {
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
         </div>
-        <p className="description">{description}</p>
+        {/* <p className="description">{description}</p> */}
 
         <Tooltip title="Añadir propuesta">
           <Button
