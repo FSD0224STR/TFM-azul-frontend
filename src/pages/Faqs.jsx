@@ -82,6 +82,18 @@ const getItems = (panelStyle) => [
     ),
     style: panelStyle,
   },
+  {
+    key: "7",
+    label: "¿Los viajes se quedan guardados aunque haya pasado la fecha?",
+    children: (
+      <p>
+        Sí, los viajes se guardan en la base de datos hasta que se eliminen o se
+        desvinculen. Así si algun día quieres recordar qué hiciste en aquel
+        viaje podrás volver a revisar todas las propuestas.
+      </p>
+    ),
+    style: panelStyle,
+  },
 ];
 const FAQs = () => {
   const { token } = theme.useToken();

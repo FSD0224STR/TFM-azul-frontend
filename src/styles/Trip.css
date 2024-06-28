@@ -27,10 +27,3 @@
   border-radius: 15px;
   background-color: beige;
 }
-
-.categoryCardList {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
-}

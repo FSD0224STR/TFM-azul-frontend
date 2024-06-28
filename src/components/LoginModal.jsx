@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Modal, Button, Spin, Alert } from "antd";
 import { AuthContext } from "../contexts/authContext";
+import { LoginFooter } from "./LoginFooter";
 
 const LoginModal = ({
   isModalVisible,
@@ -19,6 +20,10 @@ const LoginModal = ({
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  const handleRegisterClick = () => {
+    handleCancel();
   };
 
   return (
@@ -62,6 +67,7 @@ const LoginModal = ({
           </div>
         )}
       </div>
+      <LoginFooter onRegisterClick={handleRegisterClick} />
     </Modal>
   );
 };

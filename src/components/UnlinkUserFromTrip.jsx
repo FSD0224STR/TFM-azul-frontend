@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import tripApi from "../apiservice/tripApi";
 import userApi from "../apiservice/userApi";
-import { Popconfirm } from "antd";
+import { Popconfirm, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const UnlinkUser = ({ tripId }) => {
@@ -30,7 +30,11 @@ const UnlinkUser = ({ tripId }) => {
         const result = await tripApi.unlinkUserFromTrip(tripId, userId);
         if (result) {
           console.log("Unlink result:", result);
-          alert(result.message);
+          notification.success({
+            message: "Ya no formas parte del viaje",
+            description: result.message,
+            placement: "topRight",
+          });
           setTrip((prevTrip) => ({
             ...prevTrip,
             users: prevTrip.users.filter((user) => user !== userId),
@@ -39,6 +43,11 @@ const UnlinkUser = ({ tripId }) => {
         }
       } catch (error) {
         console.error("Error al desvincular usuario:", error);
+        notification.error({
+          message: "Error al desvincular usuario",
+          description: error.message,
+          placement: "topRight",
+        });
       }
     }
   };

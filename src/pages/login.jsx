@@ -36,9 +36,7 @@ const Login = () => {
         amigos, ofreciendo una experiencia que simplifique y enriquezca cada
         aventura compartida.
       </p>
-      <div>
-        <LoginFooter />
-      </div>
+      <div></div>
     </>
   );
 };

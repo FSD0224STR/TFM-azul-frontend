@@ -14,10 +14,19 @@ import { ViewCategory } from "./pages/viewCategory";
 import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
 import RegistrationForm2 from "./pages/registration2";
+import { Spin } from "antd";
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
-  if (loading) return <h1>Loading...</h1>;
+  if (loading)
+    return (
+      <>
+        <NavBar2></NavBar2>
+        <div className="cardInfoTrip">
+          <Spin size="large" />;
+        </div>
+      </>
+    );
   return (
     <>
       <NavBar2></NavBar2>
@@ -29,14 +38,9 @@ export const App = () => {
           element={<UserDetails props></UserDetails>}
         ></Route>
 
-        <Route path="/login" element={<Login props></Login>}></Route>
+        <Route path="/" element={<Login props></Login>}></Route>
 
-        {/* <Route
-          path="/tripInfo/:id"
-          element={<TripInfo props></TripInfo>}
-        ></Route>
-
-        <Route path="/tripInfo" element={<TripInfo props></TripInfo>}></Route> */}
+        <Route path="/home" element={<Home props></Home>}></Route>
 
         <Route path="/:id" element={<Trip props></Trip>}></Route>
 
@@ -49,7 +53,9 @@ export const App = () => {
           path="/registration"
           element={<RegistrationForm2 props></RegistrationForm2>}
         ></Route>
+
         <Route path="/join-trip/:id" element={<JoinTripPage />}></Route>
+
         <Route path="/faqs" element={<FAQs />}></Route>
       </Routes>
     </>

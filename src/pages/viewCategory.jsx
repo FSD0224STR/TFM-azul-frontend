@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
-import { Alert, Button, Typography, Modal, Form, Input } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
+import "../styles/ViewCategory.css";
 
 const { TextArea } = Input;
 
@@ -136,15 +137,26 @@ export const ViewCategory = () => {
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
         </div>
-        <p className="description">{description}</p>
+        {/* <p className="description">{description}</p> */}
 
-        <Button
-          className="tripButton"
-          onClick={handleAddProposalClick}
-          icon={<PlusCircleOutlined />}
-        >
-          Añadir propuesta
-        </Button>
+        <Tooltip title="Añadir propuesta">
+          <Button
+            type="primary"
+            shape="circle"
+            size="large"
+            icon={<PlusOutlined />}
+            onClick={() => handleAddProposalClick(true)}
+            style={{
+              width: "64px",
+              height: "64px",
+              lineHeight: "64px",
+              textAlign: "center",
+              position: "fixed",
+              bottom: 20,
+              right: 20,
+            }}
+          />
+        </Tooltip>
 
         <Modal
           title={isEditing ? "Editar Propuesta" : "Añadir Propuesta"}
@@ -208,8 +220,8 @@ export const ViewCategory = () => {
             onClose={() => setError("")}
           />
         )}
-      </div>
 
+<<<<<<< HEAD
       <div className="categoryCardList">
         {proposals.map((proposal) => (
           <ProposalCard
@@ -228,6 +240,23 @@ export const ViewCategory = () => {
           "IDs de propuestas:",
           proposals.map((p) => p._id)
         )}
+=======
+        <div className="categoryCardList">
+          {proposals.map((proposal) => (
+            <ProposalCard
+              key={proposal._id}
+              id={proposal._id}
+              title={proposal.title}
+              description={proposal.description}
+              address={proposal.address}
+              owner={proposal.owner}
+              onEdit={() => handleEditClick(proposal)}
+              onDelete={() => handleDeleteProposal(proposal._id)}
+              refreshProposals={() => getCategoryById(id)}
+            ></ProposalCard>
+          ))}
+        </div>
+>>>>>>> c2f23c771b64c24453d2bc98dcf38f59248aa453
       </div>
     </div>
   );

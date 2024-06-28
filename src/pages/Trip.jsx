@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Alert, Tooltip } from "antd";
+import { Typography, Alert, Tooltip, notification } from "antd";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
 import { TeamOutlined, UserAddOutlined } from "@ant-design/icons";
@@ -64,9 +64,18 @@ export function Trip() {
     navigator.clipboard
       .writeText(inviteLink)
       .then(() => {
-        alert("Enlace copiado al portapapeles: " + inviteLink);
+        notification.success({
+          message: "Enlace copiado al portapapeles",
+          description: `Comparte el enlace para que tus compañeros de viaje puedan empezar a añadir propuestas. `,
+          placement: "topRight",
+        });
       })
       .catch((err) => {
+        notification.error({
+          message: "Error",
+          description: "No se pudo copiar al portapapeles.",
+          placement: "topRight",
+        });
         console.error("No se pudo copiar al portapapeles: ", err);
       });
   };
@@ -74,7 +83,7 @@ export function Trip() {
   //Pintamos el viaje nada más arrancar la página
   useEffect(() => {
     getTripById(id);
-  }, []);
+  }, [id]);
 
   return (
     <div>
