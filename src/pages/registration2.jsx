@@ -145,11 +145,6 @@ const RegistrationForm2 = () => {
           >
             <Input.Password />
           </Form.Item>
-          <Form.Item className="registration-btn">
-            <Button type="primary" htmlType="submit" block>
-              Registrarse
-            </Button>
-          </Form.Item>
 
           {error && (
             <Alert
@@ -159,6 +154,12 @@ const RegistrationForm2 = () => {
               showIcon
             />
           )}
+
+          <Form.Item className="registration-btn">
+            <Button type="primary" htmlType="submit" block>
+              Registrarse
+            </Button>
+          </Form.Item>
 
           {addedUser && (
             <Modal
