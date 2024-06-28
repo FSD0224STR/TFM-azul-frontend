@@ -19,9 +19,12 @@ export const App = () => {
   const { loading } = useContext(AuthContext);
   if (loading)
     return (
-      <div className="cardInfoTrip">
-        <Spin size="large" />;
-      </div>
+      <>
+        <NavBar2></NavBar2>
+        <div className="cardInfoTrip">
+          <Spin size="large" />;
+        </div>
+      </>
     );
   return (
     <>
