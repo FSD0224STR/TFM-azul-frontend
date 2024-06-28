@@ -145,7 +145,6 @@ const RegistrationForm2 = () => {
           >
             <Input.Password />
           </Form.Item>
-          <LoginFooter />
           <Form.Item className="registration-btn">
             <Button type="primary" htmlType="submit" block>
               Registrarse
