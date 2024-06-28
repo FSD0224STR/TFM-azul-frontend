@@ -2,7 +2,7 @@ import { Typography, Button } from "antd";
 
 const { Title, Text } = Typography;
 
-const ValidationTripPage = () => {
+const ConfirmRegistration = () => {
   return (
     <div className="cardInfoTrip">
       <Title>¿Ya te has registrado?</Title>
@@ -15,4 +15,4 @@ const ValidationTripPage = () => {
   );
 };
 
-export default ValidationTripPage;
+export default ConfirmRegistration;
