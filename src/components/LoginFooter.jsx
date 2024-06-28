@@ -5,7 +5,7 @@ export const LoginFooter = () => {
 
   if (location.pathname === "/registration") {
     return (
-      <div className="footer">
+      <div className="footer2">
         <p>
           ¿Ya tienes una cuenta? <Link to="/">Inicia aquí</Link>
         </p>

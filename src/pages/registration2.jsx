@@ -3,6 +3,7 @@ import userApi from "/src/apiservice/userApi.js";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../styles/Registration.css";
+import { LoginFooter } from "../components/LoginFooter";
 
 const RegistrationForm2 = () => {
   const [form] = Form.useForm();
@@ -144,7 +145,7 @@ const RegistrationForm2 = () => {
           >
             <Input.Password />
           </Form.Item>
-
+          <LoginFooter />
           <Form.Item className="registration-btn">
             <Button type="primary" htmlType="submit" block>
               Registrarse
