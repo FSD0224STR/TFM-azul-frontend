@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
-import { Alert, Button, Typography, Modal, Form, Input } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
+import { PlusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
 
 const { TextArea } = Input;
@@ -138,13 +138,24 @@ export const ViewCategory = () => {
         </div>
         <p className="description">{description}</p>
 
-        <Button
-          className="tripButton"
-          onClick={handleAddProposalClick}
-          icon={<PlusCircleOutlined />}
-        >
-          Añadir propuesta
-        </Button>
+        <Tooltip title="Añadir propuesta">
+          <Button
+            type="primary"
+            shape="circle"
+            size="large"
+            icon={<PlusOutlined />}
+            onClick={() => handleAddProposalClick(true)}
+            style={{
+              width: "64px",
+              height: "64px",
+              lineHeight: "64px",
+              textAlign: "center",
+              position: "fixed",
+              bottom: 20,
+              right: 20,
+            }}
+          />
+        </Tooltip>
 
         <Modal
           title={isEditing ? "Editar Propuesta" : "Añadir Propuesta"}
