@@ -124,7 +124,7 @@ const UserDetails = () => {
               <Form layout="vertical">
                 <Form.Item
                   label="Nombre de usuario"
-                  name="username"
+                  //name="username"
                   rules={[
                     {
                       required: true,
@@ -159,6 +159,8 @@ const UserDetails = () => {
                     },
                   ]}
                 >
+                  {" "}
+                  <div className="required"></div>
                   <Input
                     value={lastname}
                     onChange={(e) => handleInputChange(e, "lastname")}
