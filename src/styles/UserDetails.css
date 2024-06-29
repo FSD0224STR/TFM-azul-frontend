@@ -28,7 +28,7 @@
 .image-container{
         width: 120px;
         height: 120px;
-        /* borderRadius: "50%",*/
+        border-radius: 50%;
 }
 
 .form-details .ant-form-item .ant-form-item-label ::before {

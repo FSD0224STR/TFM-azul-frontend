@@ -102,12 +102,22 @@ const addNewImage = async (formData) => {
 };
 
 
-const updateUser = async (id, userData) => {
+const updateUser = async (_id,
+  firstname,
+  lastname,
+  username,
+  email,
+  imageUrl) => {
   const token = localStorage.getItem("access_token");
 
-  const response = await fetch(`${baseUrl}/users/${id}`, {
+  const response = await fetch(`${baseUrl}/users/${_id}`, {
     method: "PUT",
-    body: JSON.stringify(userData),
+    body: JSON.stringify({_id,
+      firstname,
+      lastname,
+      username,
+      email,
+      imageUrl}),
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,

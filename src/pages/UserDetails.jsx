@@ -4,10 +4,10 @@ import {
   Form,
   Input,
   Button,
-  Alert,
   Upload,
   Skeleton,
   message,
+  Modal,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { AuthContext } from "/src/contexts/authContext";
@@ -20,13 +20,10 @@ const UserDetails = () => {
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
-
-  const [error, setError] = useState("");
-  const [user, setUser] = useState("");
+  const [imageUrl, setImage] = useState("");
 
   const authContext = useContext(AuthContext);
-  const { profile, updateProfile } = authContext;
+  const { profile } = authContext;
 
   useEffect(() => {
     if (profile) {
@@ -36,9 +33,22 @@ const UserDetails = () => {
       setLastname(profile.lastname);
       setUsername(profile.username);
       setEmail(profile.email);
-      setImage(profile.imageUrl || ""); // Asegúrate de inicializar image correctamente
+      setImage(profile.imageUrl || "");
     }
   }, [profile]);
+
+  const showErrorModal = (message) => {
+    Modal.error({
+      title: "Error",
+      content: message,
+    });
+  };
+
+  const showSuccessModal = (message) => {
+    Modal.success({
+      content: message,
+    });
+  };
 
   const handleInputChange = (e, field) => {
     const value = e.target.value;
@@ -78,21 +88,20 @@ const UserDetails = () => {
   const handleSaveChanges = async () => {
     try {
       const response = await userApi.updateUser(
+        profile._id,
         firstname,
         lastname,
         username,
         email,
-        image
+        imageUrl
       );
       if ("error" in response) {
-        setError(response.error);
+        showErrorModal(response.error.msg);
       } else {
-        setUser(response.data);
-        updateProfile(response.data); // Actualizar el perfil en el contexto si es necesario
-        message.success("Perfil actualizado con éxito");
+        showSuccessModal(`¡Usuario ${profile.username} actualizado con éxito!`);
       }
     } catch (error) {
-      setError(error.message || "Error desconocido al guardar cambios");
+      showErrorModal(error.message || "Error desconocido al guardar cambios");
     }
   };
 
@@ -101,6 +110,8 @@ const UserDetails = () => {
     beforeUpload: handleFileChange,
     showUploadList: false,
   };
+
+  const isFormValid = username && firstname && lastname && email;
 
   return (
     <>
@@ -111,8 +122,8 @@ const UserDetails = () => {
           </Typography.Title>
           <div className="profile-section">
             <div className="profile-image">
-              {image ? (
-                <img src={image} alt="Profile" className="image-container" />
+              {imageUrl ? (
+                <img src={imageUrl} alt="Profile" className="image-container" />
               ) : (
                 <Skeleton.Image className="image-container" />
               )}
@@ -124,7 +135,6 @@ const UserDetails = () => {
               <Form layout="vertical">
                 <Form.Item
                   label="Nombre de usuario"
-                  //name="username"
                   rules={[
                     {
                       required: true,
@@ -133,13 +143,12 @@ const UserDetails = () => {
                   ]}
                 >
                   <Input
-                    defaultValue={username}
+                    value={username}
                     onChange={(e) => handleInputChange(e, "username")}
                   />
                 </Form.Item>
                 <Form.Item
                   label="Nombre"
-                  // name="firstname"
                   rules={[
                     { required: true, message: "Por favor ingresa tu nombre" },
                   ]}
@@ -185,7 +194,7 @@ const UserDetails = () => {
                   <Button
                     type="primary"
                     onClick={handleSaveChanges}
-                    disabled={!email || error}
+                    disabled={!isFormValid}
                   >
                     Guardar cambios
                   </Button>
@@ -193,22 +202,6 @@ const UserDetails = () => {
               </Form>
             </div>
           </div>
-          {error && (
-            <div className="registerAlert">
-              <Alert
-                type="error"
-                message={`Error al actualizar usuario: ${error}`}
-                banner
-              />
-            </div>
-          )}
-          {user && (
-            <Alert
-              type="success"
-              message={`Usuario actualizado con éxito: ${user.username}`}
-              banner
-            />
-          )}
         </div>
       </div>
     </>
