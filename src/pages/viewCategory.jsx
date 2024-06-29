@@ -12,7 +12,7 @@ const { TextArea } = Input;
 export const ViewCategory = () => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  //const [description, setDescription] = useState("");
   const [proposals, setProposals] = useState([]);
   const [error, setError] = useState("");
   const [visibleModal, setVisibleModal] = useState(false);
@@ -33,7 +33,7 @@ export const ViewCategory = () => {
 
       if (response.data) {
         setTitle(response.data.title);
-        setDescription(response.data.description);
+        //setDescription(response.data.description);
         setProposals(response.data.proposals);
       } else if (response.error) {
         setError(response.error);
@@ -221,26 +221,6 @@ export const ViewCategory = () => {
           />
         )}
 
-<<<<<<< HEAD
-      <div className="categoryCardList">
-        {proposals.map((proposal) => (
-          <ProposalCard
-            key={`${proposal._id}-${proposal.title}`}
-            id={proposal._id}
-            title={proposal.title}
-            description={proposal.description}
-            address={proposal.address}
-            owner={proposal.owner}
-            onEdit={() => handleEditClick(proposal)}
-            onDelete={() => handleDeleteProposal(proposal._id)}
-            refreshProposals={() => getCategoryById(id)}
-          ></ProposalCard>
-        ))}
-        {console.log(
-          "IDs de propuestas:",
-          proposals.map((p) => p._id)
-        )}
-=======
         <div className="categoryCardList">
           {proposals.map((proposal) => (
             <ProposalCard
@@ -256,7 +236,6 @@ export const ViewCategory = () => {
             ></ProposalCard>
           ))}
         </div>
->>>>>>> c2f23c771b64c24453d2bc98dcf38f59248aa453
       </div>
     </div>
   );
