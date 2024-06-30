@@ -8,6 +8,7 @@ import {
   HomeOutlined,
   LoginOutlined,
   LogoutOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 const { Header } = Layout;
@@ -28,7 +29,7 @@ const NavBar = () => {
         mode="horizontal"
         items={[
           {
-            key: "1",
+            key: "0",
             label: (
               <Tooltip title="Regresar">
                 <Button type="link" onClick={handleGoBack}>
@@ -60,6 +61,19 @@ const NavBar = () => {
           },
           {
             key: "3",
+            label: isLoggedIn && (
+              <Link
+                to="/user"
+                className={isLoggedIn ? "" : "hidden-and-disabled"}
+              >
+                <Button type="link">
+                  <UserOutlined className="icon-size" />
+                </Button>
+              </Link>
+            ),
+          },
+          {
+            key: "4",
             label: !isLoggedIn ? (
               <Link to="/login">
                 <Button type="link">
