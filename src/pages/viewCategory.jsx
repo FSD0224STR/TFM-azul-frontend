@@ -12,7 +12,7 @@ const { TextArea } = Input;
 export const ViewCategory = () => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  //const [description, setDescription] = useState("");
   const [proposals, setProposals] = useState([]);
   const [error, setError] = useState("");
   const [visibleModal, setVisibleModal] = useState(false);
@@ -33,7 +33,7 @@ export const ViewCategory = () => {
 
       if (response.data) {
         setTitle(response.data.title);
-        setDescription(response.data.description);
+        //setDescription(response.data.description);
         setProposals(response.data.proposals);
       } else if (response.error) {
         setError(response.error);

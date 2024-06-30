@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/login";
 //import Registration from "./pages/registration";
+import UserDetails from "./pages/UserDetails";
 
 import { AuthContext } from "./contexts/authContext";
 import { useContext } from "react";
@@ -30,6 +31,13 @@ export const App = () => {
     <>
       <NavBar2></NavBar2>
       <Routes>
+        <Route path="/home" element={<Home props></Home>}></Route>
+
+        <Route
+          path="/perfil"
+          element={<UserDetails props></UserDetails>}
+        ></Route>
+
         <Route path="/" element={<Login props></Login>}></Route>
 
         <Route path="/home" element={<Home props></Home>}></Route>
