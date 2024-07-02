@@ -1,19 +1,20 @@
 import { Routes, Route } from "react-router-dom";
+import { useContext } from "react";
+
 import Home from "./pages/Home";
 import Login from "./pages/login";
-//import Registration from "./pages/registration";
 import UserDetails from "./pages/UserDetails";
-
-import { AuthContext } from "./contexts/authContext";
-import { useContext } from "react";
-import { NavBar } from "./components/NavBar";
-
-import "./styles/App.css";
-import { Trip } from "./pages/Trip";
-import { ViewCategory } from "./pages/viewCategory";
+import ViewCategory from "./pages/viewCategory";
+import Trip from "./pages/Trip";
 import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
 import RegistrationForm2 from "./pages/registration2";
+
+import { NavBar } from "./components/NavBar";
+
+import { AuthContext } from "./contexts/authContext";
+
+import "./styles/App.css";
 import { Spin } from "antd";
 
 export const App = () => {
@@ -22,7 +23,7 @@ export const App = () => {
     return (
       <>
         <NavBar></NavBar>
-        <div className="cardInfoTrip">
+        <div>
           <Spin size="large" />;
         </div>
       </>

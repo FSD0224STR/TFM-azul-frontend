@@ -11,7 +11,7 @@ import { ProposalCard } from "../components/ProposalCard";
 import ProposalModal from "../components/CreateProposalModal";
 import FloatingButton from "../components/FloatingButton";
 
-export const ViewCategory = () => {
+const ViewCategory = () => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
   //const [description, setDescription] = useState("");
@@ -181,3 +181,5 @@ export const ViewCategory = () => {
     </div>
   );
 };
+
+export default ViewCategory;

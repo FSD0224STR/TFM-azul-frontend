@@ -57,7 +57,7 @@ export const TripCard = ({
     <Card
       title={<div className="centered-uppercase">{title}</div>}
       className="cardSize"
-      style={{ margin: "25px", width: "80%" }}
+      style={{ marginBottom: "2%", width: "100%" }}
       extra={
         <>
           <div className="btnPanel">
@@ -88,7 +88,6 @@ export const TripCard = ({
     >
       <div className="cardBody">
         <Descriptions
-          bordered
           column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
           items={items}
         />
