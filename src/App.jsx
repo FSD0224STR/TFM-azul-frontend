@@ -6,7 +6,7 @@ import UserDetails from "./pages/UserDetails";
 
 import { AuthContext } from "./contexts/authContext";
 import { useContext } from "react";
-import { NavBar2 } from "./components/NavBar2";
+import { NavBar } from "./components/NavBar";
 
 import "./styles/App.css";
 import { Trip } from "./pages/Trip";
@@ -21,7 +21,7 @@ export const App = () => {
   if (loading)
     return (
       <>
-        <NavBar2></NavBar2>
+        <NavBar></NavBar>
         <div className="cardInfoTrip">
           <Spin size="large" />;
         </div>
@@ -29,7 +29,7 @@ export const App = () => {
     );
   return (
     <>
-      <NavBar2></NavBar2>
+      <NavBar></NavBar>
       <Routes>
         <Route path="/home" element={<Home props></Home>}></Route>
 
