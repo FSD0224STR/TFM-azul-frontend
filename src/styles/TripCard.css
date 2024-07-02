@@ -1,23 +1,19 @@
 .cardSize {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.468);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 .cardSize:hover {
-  transform: scale(1.03);
+  transform: scale(1.01);
 }
 
 .cardBody {
   display: flex;
 }
 
-.ant-descriptions.ant-descriptions-bordered {
-  width: -webkit-fill-available;
-}
-
 .icon-size {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .icon-margin-left {
@@ -32,19 +28,3 @@
 .blue {
   color: #0e77da;
 }
-
-/* @media (min-width: 992px) {
-  .cardSize {
-    width: 49%;
-  }
-} */
-/* @media (min-width: 576px) {
-    .cardSize {
-        width: 50%;
-    }
-}
-@media (min-width: 768px) { 
-    .cardSize {
-        width: 20%;
-    }
-} */

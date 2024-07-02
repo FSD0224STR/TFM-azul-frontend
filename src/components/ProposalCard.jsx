@@ -1,9 +1,12 @@
 import { Card, Descriptions, message, Popconfirm } from "antd";
 import {
+  AlignRightOutlined,
   DeleteOutlined,
   DislikeOutlined,
   EditOutlined,
+  EnvironmentOutlined,
   LikeOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import "../styles/ProposalCard.css";
 
@@ -19,15 +22,15 @@ export const ProposalCard = ({
 }) => {
   const items = [
     {
-      label: "Dirección",
+      label: <EnvironmentOutlined />,
       children: address,
     },
     {
-      label: "Descripción",
+      label: <AlignRightOutlined />,
       children: description,
     },
     {
-      label: "Propietario",
+      label: <UserOutlined />,
       children: owner,
     },
   ];
@@ -78,7 +81,6 @@ export const ProposalCard = ({
     >
       <div className="cardBody">
         <Descriptions
-          bordered
           column={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
           items={items}
         />
