@@ -127,6 +127,7 @@ function Home() {
             placeholder="Buscar por título"
             onSearch={(value) => handleFilterChange(value, "search")}
             enterButton
+            allowClear
           />
         </Col>
         <Col xs={24} sm={12}>
@@ -134,6 +135,7 @@ function Home() {
             placeholder="Filtrar por dueño"
             style={{ width: "100%" }}
             onChange={(value) => handleFilterChange(value, "owner")}
+            allowClear
           >
             {Array.from(new Set(trips.map((trip) => trip.owner.username))).map(
               (owner) => (
