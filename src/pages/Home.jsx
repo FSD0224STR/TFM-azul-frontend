@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Typography, Spin, Row, Col, Alert, Modal, Select, Input } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
 
@@ -9,7 +10,6 @@ import { TripCard } from "../components/TripCard";
 import CreateTripModal from "../components/CreateTripModal";
 import FloatingButton from "../components/FloatingButton";
 
-import { Typography, Spin, Row, Col, Alert, Modal, Select, Input } from "antd";
 import "../styles/Home.css";
 
 const { Option } = Select;
@@ -127,7 +127,6 @@ function Home() {
             placeholder="Buscar por título"
             onSearch={(value) => handleFilterChange(value, "search")}
             enterButton
-            allowClear
           />
         </Col>
         <Col xs={24} sm={12}>
@@ -135,7 +134,6 @@ function Home() {
             placeholder="Filtrar por dueño"
             style={{ width: "100%" }}
             onChange={(value) => handleFilterChange(value, "owner")}
-            allowClear
           >
             {Array.from(new Set(trips.map((trip) => trip.owner.username))).map(
               (owner) => (
