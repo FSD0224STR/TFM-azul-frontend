@@ -6,6 +6,7 @@ import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
 import "../styles/ViewCategory.css";
+import FloatingButton from "../components/FloatingButton";
 
 const { TextArea } = Input;
 
@@ -137,27 +138,11 @@ export const ViewCategory = () => {
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
         </div>
-        {/* <p className="description">{description}</p> */}
 
-        <Tooltip title="Añadir propuesta">
-          <Button
-            type="primary"
-            shape="circle"
-            size="large"
-            icon={<PlusOutlined />}
-            onClick={() => handleAddProposalClick(true)}
-            style={{
-              width: "64px",
-              height: "64px",
-              lineHeight: "64px",
-              textAlign: "center",
-              position: "fixed",
-              bottom: 20,
-              right: 20,
-            }}
-          />
-        </Tooltip>
-
+        <FloatingButton
+          onClick={handleAddProposalClick}
+          tooltipTitle="Añadir propuesta"
+        />
         <Modal
           title={isEditing ? "Editar Propuesta" : "Añadir Propuesta"}
           open={visibleModal}

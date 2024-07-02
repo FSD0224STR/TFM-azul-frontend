@@ -1,25 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  Typography,
-  Spin,
-  Row,
-  Col,
-  Alert,
-  Modal,
-  Button,
-  Tooltip,
-  Select,
-  Input,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 import tripAPI from "../apiservice/tripApi";
+
 import { AuthContext } from "../contexts/authContext";
+
 import { TripCard } from "../components/TripCard";
 import CreateTripModal from "../components/CreateTripModal";
+import FloatingButton from "../components/FloatingButton";
 
+import { Typography, Spin, Row, Col, Alert, Modal, Select, Input } from "antd";
 import "../styles/Home.css";
-import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const { Search } = Input;
@@ -191,27 +182,10 @@ function Home() {
               />
             </Col>
           </Row>
-          {/* Botón flotante para abrir modal de creación */}
-          <Tooltip title="Nuevo viaje">
-            <Button
-              type="primary"
-              shape="circle"
-              size="large"
-              icon={<PlusOutlined />}
-              onClick={handleCreateTrip}
-              style={{
-                width: "80px",
-                height: "80px",
-                textAlign: "center",
-                position: "fixed",
-                bottom: 25,
-                right: "3%",
-                background: `rgba(0, 81, 255, 0.63)`,
-                color: "rgba(255, 255, 255)",
-                zIndex: 100,
-              }}
-            />
-          </Tooltip>
+          <FloatingButton
+            onClick={handleCreateTrip}
+            tooltipTitle="Nuevo viaje"
+          />
         </>
       ) : (
         <Typography.Title level={3}>

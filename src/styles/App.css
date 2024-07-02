@@ -35,3 +35,7 @@ html {
 .joinTripPage {
   margin-top: 300px;
 }
+
+.floating-button:hover {
+  transform: scale(1.06);
+}

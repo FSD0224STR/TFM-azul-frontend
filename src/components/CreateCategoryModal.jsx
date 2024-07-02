@@ -1,7 +1,7 @@
 import { useState } from "react";
 import tripApi from "../apiservice/tripApi";
-import { Button, Input, Modal, Tooltip } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Input, Modal } from "antd";
+import FloatingButton from "../components/FloatingButton";
 
 const AddCategoryModal = ({ tripId, getTripById }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,24 +32,10 @@ const AddCategoryModal = ({ tripId, getTripById }) => {
 
   return (
     <>
-      <Tooltip title="Añadir categoría">
-        <Button
-          type="primary"
-          shape="circle"
-          size="large"
-          icon={<PlusOutlined />}
-          onClick={() => setModalVisible(true)}
-          style={{
-            width: "64px",
-            height: "64px",
-            lineHeight: "64px",
-            textAlign: "center",
-            position: "fixed",
-            bottom: 20,
-            right: 20,
-          }}
-        />
-      </Tooltip>
+      <FloatingButton
+        onClick={() => setModalVisible(true)}
+        tooltipTitle="Añadir categoría"
+      />
 
       <Modal
         title="Añadir Categoría"
