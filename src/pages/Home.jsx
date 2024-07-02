@@ -119,7 +119,7 @@ function Home() {
             ))}
           </div>
         ) : (
-          <Typography.Text>No trips found.</Typography.Text>
+          <Typography.Text>No se han encontrado viajes.</Typography.Text>
         )}
       </div>
       {isLoggedIn ? (
@@ -155,9 +155,9 @@ function Home() {
           </Tooltip>
         </>
       ) : (
-        <Typography.Title level={3}>
-          Para añadir viajes, por favor inicia sesión
-        </Typography.Title>
+        <Typography.Text>
+          Por favor, regístrate o inicia sesión.
+        </Typography.Text>
       )}
       {error && (
         <Alert
