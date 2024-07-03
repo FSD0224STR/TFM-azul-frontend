@@ -11,7 +11,8 @@ export const LoginFooter = ({ onRegisterClick }) => {
         </Link>
       </p>
       <p>
-        ¿Has olvidado la contraseña? <Link to=""> Recupera tu contraseña </Link>
+        ¿Has olvidado la contraseña?{" "}
+        <Link to="/forgot-password"> Recupera tu contraseña </Link>
       </p>
     </div>
   );
