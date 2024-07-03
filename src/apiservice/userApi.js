@@ -58,10 +58,11 @@ const login = async (username, password) => {
 
   if (!response.ok) {
     const error = await response.json();
-    return { error: error.message };
+    throw new Error(error.message);
   }
+
   const logged = await response.json();
-  return { data: logged };
+  return logged;
 };
 
 const getMyProfile = async (username) => {
@@ -80,12 +81,10 @@ const getMyProfile = async (username) => {
   return { data: await response.json() };
 };
 
-
 const addNewImage = async (formData) => {
-  
-  console.log('formData', formData);
+  console.log("formData", formData);
 
-  const response = await fetch(`${baseUrl}/upload`,{
+  const response = await fetch(`${baseUrl}/upload`, {
     method: "POST",
     body: formData,
     // headers: {
@@ -101,23 +100,26 @@ const addNewImage = async (formData) => {
   return { data: await response.json() };
 };
 
-
-const updateUser = async (_id,
+const updateUser = async (
+  _id,
   firstname,
   lastname,
   username,
   email,
-  imageUrl) => {
+  imageUrl
+) => {
   const token = localStorage.getItem("access_token");
 
   const response = await fetch(`${baseUrl}/users/${_id}`, {
     method: "PUT",
-    body: JSON.stringify({_id,
+    body: JSON.stringify({
+      _id,
       firstname,
       lastname,
       username,
       email,
-      imageUrl}),
+      imageUrl,
+    }),
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
@@ -133,5 +135,11 @@ const updateUser = async (_id,
   return { data: newlyCreatedUser };
 };
 
-
-export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile, addNewImage, updateUser };
+export default {
+  /*getAllUsers,*/ addUser,
+  deleteUser,
+  login,
+  getMyProfile,
+  addNewImage,
+  updateUser,
+};
