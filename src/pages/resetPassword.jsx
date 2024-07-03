@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Form, Input, Button, message } from "antd";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import userApi from "../apiservice/userApi";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const { token } = useParams();
-
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     setLoading(true);
     const { newPassword } = values;
@@ -17,9 +17,7 @@ const ResetPassword = () => {
         message.error(response.error);
       } else {
         message.success(response.data.message);
-        // Redirigir al usuario a la página de inicio de sesión u otra página relevante
-        // después de un restablecimiento exitoso
-        // history.push('/login'); // Asegúrate de importar useHistory desde 'react-router-dom'
+        navigate("/");
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -39,9 +37,12 @@ const ResetPassword = () => {
               required: true,
               message: "Por favor ingresa tu nueva contraseña",
             },
+            {},
             {
-              min: 8,
-              message: "La contraseña debe tener al menos 8 caracteres",
+              pattern:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message:
+                "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)",
             },
           ]}
         >
