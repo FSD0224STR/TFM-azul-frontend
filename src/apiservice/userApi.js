@@ -58,11 +58,10 @@ const login = async (username, password) => {
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message);
+    return { error: error.message };
   }
-
   const logged = await response.json();
-  return logged;
+  return { data: logged };
 };
 
 const getMyProfile = async (username) => {
