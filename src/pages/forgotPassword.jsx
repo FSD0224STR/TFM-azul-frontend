@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Form, Input, Button, message } from "antd";
-import userApi from "../apiservice/userApi"; // Importa las funciones de la API que hemos definido
+import { Form, Input, Button, message, Typography } from "antd";
+import userApi from "../apiservice/userApi";
+import delfines from "../images/delfines.png";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -29,9 +30,17 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="cardInfoTrip">
+    <div className="messagePassword ">
       {emailSent ? (
-        <p>Revisa tu correo electrónico para restablecer la contraseña.</p>
+        <Typography.Text className="messagePassword">
+          ¡¡Cuidado!! contraseña en modo aventura! 🌊 <br /> ¿Se fue a nadar con
+          delfines digitales y se quedó atrapada en una isla tropical de bits?No
+          te preocupes, te estamos enviando un mapa del tesoro con las
+          coordenadas para que tengas una nueva. Revisa tu bandeja de entrada.
+          <div>
+            <img src={delfines} alt="Delfines" className="image-container" />
+          </div>
+        </Typography.Text>
       ) : (
         <Form name="forgot-password-form" onFinish={onFinish}>
           <Form.Item
