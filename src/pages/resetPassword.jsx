@@ -1,12 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Input, Button, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import userApi from "../apiservice/userApi";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   const { token } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await userApi.getUserByToken(token);
+        if (response.data) {
+          setUserInfo(response.data);
+        } else {
+          message.error("Error al obtener la información del usuario");
+        }
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
+        message.error("Error al obtener la información del usuario");
+      }
+    };
+
+    fetchUserInfo();
+  }, [token]);
+
   const onFinish = async (values) => {
     setLoading(true);
     const { newPassword } = values;
@@ -29,6 +49,16 @@ const ResetPassword = () => {
 
   return (
     <div className="cardInfoTrip">
+      {userInfo && (
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <h2>Hola {userInfo.username}, aquí puedes cambiar tu contraseña:</h2>
+          <img
+            src={userInfo.imageUrl}
+            alt="Foto de perfil"
+            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+          />
+        </div>
+      )}
       <Form name="reset-password-form" onFinish={onFinish}>
         <Form.Item
           name="newPassword"
@@ -37,7 +67,6 @@ const ResetPassword = () => {
               required: true,
               message: "Por favor ingresa tu nueva contraseña",
             },
-            {},
             {
               pattern:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,

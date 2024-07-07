@@ -166,6 +166,20 @@ const resetPassword = async (token, newPassword) => {
   return { data: result };
 };
 
+const getUserByToken = async (token) => {
+  const response = await fetch(`${baseUrl}/users/:token`, {
+    method: "GET",
+    headers: { authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  return { data: await response.json() };
+};
+
 export default {
   /*getAllUsers,*/ addUser,
   deleteUser,
@@ -175,4 +189,5 @@ export default {
   updateUser,
   forgotPassword,
   resetPassword,
+  getUserByToken,
 };
