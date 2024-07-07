@@ -51,7 +51,7 @@ const ResetPassword = () => {
     <div className="cardInfoTrip">
       {userInfo && (
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <h2>Hola {userInfo.username}, aquí puedes cambiar tu contraseña:</h2>
+          <h2>Hola {userInfo.firstname}, aquí puedes cambiar tu contraseña:</h2>
           <img
             src={userInfo.imageUrl}
             alt="Foto de perfil"
@@ -76,6 +76,30 @@ const ResetPassword = () => {
           ]}
         >
           <Input.Password placeholder="Nueva contraseña" />
+        </Form.Item>
+
+        <Form.Item
+          name="confirmPassword"
+          dependencies={["newPassword"]}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Por favor confirma tu nueva contraseña",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("newPassword") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("Las contraseñas no coinciden")
+                );
+              },
+            }),
+          ]}
+        >
+          <Input.Password placeholder="Confirmar nueva contraseña" />
         </Form.Item>
 
         <Form.Item>
