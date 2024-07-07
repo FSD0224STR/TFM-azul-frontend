@@ -131,6 +131,16 @@ export const ViewCategory = () => {
     });
   };
 
+  const handleAddLikeAndSync = async (proposalId) => {
+    await proposalApi.addLike(proposalId);
+    getCategoryById(id);
+  };
+
+  const handleAddDislikeAndSync = async (proposalId) => {
+    await proposalApi.addDislike(proposalId);
+    getCategoryById(id);
+  };
+
   return (
     <div>
       <div className="cardInfoTrip">
@@ -227,9 +237,13 @@ export const ViewCategory = () => {
               key={proposal._id}
               id={proposal._id}
               title={proposal.title}
-              description={proposal.description}
               address={proposal.address}
+              description={proposal.description}
               owner={proposal.owner}
+              like={proposal.like}
+              dislike={proposal.dislike}
+              addLike={() => handleAddLikeAndSync(proposal._id)}
+              addDislike={() => handleAddDislikeAndSync(proposal._id)}
               onEdit={() => handleEditClick(proposal)}
               onDelete={() => handleDeleteProposal(proposal._id)}
               refreshProposals={() => getCategoryById(id)}

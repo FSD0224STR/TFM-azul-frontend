@@ -1,6 +1,8 @@
 .cardSize {
   width: 40%;
   margin: 5px;
+  margin-bottom: 25px;
+  min-width: 350px;
 }
 
 .cardBody {
@@ -24,4 +26,20 @@
 
 .danger-color {
   color: #ff4d4f;
+}
+
+.number-panel {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.number-likes{
+  margin: 0;
+}
+.number-panel > h4.ant-typography {
+  margin-bottom: 5px;
 }
