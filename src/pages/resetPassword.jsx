@@ -47,18 +47,20 @@ const ResetPassword = () => {
     }
   };
 
+  if (!userInfo) {
+    return <div>Cargando información del usuario...</div>;
+  }
+
   return (
     <div className="cardInfoTrip">
-      {userInfo && (
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <h2>Hola {userInfo.firstname}, aquí puedes cambiar tu contraseña:</h2>
-          <img
-            src={userInfo.imageUrl}
-            alt="Foto de perfil"
-            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-          />
-        </div>
-      )}
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <h2>Hola {userInfo.firstname}, aquí puedes cambiar tu contraseña:</h2>
+        <img
+          src={userInfo.imageUrl}
+          alt="Foto de perfil"
+          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+        />
+      </div>
       <Form name="reset-password-form" onFinish={onFinish}>
         <Form.Item
           name="newPassword"
@@ -68,10 +70,14 @@ const ResetPassword = () => {
               message: "Por favor ingresa tu nueva contraseña",
             },
             {
+              min: 8,
+              message: "La contraseña debe tener al menos 8 caracteres",
+            },
+            {
               pattern:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
               message:
-                "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)",
+                "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)",
             },
           ]}
         >
