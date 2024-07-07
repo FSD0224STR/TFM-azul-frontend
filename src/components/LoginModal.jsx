@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Modal, Button, Spin, Alert } from "antd";
+import { Modal, Button, Spin, Alert, Input } from "antd";
 import { AuthContext } from "../contexts/authContext";
 import { LoginFooter } from "./LoginFooter";
 
@@ -42,14 +42,14 @@ const LoginModal = ({
       className="custom-modal"
     >
       <div className="modal-content">
-        <input
+        <Input
           className="input"
           type="text"
           placeholder="Usuario"
           value={username}
           onChange={(e) => setUsername(e.currentTarget.value)}
         />
-        <input
+        <Input.Password
           className="input"
           type="password"
           placeholder="Contraseña"
