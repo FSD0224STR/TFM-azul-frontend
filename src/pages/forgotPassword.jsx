@@ -33,10 +33,7 @@ const ForgotPassword = () => {
     <div className="messagePassword ">
       {emailSent ? (
         <Typography.Text className="messagePassword">
-          ¡¡Cuidado!! contraseña en modo aventura! 🌊 <br /> ¿Se fue a nadar con
-          delfines digitales y se quedó atrapada en una isla tropical de bits?No
-          te preocupes, te estamos enviando un mapa del tesoro con las
-          coordenadas para que tengas una nueva. Revisa tu bandeja de entrada.
+          Revisa tu bandeja de entrada.
           <div>
             <img src={delfines} alt="Delfines" className="image-container" />
           </div>
