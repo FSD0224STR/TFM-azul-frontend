@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { Modal, Input } from "antd";
 import tripApi from "../apiservice/tripApi";
-import { Input, Modal } from "antd";
 import FloatingButton from "../components/FloatingButton";
 
 const AddCategoryModal = ({ tripId, getTripById }) => {
@@ -39,7 +39,7 @@ const AddCategoryModal = ({ tripId, getTripById }) => {
 
       <Modal
         title="Añadir Categoría"
-        open={modalVisible}
+        visible={modalVisible}
         onOk={handleAddCategoryClick}
         onCancel={() => {
           setModalVisible(false);

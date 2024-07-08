@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Alert, Tooltip, notification } from "antd";
+import { Typography, Alert, notification, Button } from "antd";
 import { format } from "date-fns";
-import es from "date-fns/locale/es";
-import { TeamOutlined, UserAddOutlined } from "@ant-design/icons";
+import { DeleteOutlined, UserOutlined } from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
-import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
 import UnlinkUser from "../components/UnlinkUserFromTrip";
 import AddCategoryModal from "../components/CreateCategoryModal";
+import DeleteTrip from "../components/DeleteTripButton";
 
 export default function Trip() {
   const [title, setTitle] = useState("");
@@ -16,41 +15,25 @@ export default function Trip() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [users, setUsers] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
 
   const [error, setError] = useState("");
 
-  const startDateFormatted = (date) => {
-    return date ? format(new Date(date), "d MMM", { locale: es }) : "";
+  const formatDate = (date) => {
+    return date ? format(new Date(date), "dd/MM/yyyy") : "";
   };
 
-  const endDateFormatted = (date) => {
-    return date ? format(new Date(date), "d MMM", { locale: es }) : "";
-  };
+  const { id } = useParams(); // Obtener el ID del trip desde los parámetros de la ruta
 
-  const yearDateFormatted = (date) => {
-    return date ? format(new Date(date), "yyyy", { locale: es }) : "";
-  };
-
-  //recogemos el id de la ruta
-  const { id } = useParams();
-
-  //llamada a la api para obtener los datos de ese viaje
   const getTripById = async (id) => {
-    console.log("Este es el getTripById ", id);
-
     try {
       const response = await tripAPI.getTripInfo(id);
-      console.log("esta es la respuesta", response);
       if (response.data) {
         setTitle(response.data.title);
         setDescription(response.data.description);
         setStartDate(response.data.startDate);
         setEndDate(response.data.endDate);
         setUsers(response.data.users);
-        setCategories(response.data.categories);
       } else if (response.error) {
         setError(response.error);
       }
@@ -66,7 +49,7 @@ export default function Trip() {
       .then(() => {
         notification.success({
           message: "Enlace copiado al portapapeles",
-          description: `Comparte el enlace para que tus compañeros de viaje puedan empezar a añadir propuestas. `,
+          description: `Comparte el enlace para que tus compañeros de viaje puedan empezar a añadir propuestas.`,
           placement: "topRight",
         });
       })
@@ -80,7 +63,6 @@ export default function Trip() {
       });
   };
 
-  //Pintamos el viaje nada más arrancar la página
   useEffect(() => {
     getTripById(id);
   }, [id]);
@@ -88,53 +70,37 @@ export default function Trip() {
   return (
     <div>
       <AddCategoryModal tripId={id} getTripById={getTripById} />
-      <div className="cardInfoTrip">
-        <div className="cabecera">
-          <Typography.Title level={2}>{title}</Typography.Title>
-          <Tooltip title="Copiar enlace de invitación">
-            <UserAddOutlined
-              onClick={generateInvitationLink}
-              className="icon-size"
-            />
-          </Tooltip>
-        </div>
-        <div className="unlink-btn">
+      <div>
+        <Typography.Title level={3}>¿Cuándo?</Typography.Title>
+        <Typography.Text level={3}>
+          Del {formatDate(startDate)} al {formatDate(endDate)}.
+        </Typography.Text>
+        <Typography.Title level={3}>¿Dónde?</Typography.Title>
+        <Typography.Text level={3}>A {title}.</Typography.Text>
+        <Typography.Title level={3}>¿Algo más?</Typography.Title>
+        <Typography.Text level={3}>{description}</Typography.Text>
+        <Typography.Title level={3}>¿Quién va?</Typography.Title>
+        <Typography.Text level={3}>
+          <UserOutlined />
+          {"    "}
+          {users.map((user) => user.username).join(", ")}
+        </Typography.Text>
+        <br />
+        <br />
+        <br />
+        <Button
+          style={{ marginRight: "10px" }}
+          onClick={generateInvitationLink}
+          type="dashed"
+        >
+          Añadir viajeros
+        </Button>
+        <Button style={{ marginRight: "10px" }}>Editar</Button>
+        {users.length > 1 ? (
           <UnlinkUser tripId={id} />
-        </div>
-        <div className="description">
-          <p>
-            {"Del " +
-              startDateFormatted(startDate) +
-              " al " +
-              endDateFormatted(endDate) +
-              " de " +
-              yearDateFormatted(endDate)}
-          </p>
-
-          <p>{description}</p>
-        </div>
-        <p>
-          <TeamOutlined /> {users.map((user) => user.username).join(", ")}
-        </p>
-        <div className="categoryCardList ">
-          {categories.map((categoria) => (
-            <CategoryCard
-              key={categoria._id}
-              id={categoria._id}
-              title={categoria.title}
-              refreshCategories={() => getTripById(id)} // Pasar la función de actualización como prop
-            ></CategoryCard>
-          ))}
-        </div>
-        {isAddingCategory && (
-          <input
-            className="newCategoryInput tripInfo"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
-            placeholder="Nombre de la categoría"
-          />
+        ) : (
+          <DeleteTrip tripId={id} />
         )}
-
         {error && (
           <Alert
             type="error"

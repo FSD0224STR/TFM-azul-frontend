@@ -120,10 +120,11 @@ function Home() {
   }, [filter, trips]);
 
   return (
-    <div className="cardInfoTrip">
+    <div className="">
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12}>
           <Search
+            allowClear
             placeholder="Buscar por título"
             onSearch={(value) => handleFilterChange(value, "search")}
             enterButton
@@ -131,6 +132,7 @@ function Home() {
         </Col>
         <Col xs={24} sm={12}>
           <Select
+            allowClear
             placeholder="Filtrar por dueño"
             style={{ width: "100%" }}
             onChange={(value) => handleFilterChange(value, "owner")}

@@ -99,13 +99,12 @@ const FAQs = () => {
   const { token } = theme.useToken();
   const panelStyle = {
     marginBottom: 24,
-    background: "rgba(0, 81, 255, 0.100)",
     borderRadius: token.borderRadiusLG,
     border: "none",
   };
   return (
     <Collapse
-      className="cardInfoTrip"
+      className=""
       bordered={false}
       expandIcon={({ isActive }) => (
         <CaretRightOutlined rotate={isActive ? 90 : 0} />

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
 
-import { Alert, Typography, Modal, Form } from "antd";
+import { Alert, Modal, Form } from "antd";
 import "../styles/ViewCategory.css";
 
 import { ProposalCard } from "../components/ProposalCard";
@@ -14,7 +14,6 @@ import FloatingButton from "../components/FloatingButton";
 const ViewCategory = () => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
-  //const [description, setDescription] = useState("");
   const [proposals, setProposals] = useState([]);
   const [error, setError] = useState("");
   const [visibleModal, setVisibleModal] = useState(false);
@@ -35,7 +34,6 @@ const ViewCategory = () => {
 
       if (response.data) {
         setTitle(response.data.title);
-        //setDescription(response.data.description);
         setProposals(response.data.proposals);
       } else if (response.error) {
         setError(response.error);
@@ -145,11 +143,7 @@ const ViewCategory = () => {
 
   return (
     <div>
-      <div className="cardInfoTrip">
-        <div className="travelTitle">
-          <Typography.Title level={1}>{title}</Typography.Title>
-        </div>
-
+      <div className="">
         <FloatingButton
           onClick={handleAddProposalClick}
           tooltipTitle="Añadir propuesta"

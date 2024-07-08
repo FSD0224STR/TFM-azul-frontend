@@ -1,22 +1,25 @@
 import { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../contexts/authContext";
-import tripAPI from "../apiservice/tripApi";
+import { Link, useNavigate } from "react-router-dom";
+import { Layout, Menu, Button, Spin, Alert, theme } from "antd";
 import logo from "../images/logo.png";
-import { Breadcrumb, Layout, Menu, Button, Spin, Alert, theme } from "antd";
-import LoginModal from "./LoginModal";
+import LoginModal from "../components/LoginModal";
+import tripAPI from "../apiservice/tripApi";
+import { AuthContext } from "../contexts/authContext";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const MyLayout = ({ children }) => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const { token } = theme.useToken();
+  const { colorBgContainer, borderRadiusLG } = token;
 
   const { isLoggedIn, logout, loading, error, setError } =
     useContext(AuthContext);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [trips, setTrips] = useState([]);
+  const [openKeys, setOpenKeys] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTrips = async () => {
@@ -29,7 +32,7 @@ const MyLayout = ({ children }) => {
     };
 
     fetchTrips();
-  }, []);
+  }, [setError]);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -50,16 +53,14 @@ const MyLayout = ({ children }) => {
     }
   };
 
-  const menuItems = trips.map((trip) => ({
-    key: `sub${trip._id}`,
-    label: trip.title,
-    children: [
-      { key: `option1-${trip._id}`, label: "Option 1" },
-      { key: `option2-${trip._id}`, label: "Option 2" },
-      { key: `option3-${trip._id}`, label: "Option 3" },
-      { key: `option4-${trip._id}`, label: "Option 4" },
-    ],
-  }));
+  const handleSubMenuClick = ({ key }) => {
+    setOpenKeys(key ? [key] : []);
+  };
+
+  const handleTripClick = (tripId) => {
+    // Navegar a la página de detalles del trip
+    navigate(`/${tripId}`);
+  };
 
   return (
     <Layout>
@@ -85,7 +86,7 @@ const MyLayout = ({ children }) => {
             onClick={handleMenuClick}
           >
             <Menu.Item key="home">
-              <Link to="/home">Home</Link>
+              <Link to="/home">Viajes</Link>
             </Menu.Item>
             <Menu.Item key="perfil">
               <Link to="/perfil">Perfil</Link>
@@ -122,11 +123,6 @@ const MyLayout = ({ children }) => {
         )}
       </Header>
       <Content style={{ padding: "0 48px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
         <Layout
           style={{
             padding: "24px 0",
@@ -139,18 +135,29 @@ const MyLayout = ({ children }) => {
               <Menu
                 mode="inline"
                 defaultSelectedKeys={["1"]}
-                defaultOpenKeys={["sub1"]}
+                defaultOpenKeys={openKeys}
+                onOpenChange={handleSubMenuClick}
                 style={{ height: "100%" }}
               >
-                {menuItems.map((item) => (
-                  <Menu.SubMenu
-                    key={item.key}
-                    icon={item.icon}
-                    title={item.label}
-                  >
-                    {item.children.map((child) => (
-                      <Menu.Item key={child.key}>{child.label}</Menu.Item>
-                    ))}
+                <Menu.Item>Añadir viaje</Menu.Item>
+                {trips.map((trip) => (
+                  <Menu.SubMenu key={trip._id} title={trip.title}>
+                    <Menu.Item
+                      key={`details-${trip._id}`}
+                      onClick={() => handleTripClick(trip._id)}
+                    >
+                      Información
+                    </Menu.Item>
+                    <Menu.SubMenu title="Categorías">
+                      {trip.categories.map((category) => (
+                        <Menu.Item key={category._id}>
+                          <Link to={`/categories/${category._id}`}>
+                            {category.title}
+                          </Link>
+                        </Menu.Item>
+                      ))}
+                      <Menu.Item>Añadir categoría</Menu.Item>
+                    </Menu.SubMenu>
                   </Menu.SubMenu>
                 ))}
               </Menu>
@@ -162,7 +169,7 @@ const MyLayout = ({ children }) => {
         </Layout>
       </Content>
       <Footer style={{ textAlign: "center" }}>
-        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        Equipo Azul ©{new Date().getFullYear()} Created by A.B.A.S.
       </Footer>
     </Layout>
   );
