@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
-import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { ProposalCard } from "../components/ProposalCard";
+
+import { Alert, Typography, Modal, Form } from "antd";
 import "../styles/ViewCategory.css";
 
-const { TextArea } = Input;
+import { ProposalCard } from "../components/ProposalCard";
+import ProposalModal from "../components/CreateProposalModal";
+import FloatingButton from "../components/FloatingButton";
 
-export const ViewCategory = () => {
+const ViewCategory = () => {
   const { id } = useParams();
   const [title, setTitle] = useState("");
   //const [description, setDescription] = useState("");
@@ -147,80 +149,19 @@ export const ViewCategory = () => {
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
         </div>
-        {/* <p className="description">{description}</p> */}
 
-        <Tooltip title="Añadir propuesta">
-          <Button
-            type="primary"
-            shape="circle"
-            size="large"
-            icon={<PlusOutlined />}
-            onClick={() => handleAddProposalClick(true)}
-            style={{
-              width: "64px",
-              height: "64px",
-              lineHeight: "64px",
-              textAlign: "center",
-              position: "fixed",
-              bottom: 20,
-              right: 20,
-            }}
-          />
-        </Tooltip>
-
-        <Modal
-          title={isEditing ? "Editar Propuesta" : "Añadir Propuesta"}
-          open={visibleModal}
+        <FloatingButton
+          onClick={handleAddProposalClick}
+          tooltipTitle="Añadir propuesta"
+        />
+        <ProposalModal
+          visible={visibleModal}
           onCancel={handleModalClose}
-          footer={null}
-        >
-          <Form
-            form={form}
-            onFinish={isEditing ? handleEditProposal : handleAddProposal}
-          >
-            <Form.Item
-              name="title"
-              label="Título"
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor ingresa el título de la propuesta",
-                },
-              ]}
-            >
-              <Input placeholder="Título de la propuesta" />
-            </Form.Item>
-            <Form.Item
-              name="description"
-              label="Descripción"
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor ingresa la descripción de la propuesta",
-                },
-              ]}
-            >
-              <TextArea rows={4} placeholder="Descripción de la propuesta" />
-            </Form.Item>
-            <Form.Item
-              name="address"
-              label="Dirección"
-              rules={[
-                {
-                  required: true,
-                  message: "Por favor ingresa la dirección de la propuesta",
-                },
-              ]}
-            >
-              <Input placeholder="Dirección de la propuesta" />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                {isEditing ? "Guardar" : "Añadir"}
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
+          onFinish={isEditing ? handleEditProposal : handleAddProposal}
+          isEditing={isEditing}
+          currentProposal={currentProposal}
+          form={form}
+        />
 
         {error && (
           <Alert
@@ -254,3 +195,5 @@ export const ViewCategory = () => {
     </div>
   );
 };
+
+export default ViewCategory;

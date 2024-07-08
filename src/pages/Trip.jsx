@@ -10,7 +10,7 @@ import "../styles/Trip.css";
 import UnlinkUser from "../components/UnlinkUserFromTrip";
 import AddCategoryModal from "../components/CreateCategoryModal";
 
-export function Trip() {
+export default function Trip() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");

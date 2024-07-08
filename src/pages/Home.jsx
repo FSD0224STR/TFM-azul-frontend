@@ -1,30 +1,28 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  Typography,
-  Spin,
-  Row,
-  Col,
-  Alert,
-  Modal,
-  Button,
-  Tooltip,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { Typography, Spin, Row, Col, Alert, Modal, Select, Input } from "antd";
 
 import tripAPI from "../apiservice/tripApi";
+
 import { AuthContext } from "../contexts/authContext";
+
 import { TripCard } from "../components/TripCard";
 import CreateTripModal from "../components/CreateTripModal";
+import FloatingButton from "../components/FloatingButton";
 
 import "../styles/Home.css";
-import { useNavigate } from "react-router-dom";
+
+const { Option } = Select;
+const { Search } = Input;
 
 function Home() {
   const [trips, setTrips] = useState([]);
+  const [filteredTrips, setFilteredTrips] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
   const [editingTrip, setEditingTrip] = useState(null); // Estado para el viaje que se está editando
+  const [filter, setFilter] = useState({ search: "", owner: "" }); // Estado para los filtros
 
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -41,6 +39,7 @@ function Home() {
       setLoading(true);
       const response = await tripAPI.getAllTrips();
       setTrips(response.data);
+      setFilteredTrips(response.data); // Inicialmente, los viajes filtrados son todos los viajes
     } catch (error) {
       setError(`Error fetching trips: ${error.message}`);
     } finally {
@@ -58,6 +57,9 @@ function Home() {
         showErrorModal(response.error);
       } else {
         setTrips(trips.filter((trip) => trip._id !== idToDelete));
+        setFilteredTrips(
+          filteredTrips.filter((trip) => trip._id !== idToDelete)
+        ); // También actualiza los viajes filtrados
       }
     } catch (error) {
       setError(`Error deleting trip: ${error.message}`);
@@ -93,18 +95,63 @@ function Home() {
     await getTrips(); // Vuelve a obtener la lista de viajes actualizada
   };
 
+  const handleFilterChange = (value, field) => {
+    setFilter((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const filterTrips = () => {
+    const { search, owner } = filter;
+    const filtered = trips.filter((trip) => {
+      const matchesSearch = search
+        ? trip.title.toLowerCase().includes(search.toLowerCase())
+        : true;
+      const matchesOwner = owner ? trip.owner.username === owner : true;
+      return matchesSearch && matchesOwner;
+    });
+    setFilteredTrips(filtered);
+  };
+
   useEffect(() => {
     getTrips();
   }, []);
 
+  useEffect(() => {
+    filterTrips();
+  }, [filter, trips]);
+
   return (
-    <div className="tripContainer">
-      <div>
+    <div className="cardInfoTrip">
+      <Row gutter={[16, 16]}>
+        <Col xs={24} sm={12}>
+          <Search
+            placeholder="Buscar por título"
+            onSearch={(value) => handleFilterChange(value, "search")}
+            enterButton
+          />
+        </Col>
+        <Col xs={24} sm={12}>
+          <Select
+            placeholder="Filtrar por dueño"
+            style={{ width: "100%" }}
+            onChange={(value) => handleFilterChange(value, "owner")}
+          >
+            {Array.from(new Set(trips.map((trip) => trip.owner.username))).map(
+              (owner) => (
+                <Option key={owner} value={owner}>
+                  {owner}
+                </Option>
+              )
+            )}
+          </Select>
+        </Col>
+      </Row>
+
+      <div style={{ marginTop: 20 }}>
         {loading ? (
           <Spin />
-        ) : Array.isArray(trips) && trips.length > 0 ? (
-          <div className="tripPanel">
-            {trips.map((trip) => (
+        ) : Array.isArray(filteredTrips) && filteredTrips.length > 0 ? (
+          <div className="">
+            {filteredTrips.map((trip) => (
               <TripCard
                 key={trip._id}
                 title={trip.title}
@@ -122,6 +169,7 @@ function Home() {
           <Typography.Text>No se han encontrado viajes.</Typography.Text>
         )}
       </div>
+
       {isLoggedIn ? (
         <>
           <Row gutter={[16, 16]}>
@@ -134,25 +182,10 @@ function Home() {
               />
             </Col>
           </Row>
-          {/* Botón flotante para abrir modal de creación */}
-          <Tooltip title="Crear Nuevo Viaje">
-            <Button
-              type="primary"
-              shape="circle"
-              size="large"
-              icon={<PlusOutlined />}
-              onClick={handleCreateTrip}
-              style={{
-                width: "64px",
-                height: "64px",
-                lineHeight: "64px",
-                textAlign: "center",
-                position: "fixed",
-                bottom: 20,
-                right: 20,
-              }}
-            />
-          </Tooltip>
+          <FloatingButton
+            onClick={handleCreateTrip}
+            tooltipTitle="Nuevo viaje"
+          />
         </>
       ) : (
         <Typography.Text>

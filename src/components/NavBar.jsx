@@ -1,12 +1,16 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../contexts/authContext";
-import { Button, Spin, Alert } from "antd";
-import LoginModal from "./LoginModal"; // Asegúrate de que la ruta sea correcta
-import logo from "../images/logo.png";
-import "../styles/NavBar2.css";
 import { Link } from "react-router-dom";
 
-export const NavBar2 = () => {
+import { AuthContext } from "../contexts/authContext";
+
+import { Button, Spin, Alert } from "antd";
+import "../styles/NavBar.css";
+
+import LoginModal from "./LoginModal";
+
+import logo from "../images/logo.png";
+
+export const NavBar = () => {
   const { isLoggedIn, logout, loading, error, setError } =
     useContext(AuthContext);
   const [isModalVisible, setIsModalVisible] = useState(false);

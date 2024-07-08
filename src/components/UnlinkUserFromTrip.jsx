@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import tripApi from "../apiservice/tripApi";
 import userApi from "../apiservice/userApi";
+
 import { Popconfirm, notification } from "antd";
+
 import { useNavigate } from "react-router-dom";
 
 const UnlinkUser = ({ tripId }) => {
   const [userId, setUserId] = useState(null);
-  const [trip, setTrip] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const userInfo = await userApi.getMyProfile();
-      console.log("userInfo", userInfo);
-      if (userInfo) {
-        setUserId(userInfo.data._id);
+      try {
+        const userInfo = await userApi.getMyProfile();
+        console.log("userInfo", userInfo);
+        if (userInfo) {
+          setUserId(userInfo.data._id);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // Handle error fetching user data
       }
     };
 
@@ -35,10 +41,7 @@ const UnlinkUser = ({ tripId }) => {
             description: result.message,
             placement: "topRight",
           });
-          setTrip((prevTrip) => ({
-            ...prevTrip,
-            users: prevTrip.users.filter((user) => user !== userId),
-          }));
+          // No se necesita actualizar 'trip' en este componente
           navigate("/home");
         }
       } catch (error) {
