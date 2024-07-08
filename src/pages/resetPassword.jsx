@@ -52,7 +52,7 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="cardInfoTrip">
+    <div className="">
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
         <h2>Hola {userInfo.firstname}, aquí puedes cambiar tu contraseña:</h2>
         <img

@@ -72,7 +72,7 @@ const MyLayout = ({ children }) => {
               src={logo}
               alt="Logo de la Aplicación"
               style={{
-                height: "50px",
+                maxHeight: "50px",
                 verticalAlign: "-webkit-baseline-middle",
               }}
             />
