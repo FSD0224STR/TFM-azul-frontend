@@ -6,12 +6,12 @@ import Login from "./pages/login";
 import UserDetails from "./pages/UserDetails";
 import { AuthContext } from "./contexts/authContext";
 import "./styles/App.css";
-import Trip from "./pages/Trip";
+import Trip from "./pages/tripDetails";
 import ViewCategory from "./pages/viewCategory";
 import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
 import RegistrationForm2 from "./pages/registration2";
-import ConfirmRegistration from "./pages/confirmRegistration"; // Importa la nueva página
+import ConfirmRegistration from "./pages/confirmRegistration";
 import { Spin } from "antd";
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resetPassword";

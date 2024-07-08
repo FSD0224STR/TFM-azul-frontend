@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import tripApi from "../apiservice/tripApi";
-import userApi from "../apiservice/userApi";
+import tripApi from "../../apiservice/tripApi";
+import userApi from "../../apiservice/userApi";
 
 import { Button, Popconfirm, notification } from "antd";
 
 import { useNavigate } from "react-router-dom";
 
-const UnlinkUser = ({ tripId }) => {
+const DeleteTrip = ({ tripId }) => {
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
@@ -20,34 +20,29 @@ const UnlinkUser = ({ tripId }) => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        // Handle error fetching user data
       }
     };
 
     fetchUserData();
   }, []);
 
-  const handleUnlink = async () => {
-    console.log("Button clicked");
+  const handleDelete = async () => {
     if (userId) {
-      console.log("User ID:", userId);
-      console.log("Trip ID:", tripId);
       try {
-        const result = await tripApi.unlinkUserFromTrip(tripId, userId);
+        const result = await tripApi.deleteTrip(tripId, userId);
         if (result) {
-          console.log("Unlink result:", result);
+          console.log("Delete result:", result);
           notification.success({
-            message: "Ya no formas parte del viaje",
+            message: "Viaje eliminado con éxito",
             description: result.message,
             placement: "topRight",
           });
-          // No se necesita actualizar 'trip' en este componente
           navigate("/home");
         }
       } catch (error) {
-        console.error("Error al desvincular usuario:", error);
+        console.error("Error al eliminar viaje:", error);
         notification.error({
-          message: "Error al desvincular usuario",
+          message: "Error al eliminar viaje",
           description: error.message,
           placement: "topRight",
         });
@@ -57,14 +52,14 @@ const UnlinkUser = ({ tripId }) => {
 
   return (
     <Popconfirm
-      title="¿Estás seguro de que quieres desvincularte del viaje?"
-      onConfirm={handleUnlink}
+      title="¿Estás seguro de que quieres eliminar el viaje para siempre?"
+      onConfirm={handleDelete}
       okText="Sí"
       cancelText="No"
     >
-      <Button danger>Desvincularme del viaje</Button>
+      <Button danger>Eliminar viaje</Button>
     </Popconfirm>
   );
 };
 
-export default UnlinkUser;
+export default DeleteTrip;

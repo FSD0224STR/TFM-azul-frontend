@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Typography, Alert, notification, Button } from "antd";
 import { format } from "date-fns";
-import { DeleteOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
 import "../styles/Trip.css";
-import UnlinkUser from "../components/UnlinkUserFromTrip";
+import UnlinkUser from "../components/tripDetails/UnlinkUserFromTripButton";
 import AddCategoryModal from "../components/CreateCategoryModal";
-import DeleteTrip from "../components/DeleteTripButton";
+import DeleteTrip from "../components/tripDetails/DeleteTripButton";
+import EditTrip from "../components/tripDetails/EditTripButton";
 
 export default function Trip() {
   const [title, setTitle] = useState("");
@@ -95,7 +96,7 @@ export default function Trip() {
         >
           Añadir viajeros
         </Button>
-        <Button style={{ marginRight: "10px" }}>Editar</Button>
+        <EditTrip />
         {users.length > 1 ? (
           <UnlinkUser tripId={id} />
         ) : (

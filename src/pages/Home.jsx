@@ -26,7 +26,6 @@ function Home() {
 
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const showErrorModal = (message) => {
     Modal.error({
       title: "Error",
