@@ -1,7 +1,7 @@
 import { Button, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
-const FloatingButton = ({ onClick, tooltipTitle = "Añadir", style = {} }) => (
+const FloatingButton = ({ onClick, tooltipTitle = "Añadir" }) => (
   <Tooltip title={tooltipTitle}>
     <Button
       type="primary"
