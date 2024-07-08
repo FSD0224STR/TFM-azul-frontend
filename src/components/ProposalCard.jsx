@@ -1,4 +1,4 @@
-import { Card, Descriptions, message, Popconfirm } from "antd";
+import { Card, Descriptions, message, Popconfirm, Typography } from "antd";
 import {
   DeleteOutlined,
   DislikeOutlined,
@@ -12,10 +12,12 @@ export const ProposalCard = ({
   address,
   description,
   owner,
-  onDelete,
-  onEdit,
   like,
   dislike,
+  onEdit,
+  onDelete,
+  addLike,
+  addDislike,
 }) => {
   const items = [
     {
@@ -59,19 +61,21 @@ export const ProposalCard = ({
             >
               <DeleteOutlined className="icon-size danger-color " />
             </Popconfirm>
-
             <EditOutlined
               onClick={onEdit}
               className="icon-size icon-margin-left"
             />
-            <LikeOutlined
-              onClick={like}
-              className="icon-size icon-margin-left blue"
-            />
-            <DislikeOutlined
-              onClick={dislike}
-              className="icon-size icon-margin-left blue"
-            />
+            <div className="number-panel icon-margin-left">
+              <Typography.Title level={4}>{like}</Typography.Title>
+              <LikeOutlined onClick={addLike} className="icon-size blue" />
+            </div>
+            <div className="number-panel icon-margin-left">
+              <Typography.Title level={4}>{dislike}</Typography.Title>
+              <DislikeOutlined
+                onClick={addDislike}
+                className="icon-size blue"
+              />
+            </div>
           </div>
         </>
       }
