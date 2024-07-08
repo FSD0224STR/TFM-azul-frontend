@@ -80,12 +80,10 @@ const getMyProfile = async (username) => {
   return { data: await response.json() };
 };
 
-
 const addNewImage = async (formData) => {
-  
-  console.log('formData', formData);
+  console.log("formData", formData);
 
-  const response = await fetch(`${baseUrl}/upload`,{
+  const response = await fetch(`${baseUrl}/upload`, {
     method: "POST",
     body: formData,
     // headers: {
@@ -101,23 +99,26 @@ const addNewImage = async (formData) => {
   return { data: await response.json() };
 };
 
-
-const updateUser = async (_id,
+const updateUser = async (
+  _id,
   firstname,
   lastname,
   username,
   email,
-  imageUrl) => {
+  imageUrl
+) => {
   const token = localStorage.getItem("access_token");
 
   const response = await fetch(`${baseUrl}/users/${_id}`, {
     method: "PUT",
-    body: JSON.stringify({_id,
+    body: JSON.stringify({
+      _id,
       firstname,
       lastname,
       username,
       email,
-      imageUrl}),
+      imageUrl,
+    }),
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
@@ -133,5 +134,60 @@ const updateUser = async (_id,
   return { data: newlyCreatedUser };
 };
 
+const forgotPassword = async (email) => {
+  const response = await fetch(`${baseUrl}/users/forgot-password`, {
+    method: "POST",
+    body: JSON.stringify({ email }),
+    headers: { "Content-Type": "application/json" },
+  });
 
-export default { /*getAllUsers,*/ addUser, deleteUser, login, getMyProfile, addNewImage, updateUser };
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  const result = await response.json();
+  return { data: result };
+};
+
+const resetPassword = async (token, newPassword) => {
+  const response = await fetch(`${baseUrl}/users/reset-password`, {
+    method: "POST",
+    body: JSON.stringify({ token, newPassword }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  const result = await response.json();
+  return { data: result };
+};
+
+const getUserByToken = async (token) => {
+  const response = await fetch(`${baseUrl}/users/:token`, {
+    method: "GET",
+    headers: { authorization: `Bearer ${token}` },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  return { data: await response.json() };
+};
+
+export default {
+  /*getAllUsers,*/ addUser,
+  deleteUser,
+  login,
+  getMyProfile,
+  addNewImage,
+  updateUser,
+  forgotPassword,
+  resetPassword,
+  getUserByToken,
+};
