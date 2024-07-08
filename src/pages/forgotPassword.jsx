@@ -34,9 +34,6 @@ const ForgotPassword = () => {
       {emailSent ? (
         <Typography.Text className="messagePassword">
           Revisa tu bandeja de entrada.
-          <div>
-            <img src={delfines} alt="Delfines" className="image-container" />
-          </div>
         </Typography.Text>
       ) : (
         <Form name="forgot-password-form" onFinish={onFinish}>
