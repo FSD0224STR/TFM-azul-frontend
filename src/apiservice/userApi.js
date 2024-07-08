@@ -180,6 +180,22 @@ const getUserByToken = async (token) => {
   return { data: await response.json() };
 };
 
+export const verifyUserAccount = async (token) => {
+  const response = await fetch(`${baseUrl}/users/verify-user`, {
+    method: "PATCH",
+    body: JSON.stringify({ token }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  const result = await response.json();
+  return { data: result };
+};
+
 export default {
   /*getAllUsers,*/ addUser,
   deleteUser,
@@ -190,4 +206,5 @@ export default {
   forgotPassword,
   resetPassword,
   getUserByToken,
+  verifyUserAccount,
 };

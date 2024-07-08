@@ -3,6 +3,8 @@ import { Typography, Button } from "antd";
 const { Title, Text } = Typography;
 
 const ConfirmRegistration = () => {
+  //añadir la lógica para llamar a userApi.verifyUserAccount
+
   return (
     <div className="cardInfoTrip">
       <Title>¿Ya te has registrado?</Title>
