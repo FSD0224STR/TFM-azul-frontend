@@ -115,8 +115,8 @@ const UserDetails = () => {
 
   return (
     <>
-      <div className="user-container">
-        <div className="user-content">
+      <div className="">
+        <div className="">
           <Typography.Title level={2} className="profileTitle">
             Perfil
           </Typography.Title>
