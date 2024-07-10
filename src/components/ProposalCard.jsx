@@ -4,6 +4,8 @@ import {
   DislikeOutlined,
   EditOutlined,
   LikeOutlined,
+  LikeFilled,
+  DislikeFilled,
 } from "@ant-design/icons";
 import "../styles/ProposalCard.css";
 
@@ -14,10 +16,13 @@ export const ProposalCard = ({
   owner,
   like,
   dislike,
+  userId,
   onEdit,
   onDelete,
   addLike,
   addDislike,
+  removeLike,
+  removeDislike,
 }) => {
   const items = [
     {
@@ -44,6 +49,13 @@ export const ProposalCard = ({
     message.error("Una retirada a tiempo es una victoria");
   };
 
+  const isLiked = (userId, like) => {
+    return like.includes(userId);
+  };
+  const isDisliked = (userId, like) => {
+    return like.includes(userId);
+  };
+
   return (
     <Card
       title={title}
@@ -66,15 +78,26 @@ export const ProposalCard = ({
               className="icon-size icon-margin-left"
             />
             <div className="number-panel icon-margin-left">
-              <Typography.Title level={4}>{like}</Typography.Title>
-              <LikeOutlined onClick={addLike} className="icon-size blue" />
+              <Typography.Title level={4}>{like.length}</Typography.Title>
+              {isLiked(userId, like) ? (
+                <LikeFilled onClick={removeLike} className="icon-size blue" />
+              ) : (
+                <LikeOutlined onClick={addLike} className="icon-size blue" />
+              )}
             </div>
             <div className="number-panel icon-margin-left">
-              <Typography.Title level={4}>{dislike}</Typography.Title>
-              <DislikeOutlined
-                onClick={addDislike}
-                className="icon-size blue"
-              />
+              <Typography.Title level={4}>{dislike.length}</Typography.Title>
+              {isDisliked(userId, dislike) ? (
+                <DislikeFilled
+                  onClick={removeDislike}
+                  className="icon-size blue"
+                />
+              ) : (
+                <DislikeOutlined
+                  onClick={addDislike}
+                  className="icon-size blue"
+                />
+              )}
             </div>
           </div>
         </>
