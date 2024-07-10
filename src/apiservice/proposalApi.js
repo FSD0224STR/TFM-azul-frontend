@@ -128,11 +128,67 @@ export const addDislike= async (proposalId) => {
   }
 } 
 
+export const removeLike= async (proposalId) => {
+  const token = localStorage.getItem("access_token");
+  console.log('token',token);
+
+  if (!token) {
+    return { error: "No token found. Please login again." };
+  }
+
+  try{
+      console.log('estoy quitando un Like');
+      const response = await fetch(`${baseUrl}like/${proposalId}`, {
+          method: 'DELETE', 
+          headers:{
+            Authorization: `Bearer ${token}`,
+          },
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        return { error: error.message };
+      }
+      const data = await response.json();
+      return { data };
+      
+  } catch (error) {
+    return { error: error.message };
+  }
+} 
+
+export const removeDislike= async (proposalId) => {
+  const token = localStorage.getItem("access_token");
+
+  if (!token) {
+    return { error: "No token found. Please login again." };
+  }
+
+  try{
+    console.log('estoy quitando un Dislike');
+      const response = await fetch(`${baseUrl}dislike/${proposalId}`, {
+          method: 'DELETE', 
+          headers:{
+            Authorization: `Bearer ${token}`,
+          },
+      });
+      if (!response.ok) {
+        const error = await response.json();
+        return { error: error.message };
+      }
+      const data = await response.json();
+      return { data };
+      
+  } catch (error) {
+    return { error: error.message };
+  }
+} 
 
 export default {
   updateProposal,
   deleteProposal,
   getProposalInfo,
   addLike,
-  addDislike
+  addDislike,
+  removeLike,
+  removeDislike
 };

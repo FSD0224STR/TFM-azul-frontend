@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
 import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
+import { AuthContext } from "/src/contexts/authContext";
 import "../styles/ViewCategory.css";
 
 const { TextArea } = Input;
@@ -19,6 +20,10 @@ export const ViewCategory = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [currentProposal, setCurrentProposal] = useState(null);
+
+  const authContext = useContext(AuthContext);
+  const { profile } = authContext;
+  const [userId, setUserId] = useState(null);
 
   const showErrorModal = (message) => {
     Modal.error({
@@ -44,6 +49,13 @@ export const ViewCategory = () => {
       showErrorModal(error.message);
     }
   };
+
+  useEffect(() => {
+    if (profile) {
+      console.log("profile userid: ", profile._id);
+      setUserId(profile._id);
+    }
+  }, [profile]);
 
   useEffect(() => {
     getCategoryById(id);
@@ -138,6 +150,16 @@ export const ViewCategory = () => {
 
   const handleAddDislikeAndSync = async (proposalId) => {
     await proposalApi.addDislike(proposalId);
+    getCategoryById(id);
+  };
+
+  const handleRemoveLikeAndSync = async (proposalId) => {
+    await proposalApi.removeLike(proposalId);
+    getCategoryById(id);
+  };
+
+  const handleRemoveDislikeAndSync = async (proposalId) => {
+    await proposalApi.removeDislike(proposalId);
     getCategoryById(id);
   };
 
@@ -242,8 +264,11 @@ export const ViewCategory = () => {
               owner={proposal.owner}
               like={proposal.like}
               dislike={proposal.dislike}
+              userId={userId}
               addLike={() => handleAddLikeAndSync(proposal._id)}
               addDislike={() => handleAddDislikeAndSync(proposal._id)}
+              removeLike={() => handleRemoveLikeAndSync(proposal._id)}
+              removeDislike={() => handleRemoveDislikeAndSync(proposal._id)}
               onEdit={() => handleEditClick(proposal)}
               onDelete={() => handleDeleteProposal(proposal._id)}
               refreshProposals={() => getCategoryById(id)}
