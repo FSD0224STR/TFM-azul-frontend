@@ -1,17 +1,5 @@
 const baseUrl = import.meta.env.VITE_BACKEND;
 
-// const getAllUsers = async () => {
-//   const response = await window.fetch(`${baseUrl}/users`);
-
-//   if (!response.ok) {
-//     const error = await response.json();
-//     return { error: error.message };
-//   }
-
-//   const users = await response.json();
-//   return { data: users };
-// };
-
 const addUser = async (firstname, lastname, username, password, email) => {
   const token = localStorage.getItem("access_token");
 
@@ -130,8 +118,8 @@ const updateUser = async (
     return { error: errorMessage };
   }
 
-  const newlyCreatedUser = await response.json();
-  return { data: newlyCreatedUser };
+  const updatedUser = await response.json();
+  return { data: updatedUser };
 };
 
 const forgotPassword = async (email) => {
@@ -167,7 +155,7 @@ const resetPassword = async (token, newPassword) => {
 };
 
 const getUserByToken = async (token) => {
-  const response = await fetch(`${baseUrl}/users/:token`, {
+  const response = await fetch(`${baseUrl}/users/token/${token}`, {
     method: "GET",
     headers: { authorization: `Bearer ${token}` },
   });
@@ -181,7 +169,7 @@ const getUserByToken = async (token) => {
 };
 
 export default {
-  /*getAllUsers,*/ addUser,
+  addUser,
   deleteUser,
   login,
   getMyProfile,
