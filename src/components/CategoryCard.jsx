@@ -62,7 +62,6 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
         console.log(response.error);
         showErrorModal(response.error);
       } else {
-        message.success("Categoría eliminada");
         refreshCategories();
       }
     } catch (error) {

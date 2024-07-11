@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Alert, Tooltip, notification } from "antd";
+import { Typography, Alert, Tooltip, notification, Badge } from "antd";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
 import { TeamOutlined, UserAddOutlined } from "@ant-design/icons";
@@ -9,6 +9,8 @@ import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
 import UnlinkUser from "../components/UnlinkUserFromTrip";
 import AddCategoryModal from "../components/CreateCategoryModal";
+import { socket } from "../socket";
+import { Socket } from "socket.io-client";
 
 export function Trip() {
   const [title, setTitle] = useState("");
@@ -19,6 +21,7 @@ export function Trip() {
   const [categories, setCategories] = useState([]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
+ 
 
   const [error, setError] = useState("");
 
@@ -85,6 +88,7 @@ export function Trip() {
     getTripById(id);
   }, [id]);
 
+  
   return (
     <div>
       <AddCategoryModal tripId={id} getTripById={getTripById} />
@@ -114,7 +118,16 @@ export function Trip() {
           <p>{description}</p>
         </div>
         <p>
-          <TeamOutlined /> {users.map((user) => user.username).join(", ")}
+        <TeamOutlined />{" "}
+          {users.map((user) => (
+            <span key={user._id}>
+              <Badge
+                status={user.isConnected ? "success" : "default"}
+                style={{ marginRight: 8 }}
+              />
+              {user.username}
+            </span>
+          ))}
         </p>
         <div className="categoryCardList ">
           {categories.map((categoria) => (
