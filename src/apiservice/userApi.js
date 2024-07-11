@@ -168,6 +168,19 @@ const getUserByToken = async (token) => {
   return { data: await response.json() };
 };
 
+const confirmValidation = async (token) => {
+  const response = await fetch(`${baseUrl}/users/confirm-validation/${token}`, {
+    method: "GET",
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
+
+  return { data: await response.json() };
+};
+
 export default {
   addUser,
   deleteUser,
@@ -178,4 +191,5 @@ export default {
   forgotPassword,
   resetPassword,
   getUserByToken,
+  confirmValidation,
 };
