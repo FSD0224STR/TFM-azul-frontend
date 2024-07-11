@@ -1,20 +1,20 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login"; // Asegúrate de que la importación coincida con el nombre del archivo
+import Login from "./pages/login"; 
 import UserDetails from "./pages/UserDetails";
 import { AuthContext } from "./contexts/authContext";
 import { useContext } from "react";
 import { NavBar2 } from "./components/NavBar2";
 import "./styles/App.css";
-import Trip from "./pages/Trip"; // Asegúrate de que la importación coincida con el nombre del archivo y quita las llaves si no se exporta como un named export
-import ViewCategory from "./pages/ViewCategory"; // Asegúrate de que la importación coincida con el nombre del archivo
+import Trip from "./pages/Trip"; 
+import ViewCategory from "./pages/viewCategory";
 import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
-import RegistrationForm2 from "./pages/Registration2"; // Asegúrate de que la importación coincida con el nombre del archivo
-import ConfirmValidation from "./pages/confirmValidation"; // Importa el componente con la primera letra en mayúscula
+import RegistrationForm2 from "./pages/registration2";
+import ConfirmValidation from "./pages/confirmValidation";
 import { Spin } from "antd";
-import ForgotPassword from "./pages/ForgotPassword"; // Asegúrate de que la importación coincida con el nombre del archivo
-import ResetPassword from "./pages/ResetPassword"; // Asegúrate de que la importación coincida con el nombre del archivo
+import ForgotPassword from "./pages/resetPassword";
+import ResetPassword from "./pages/resetPassword"; 
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
@@ -43,7 +43,7 @@ export const App = () => {
         <Route path="/confirm-validation/:token" element={<ConfirmValidation />} />
         <Route path="/join-trip/:id" element={<JoinTripPage />} />
         <Route path="/faqs" element={<FAQs />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} /> {/* Elimina la barra final */}
+        <Route path="/forgot-password" element={<ForgotPassword />} /> 
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </>

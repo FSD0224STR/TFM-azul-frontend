@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Typography, Button, Spin, message } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
-import userApi from "./api/userApi"; // Asegúrate de tener esta API configurada
+import userApi from "../apiservice/userApi";
+
 
 const { Title, Text } = Typography;
 
