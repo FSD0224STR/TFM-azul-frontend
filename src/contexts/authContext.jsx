@@ -67,7 +67,7 @@ export const AuthContextProvider = ({ children }) => {
   const logout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("access_token");
-    navigate("/");
+    navigate("/about");
   };
 
   // Value object to be provided by the context
