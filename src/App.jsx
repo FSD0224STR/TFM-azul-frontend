@@ -38,7 +38,7 @@ export const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/perfil" element={<UserDetails />} />
 
-        <Route path="/:id" element={<Trip />} />
+        <Route path="/trip/:id" element={<Trip />} />
         <Route path="categories/:id" element={<ViewCategory />} />
         <Route path="/registration" element={<RegistrationForm2 />} />
         <Route path="/confirm-registration" element={<ConfirmRegistration />} />
