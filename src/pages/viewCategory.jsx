@@ -2,8 +2,17 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
-import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import {
+  Alert,
+  Button,
+  Typography,
+  Modal,
+  Form,
+  Input,
+  Tooltip,
+  Breadcrumb,
+} from "antd";
+import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
 import { AuthContext } from "/src/contexts/authContext";
 import "../styles/ViewCategory.css";
@@ -24,6 +33,8 @@ export const ViewCategory = () => {
   const authContext = useContext(AuthContext);
   const { profile } = authContext;
   const [userId, setUserId] = useState(null);
+  const [tripId, setTripId] = useState(null);
+  const [tripName, setTripName] = useState(null);
 
   const showErrorModal = (message) => {
     Modal.error({
@@ -37,9 +48,12 @@ export const ViewCategory = () => {
       const response = await categoryApi.getCategoryInfo(id);
 
       if (response.data) {
+        //console.log("response.data", response.data);
         setTitle(response.data.title);
         //setDescription(response.data.description);
         setProposals(response.data.proposals);
+        setTripId(response.data.tripId);
+        setTripName(response.data.tripName);
       } else if (response.error) {
         setError(response.error);
         showErrorModal(response.error);
@@ -165,6 +179,24 @@ export const ViewCategory = () => {
 
   return (
     <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "../home",
+              title: <HomeOutlined />,
+            },
+            {
+              href: `../trip/${tripId}`,
+              title: `${tripName}`,
+            },
+            {
+              //href: `${id}`,
+              title: `${title}`,
+            },
+          ]}
+        />
+      </div>
       <div className="cardInfoTrip">
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
