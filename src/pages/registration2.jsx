@@ -51,7 +51,7 @@ const RegistrationForm2 = () => {
 
   const handleModalOk = () => {
     setModalVisible(false); // Ocultar el modal
-    navigate("/"); // Navegar a la página de inicio
+    navigate("/about"); // Navegar a la página de inicio
   };
 
   const isFormValid = ({ length, uppercase, lowercase, number, specialChar }) =>

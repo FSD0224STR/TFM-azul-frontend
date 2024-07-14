@@ -37,7 +37,7 @@ const ResetPassword = () => {
         message.error(response.error);
       } else {
         message.success(response.data.message);
-        navigate("/");
+        navigate("/about");
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);

@@ -26,7 +26,7 @@ export const NavBar2 = () => {
   return (
     <nav className="navbar">
       <div className="container1">
-        <Link to="/">
+        <Link to="/about">
           <img className="logo" src={logo} alt="Logo de la Aplicación" />
         </Link>
       </div>
@@ -72,7 +72,7 @@ export const NavBar2 = () => {
                   <a href="/FAQs">FAQs</a>
                 </li>
                 <li>
-                  <a href="/" onClick={logout}>
+                  <a href="/about" onClick={logout}>
                     Cerrar sesión
                   </a>
                 </li>

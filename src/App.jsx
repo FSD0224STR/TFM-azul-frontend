@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/login";
 import UserDetails from "./pages/UserDetails";
@@ -34,7 +34,7 @@ export const App = () => {
     <>
       <NavBar2 />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route exact path="/about" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/perfil" element={<UserDetails />} />
 
@@ -46,6 +46,8 @@ export const App = () => {
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/forgot-password/" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        {/* Redirigir a la página por defecto si la ruta no coincide */}
+        <Route path="*" element={<Navigate to="/about" />} />
       </Routes>
     </>
   );
