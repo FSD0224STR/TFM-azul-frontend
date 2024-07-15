@@ -52,37 +52,23 @@ export const App = () => {
       messageApi.open({
         type: 'success',
         content: `${data}`,
+        duration: 10,
       });
       
     }
 
-    function onAddCategory (data) {
-      console.log("actualizando un viaje", data);
-      messageApi.open({
-        type: 'success',
-        content: `${data}`,
-      }); 
-    }
-    function onUpdateCategory (data) {
-      console.log("actualizando un viaje", data);
-      messageApi.open({
-        type: 'success',
-        content: `${data}`,
-      }); 
-    }
+    
 
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
-    socket.on('tripUpdated', onUpdate); // Escuchar el evento 'tripUpdated'
-    socket.on('categoryAdded', onAddCategory)
-    socket.on('categoryUpdated', onUpdateCategory)
+    socket.on('message', onUpdate); // Escuchar el evento 'tripUpdated'
+    
 
     return () => {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
-      socket.off ('tripUpdated', onUpdate)
-      socket.off('categoryAdded', onAddCategory)
-      socket.off('categoryUpdated', onUpdateCategory)
+      socket.off ('message', onUpdate)
+      
     };
   }, []);
 
