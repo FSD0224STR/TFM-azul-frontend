@@ -1,44 +1,34 @@
 const baseUrl = import.meta.env.VITE_BACKEND;
 
-// const getAllUsers = async () => {
-//   const response = await window.fetch(`${baseUrl}/users`);
+const getAuthToken = () => localStorage.getItem("access_token");
 
-//   if (!response.ok) {
-//     const error = await response.json();
-//     return { error: error.message };
-//   }
-
-//   const users = await response.json();
-//   return { data: users };
-// };
+const handleResponse = async (response) => {
+  const data = await response.json();
+  if (!response.ok) {
+    return { error: data.message || "Error en la solicitud" };
+  }
+  return { data };
+};
 
 const addUser = async (firstname, lastname, username, password, email) => {
-  const token = localStorage.getItem("access_token");
-
+  const token = getAuthToken();
   const response = await fetch(`${baseUrl}/users/`, {
     method: "POST",
     body: JSON.stringify({ firstname, lastname, username, password, email }),
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!response.ok) {
-    const errorMessage = await response.json();
-    return { error: errorMessage };
-  }
-
-  const newlyCreatedUser = await response.json();
-  return { data: newlyCreatedUser };
+  return handleResponse(response);
 };
 
 const deleteUser = async (id) => {
-  const token = localStorage.getItem("access_token");
-
+  const token = getAuthToken();
   const response = await fetch(`${baseUrl}/users/${id}`, {
     method: "DELETE",
-    headers: { authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` },
   });
 
   if (!response.ok) {
@@ -56,82 +46,40 @@ const login = async (username, password) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
-  const logged = await response.json();
-  return { data: logged };
+  return handleResponse(response);
 };
 
 const getMyProfile = async (username) => {
-  const token = localStorage.getItem("access_token");
-
+  const token = getAuthToken();
   const response = await fetch(`${baseUrl}/users/${username}`, {
     method: "GET",
-    headers: { authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
-
-  return { data: await response.json() };
+  return handleResponse(response);
 };
 
 const addNewImage = async (formData) => {
-  console.log("formData", formData);
-
   const response = await fetch(`${baseUrl}/upload`, {
     method: "POST",
     body: formData,
-    // headers: {
-    //   "Content-Type": "multipart/form-data", //// Elimino del Encabezado Content-Type, ya que FormData gestiona este encabezado automáticamente.
-    // },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
-
-  return { data: await response.json() };
+  return handleResponse(response);
 };
 
-const updateUser = async (
-  _id,
-  firstname,
-  lastname,
-  username,
-  email,
-  imageUrl
-) => {
-  const token = localStorage.getItem("access_token");
-
+const updateUser = async (_id, firstname, lastname, username, email, imageUrl) => {
+  const token = getAuthToken();
   const response = await fetch(`${baseUrl}/users/${_id}`, {
     method: "PUT",
-    body: JSON.stringify({
-      _id,
-      firstname,
-      lastname,
-      username,
-      email,
-      imageUrl,
-    }),
+    body: JSON.stringify({ _id, firstname, lastname, username, email, imageUrl }),
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!response.ok) {
-    const errorMessage = await response.json();
-    return { error: errorMessage };
-  }
-
-  const newlyCreatedUser = await response.json();
-  return { data: newlyCreatedUser };
+  return handleResponse(response);
 };
 
 const forgotPassword = async (email) => {
@@ -141,43 +89,43 @@ const forgotPassword = async (email) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
+  return handleResponse(response);
+};
 
-  const result = await response.json();
-  return { data: result };
+const validateNewPassword = async (token, newPassword) => {
+  const response = await fetch(`${baseUrl}/users/validate-password`, {
+    method: "POST",
+    body: JSON.stringify({ token, newPassword }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const data = await response.json();
+  return response.ok && data;
 };
 
 const resetPassword = async (token, newPassword) => {
+  const isValidPassword = await validateNewPassword(token, newPassword);
+
+  if (!isValidPassword) {
+    return { error: "La contraseña ingresada ya ha sido utilizada anteriormente." };
+  }
+
   const response = await fetch(`${baseUrl}/users/reset-password`, {
     method: "POST",
     body: JSON.stringify({ token, newPassword }),
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
-
-  const result = await response.json();
-  return { data: result };
+  return handleResponse(response);
 };
 
 const getUserByToken = async (token) => {
-  const response = await fetch(`${baseUrl}/users/:token`, {
+  const response = await fetch(`${baseUrl}/users/${token}`, {
     method: "GET",
-    headers: { authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
-
-  return { data: await response.json() };
+  return handleResponse(response);
 };
 
 export const verifyUserAccount = async (token) => {
@@ -187,17 +135,11 @@ export const verifyUserAccount = async (token) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    return { error: error.message };
-  }
-
-  const result = await response.json();
-  return { data: result };
+  return handleResponse(response);
 };
 
 export default {
-  /*getAllUsers,*/ addUser,
+  addUser,
   deleteUser,
   login,
   getMyProfile,

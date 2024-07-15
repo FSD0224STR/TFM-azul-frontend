@@ -36,7 +36,7 @@ const ResetPassword = () => {
       if (response.error) {
         message.error(response.error);
       } else {
-        message.success(response.data.message);
+        message.success("Contraseña restablecida con éxito");
         navigate("/");
       }
     } catch (error) {
