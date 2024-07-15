@@ -11,13 +11,8 @@ import { ViewCategory } from "./pages/viewCategory";
 import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
 import RegistrationForm2 from "./pages/registration2";
-<<<<<<< HEAD
 import ConfirmValidation from "./pages/ConfirmValidation"; 
 import { Spin } from "antd";
-=======
-import ConfirmRegistration from "./pages/confirmRegistration"; // Importa la nueva página
-import { Spin, message } from "antd";
->>>>>>> 39bf54feff0f2da2ccf4bdeb702523d0b526034b
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resetPassword";
 //websockets
@@ -99,12 +94,8 @@ export const App = () => {
         <Route exact path="/about" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/perfil" element={<UserDetails />} />
-<<<<<<< HEAD
-       <Route path="/:id" element={<Trip />} />
-=======
 
         <Route path="/trip/:id" element={<Trip />} />
->>>>>>> 39bf54feff0f2da2ccf4bdeb702523d0b526034b
         <Route path="categories/:id" element={<ViewCategory />} />
         <Route path="/registration" element={<RegistrationForm2 />} />
         <Route path="/confirm-validation/:token" element={<ConfirmValidation />} />
