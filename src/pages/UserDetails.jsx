@@ -8,8 +8,9 @@ import {
   Skeleton,
   message,
   Modal,
+  Breadcrumb,
 } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { AuthContext } from "/src/contexts/authContext";
 import userApi from "/src/apiservice/userApi.js";
 
@@ -115,10 +116,28 @@ const UserDetails = () => {
 
   return (
     <>
-      <div className="user-container">
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "home",
+              title: <HomeOutlined />,
+            },
+            {
+              title: (
+                <>
+                  <UserOutlined />
+                  <span>Perfil del usuario</span>
+                </>
+              ),
+            },
+          ]}
+        />
+      </div>
+      <div className="cardInfoTrip user-align">
         <div className="user-content">
           <Typography.Title level={2} className="profileTitle">
-            Perfil
+            Perfil del usuario
           </Typography.Title>
           <div className="profile-section">
             <div className="profile-image">

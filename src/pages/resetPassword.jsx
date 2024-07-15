@@ -36,8 +36,13 @@ const ResetPassword = () => {
       if (response.error) {
         message.error(response.error);
       } else {
+<<<<<<< HEAD
         message.success("Contraseña restablecida con éxito");
         navigate("/");
+=======
+        message.success(response.data.message);
+        navigate("/about");
+>>>>>>> 39bf54feff0f2da2ccf4bdeb702523d0b526034b
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -75,9 +80,9 @@ const ResetPassword = () => {
             },
             {
               pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&_-]{8,}$/,
               message:
-                "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)",
+                "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&_-)",
             },
           ]}
         >

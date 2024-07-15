@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Alert, Tooltip, notification } from "antd";
+import { Typography, Alert, Tooltip, notification, Breadcrumb, Badge } from "antd";
+import { TeamOutlined, UserAddOutlined, HomeOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
-import { TeamOutlined, UserAddOutlined } from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
 import UnlinkUser from "../components/UnlinkUserFromTrip";
 import AddCategoryModal from "../components/CreateCategoryModal";
+import { socket } from "../socket";
+import { Socket } from "socket.io-client";
 
 export function Trip() {
   const [title, setTitle] = useState("");
@@ -19,6 +21,7 @@ export function Trip() {
   const [categories, setCategories] = useState([]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
+ 
 
   const [error, setError] = useState("");
 
@@ -85,8 +88,24 @@ export function Trip() {
     getTripById(id);
   }, [id]);
 
+  
   return (
     <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "../home",
+              title: <HomeOutlined />,
+            },
+            {
+              //href: `${id}`,
+              title: `${title}`,
+            },
+          ]}
+        />
+      </div>
+
       <AddCategoryModal tripId={id} getTripById={getTripById} />
       <div className="cardInfoTrip">
         <div className="cabecera">
@@ -114,7 +133,16 @@ export function Trip() {
           <p>{description}</p>
         </div>
         <p>
-          <TeamOutlined /> {users.map((user) => user.username).join(", ")}
+        <TeamOutlined />{" "}
+          {users.map((user) => (
+            <span key={user._id}>
+              <Badge
+                status={user.isConnected ? "success" : "default"}
+                style={{ marginRight: 8 }}
+              />
+              {user.username}
+            </span>
+          ))}
         </p>
         <div className="categoryCardList ">
           {categories.map((categoria) => (

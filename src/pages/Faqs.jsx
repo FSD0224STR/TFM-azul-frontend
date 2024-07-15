@@ -1,5 +1,9 @@
-import { CaretRightOutlined, ShareAltOutlined } from "@ant-design/icons";
-import { Collapse, theme } from "antd";
+import { Collapse, theme, Breadcrumb } from "antd";
+import {
+  CaretRightOutlined,
+  ShareAltOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 const getItems = (panelStyle) => [
   {
     key: "1",
@@ -104,17 +108,33 @@ const FAQs = () => {
     border: "none",
   };
   return (
-    <Collapse
-      className="cardInfoTrip"
-      bordered={false}
-      expandIcon={({ isActive }) => (
-        <CaretRightOutlined rotate={isActive ? 90 : 0} />
-      )}
-      style={{
-        background: token.colorBgContainer,
-      }}
-      items={getItems(panelStyle)}
-    />
+    <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "home",
+              title: <HomeOutlined />,
+            },
+            {
+              //href: `${id}`,
+              title: `Preguntas frecuentes (FAQs)`,
+            },
+          ]}
+        />
+      </div>
+      <Collapse
+        className="cardInfoTrip"
+        bordered={false}
+        expandIcon={({ isActive }) => (
+          <CaretRightOutlined rotate={isActive ? 90 : 0} />
+        )}
+        style={{
+          background: token.colorBgContainer,
+        }}
+        items={getItems(panelStyle)}
+      />
+    </div>
   );
 };
 export default FAQs;
