@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
 import tripApi from "../apiservice/tripApi";
 import LoginModal from "../components/LoginModal";
-import { Typography, Button } from "antd";
+import { Typography, Button, Breadcrumb } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 import "../styles/JoinTrip.css";
 
 const { Title, Text } = Typography;
@@ -82,45 +83,66 @@ const JoinTripPage = () => {
   }, [id]);
 
   return (
-    <div className="joinTripPage cardInfoTrip">
-      <Title level={5}>
-        Parece que {tripOwner ? tripOwner : "alguien"} quiere organizar un viaje
-        contigo a...
-      </Title>
-      <Title className="joinTrip" level={2}>
-        {tripTitle ? tripTitle : "algún lugar"}
-      </Title>
-      {!isLoggedIn ? (
-        <div className="joinTripContent">
-          <Text>Debes iniciar sesión o registrarte para unirte al viaje.</Text>
-          <div className="joinTrip-btn">
-            <Button type="primary" onClick={handleLoginAndJoin}>
-              Iniciar sesión / Registrarse
-            </Button>
+    <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "../",
+              title: <HomeOutlined />,
+            },
+            {
+              title: `Invitación a un nuevo viaje`,
+            },
+          ]}
+        />
+      </div>
+      <div className="joinTripPage cardInfoTrip">
+        <Title level={5}>
+          Parece que {tripOwner ? tripOwner : "alguien"} quiere organizar un
+          viaje contigo a...
+        </Title>
+        <Title className="joinTrip" level={2}>
+          {tripTitle ? tripTitle : "algún lugar"}
+        </Title>
+        {!isLoggedIn ? (
+          <div className="joinTripContent">
+            <Text>
+              Debes iniciar sesión o registrarte para unirte al viaje.
+            </Text>
+            <div className="joinTrip-btn">
+              <Button type="primary" onClick={handleLoginAndJoin}>
+                Iniciar sesión / Registrarse
+              </Button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="joinTripContent">
-          <Text>
-            Haz clic en el botón si quieres unirte al viaje y empezar a añadir
-            propuestas:
-          </Text>
-          <div className="joinTrip-btn">
-            <Button type="primary" onClick={handleJoinTrip} disabled={joining}>
-              {joining ? "Uniendo..." : "Sí, quiero"}
-            </Button>
+        ) : (
+          <div className="joinTripContent">
+            <Text>
+              Haz clic en el botón si quieres unirte al viaje y empezar a añadir
+              propuestas:
+            </Text>
+            <div className="joinTrip-btn">
+              <Button
+                type="primary"
+                onClick={handleJoinTrip}
+                disabled={joining}
+              >
+                {joining ? "Uniendo..." : "Sí, quiero"}
+              </Button>
+            </div>
+            {joinError && <Text type="danger">{joinError}</Text>}
           </div>
-          {joinError && <Text type="danger">{joinError}</Text>}
-        </div>
-      )}
+        )}
 
-      {/* Renderizar el modal de inicio de sesión */}
-      <LoginModal
-        isModalVisible={isLoginModalVisible}
-        handleCancel={hideLoginModal}
-        handleLoginSuccess={handleLoginSuccess}
-        returnUrl={returnUrl} // Pasar returnUrl como prop
-      />
+        {/* Renderizar el modal de inicio de sesión */}
+        <LoginModal
+          isModalVisible={isLoginModalVisible}
+          handleCancel={hideLoginModal}
+          handleLoginSuccess={handleLoginSuccess}
+          returnUrl={returnUrl} // Pasar returnUrl como prop
+        />
+      </div>
     </div>
   );
 };
