@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/login";
 import UserDetails from "./pages/UserDetails";
 import { AuthContext } from "./contexts/authContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavBar2 } from "./components/NavBar2";
 import "./styles/App.css";
 import { Trip } from "./pages/Trip";
@@ -12,12 +12,67 @@ import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
 import RegistrationForm2 from "./pages/registration2";
 import ConfirmRegistration from "./pages/confirmRegistration"; // Importa la nueva página
-import { Spin } from "antd";
+import { Spin, message } from "antd";
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resetPassword";
+//websockets
+import { socket } from './socket';
+
+
+
 
 export const App = () => {
   const { loading } = useContext(AuthContext);
+  //websockets
+  
+  const [userToDisconnect, setUserToDisconnect] = useState(localStorage.getItem('userId') || "");
+
+  const [messageApi, contextHolder] = message.useMessage();
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    function onConnect() {
+      if (userId !== null) {
+        setUserToDisconnect(userId);
+        console.log ("este el es id del usuario", userId)
+        socket.emit('connection', userId); // Enviar userId al servidor al conectar
+      }
+    }
+
+    function onDisconnect() {
+      
+      console.log("desconectando usuario", userToDisconnect);
+      socket.emit('disconnect', userToDisconnect); // Enviar userId al servidor al desconectar
+    }
+
+  
+
+    function onUpdate (data) {
+      console.log("actualizando un viaje", data);
+      messageApi.open({
+        type: 'success',
+        content: `${data}`,
+        duration: 10,
+      });
+      
+    }
+
+    
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('message', onUpdate); // Escuchar el evento 'tripUpdated'
+    
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off ('message', onUpdate)
+      
+    };
+  }, []);
+
+
 
   if (loading) {
     return (
@@ -33,6 +88,8 @@ export const App = () => {
   return (
     <>
       <NavBar2 />
+      {contextHolder}
+      
       <Routes>
         <Route exact path="/about" element={<Login />} />
         <Route path="/home" element={<Home />} />

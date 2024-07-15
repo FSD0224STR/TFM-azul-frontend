@@ -50,7 +50,12 @@ export const AuthContextProvider = ({ children }) => {
       } else if (response.data && response.data) {
         const token = response.data;
         localStorage.setItem("access_token", token);
+        const responseProfile = await userApi.getMyProfile();
+        const userId = responseProfile.data._id;
+        localStorage.setItem("userId", userId);
+        
         navigate("/home");
+        
         setIsLoggedIn(true);
       } else {
         console.log("La respuesta no contiene un token esperado");
