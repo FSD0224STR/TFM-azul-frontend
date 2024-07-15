@@ -36,13 +36,8 @@ const ResetPassword = () => {
       if (response.error) {
         message.error(response.error);
       } else {
-<<<<<<< HEAD
-        message.success("Contraseña restablecida con éxito");
-        navigate("/");
-=======
         message.success(response.data.message);
         navigate("/about");
->>>>>>> 39bf54feff0f2da2ccf4bdeb702523d0b526034b
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
