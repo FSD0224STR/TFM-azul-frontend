@@ -1,10 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import categoryApi from "../apiservice/categoryApi";
 import proposalApi from "../apiservice/proposalApi";
-import { Alert, Button, Typography, Modal, Form, Input, Tooltip } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import {
+  Alert,
+  Button,
+  Typography,
+  Modal,
+  Form,
+  Input,
+  Tooltip,
+  Breadcrumb,
+} from "antd";
+import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
+import { AuthContext } from "/src/contexts/authContext";
 import "../styles/ViewCategory.css";
 
 const { TextArea } = Input;
@@ -20,6 +30,12 @@ export const ViewCategory = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProposal, setCurrentProposal] = useState(null);
 
+  const authContext = useContext(AuthContext);
+  const { profile } = authContext;
+  const [userId, setUserId] = useState(null);
+  const [tripId, setTripId] = useState(null);
+  const [tripName, setTripName] = useState(null);
+
   const showErrorModal = (message) => {
     Modal.error({
       title: "Error",
@@ -32,9 +48,12 @@ export const ViewCategory = () => {
       const response = await categoryApi.getCategoryInfo(id);
 
       if (response.data) {
+        //console.log("response.data", response.data);
         setTitle(response.data.title);
         //setDescription(response.data.description);
         setProposals(response.data.proposals);
+        setTripId(response.data.tripId);
+        setTripName(response.data.tripName);
       } else if (response.error) {
         setError(response.error);
         showErrorModal(response.error);
@@ -44,6 +63,13 @@ export const ViewCategory = () => {
       showErrorModal(error.message);
     }
   };
+
+  useEffect(() => {
+    if (profile) {
+      console.log("profile userid: ", profile._id);
+      setUserId(profile._id);
+    }
+  }, [profile]);
 
   useEffect(() => {
     getCategoryById(id);
@@ -131,8 +157,46 @@ export const ViewCategory = () => {
     });
   };
 
+  const handleAddLikeAndSync = async (proposalId) => {
+    await proposalApi.addLike(proposalId);
+    getCategoryById(id);
+  };
+
+  const handleAddDislikeAndSync = async (proposalId) => {
+    await proposalApi.addDislike(proposalId);
+    getCategoryById(id);
+  };
+
+  const handleRemoveLikeAndSync = async (proposalId) => {
+    await proposalApi.removeLike(proposalId);
+    getCategoryById(id);
+  };
+
+  const handleRemoveDislikeAndSync = async (proposalId) => {
+    await proposalApi.removeDislike(proposalId);
+    getCategoryById(id);
+  };
+
   return (
     <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "../home",
+              title: <HomeOutlined />,
+            },
+            {
+              href: `../trip/${tripId}`,
+              title: `${tripName}`,
+            },
+            {
+              //href: `${id}`,
+              title: `${title}`,
+            },
+          ]}
+        />
+      </div>
       <div className="cardInfoTrip">
         <div className="travelTitle">
           <Typography.Title level={1}>{title}</Typography.Title>
@@ -227,9 +291,16 @@ export const ViewCategory = () => {
               key={proposal._id}
               id={proposal._id}
               title={proposal.title}
-              description={proposal.description}
               address={proposal.address}
+              description={proposal.description}
               owner={proposal.owner}
+              like={proposal.like}
+              dislike={proposal.dislike}
+              userId={userId}
+              addLike={() => handleAddLikeAndSync(proposal._id)}
+              addDislike={() => handleAddDislikeAndSync(proposal._id)}
+              removeLike={() => handleRemoveLikeAndSync(proposal._id)}
+              removeDislike={() => handleRemoveDislikeAndSync(proposal._id)}
               onEdit={() => handleEditClick(proposal)}
               onDelete={() => handleDeleteProposal(proposal._id)}
               refreshProposals={() => getCategoryById(id)}

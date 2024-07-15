@@ -1,9 +1,11 @@
-import { Card, Descriptions, message, Popconfirm } from "antd";
+import { Card, Descriptions, message, Popconfirm, Typography } from "antd";
 import {
   DeleteOutlined,
   DislikeOutlined,
   EditOutlined,
   LikeOutlined,
+  LikeFilled,
+  DislikeFilled,
 } from "@ant-design/icons";
 import "../styles/ProposalCard.css";
 
@@ -12,10 +14,15 @@ export const ProposalCard = ({
   address,
   description,
   owner,
-  onDelete,
-  onEdit,
   like,
   dislike,
+  userId,
+  onEdit,
+  onDelete,
+  addLike,
+  addDislike,
+  removeLike,
+  removeDislike,
 }) => {
   const items = [
     {
@@ -42,6 +49,13 @@ export const ProposalCard = ({
     message.error("Una retirada a tiempo es una victoria");
   };
 
+  const isLiked = (userId, like) => {
+    return like.includes(userId);
+  };
+  const isDisliked = (userId, like) => {
+    return like.includes(userId);
+  };
+
   return (
     <Card
       title={title}
@@ -59,19 +73,32 @@ export const ProposalCard = ({
             >
               <DeleteOutlined className="icon-size danger-color " />
             </Popconfirm>
-
             <EditOutlined
               onClick={onEdit}
               className="icon-size icon-margin-left"
             />
-            <LikeOutlined
-              onClick={like}
-              className="icon-size icon-margin-left blue"
-            />
-            <DislikeOutlined
-              onClick={dislike}
-              className="icon-size icon-margin-left blue"
-            />
+            <div className="number-panel icon-margin-left">
+              <Typography.Title level={4}>{like.length}</Typography.Title>
+              {isLiked(userId, like) ? (
+                <LikeFilled onClick={removeLike} className="icon-size blue" />
+              ) : (
+                <LikeOutlined onClick={addLike} className="icon-size blue" />
+              )}
+            </div>
+            <div className="number-panel icon-margin-left">
+              <Typography.Title level={4}>{dislike.length}</Typography.Title>
+              {isDisliked(userId, dislike) ? (
+                <DislikeFilled
+                  onClick={removeDislike}
+                  className="icon-size blue"
+                />
+              ) : (
+                <DislikeOutlined
+                  onClick={addDislike}
+                  className="icon-size blue"
+                />
+              )}
+            </div>
           </div>
         </>
       }

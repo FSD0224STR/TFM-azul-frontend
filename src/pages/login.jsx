@@ -1,5 +1,3 @@
-import { LoginFooter } from "/src/components/LoginFooter";
-
 import "../styles/Login.css";
 
 const Login = () => {

@@ -35,3 +35,14 @@ html {
 .joinTripPage {
   margin-top: 300px;
 }
+
+.breadcrumbContainer {
+    margin: 150px 10% 25px 10%;
+}
+
+
+@media (max-width: 1300px) { 
+  .breadcrumbContainer {
+  margin: 140px 15px 25px 15px;
+  }
+} 

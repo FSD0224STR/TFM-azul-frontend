@@ -61,7 +61,7 @@ const JoinTripPage = () => {
     if (returnUrl) {
       window.location.href = returnUrl; // Redirigir al usuario a la URL de retorno
     } else {
-      navigate("/"); // Redirigir al usuario a la página de viajes que tiene
+      navigate("/home"); // Redirigir al usuario a la página de viajes que tiene
     }
   };
 

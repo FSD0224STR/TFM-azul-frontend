@@ -8,8 +8,9 @@ import {
   Modal,
   Button,
   Tooltip,
+  Breadcrumb,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 
 import tripAPI from "../apiservice/tripApi";
 import { AuthContext } from "../contexts/authContext";
@@ -76,7 +77,7 @@ function Home() {
   };
 
   const goToTrip = (idToGo) => {
-    navigate(`/${idToGo}`);
+    navigate(`/trip/${idToGo}`);
   };
 
   const handleCreateTrip = () => {
@@ -99,6 +100,13 @@ function Home() {
 
   return (
     <div className="tripContainer">
+      <Breadcrumb
+        items={[
+          {
+            title: <HomeOutlined />,
+          },
+        ]}
+      />
       <div>
         {loading ? (
           <Spin />

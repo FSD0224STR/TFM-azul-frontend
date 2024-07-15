@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Alert, Tooltip, notification, Badge } from "antd";
+import { Typography, Alert, Tooltip, notification, Breadcrumb, Badge } from "antd";
+import { TeamOutlined, UserAddOutlined, HomeOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
-import { TeamOutlined, UserAddOutlined } from "@ant-design/icons";
 import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
@@ -91,6 +91,21 @@ export function Trip() {
   
   return (
     <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "../home",
+              title: <HomeOutlined />,
+            },
+            {
+              //href: `${id}`,
+              title: `${title}`,
+            },
+          ]}
+        />
+      </div>
+
       <AddCategoryModal tripId={id} getTripById={getTripById} />
       <div className="cardInfoTrip">
         <div className="cabecera">
