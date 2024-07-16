@@ -12,7 +12,8 @@ import JoinTripPage from "./pages/JoinTrip";
 import FAQs from "./pages/Faqs";
 import RegistrationForm2 from "./pages/registration2";
 import ConfirmValidation from "./pages/ConfirmValidation"; 
-import { Spin } from "antd";
+import ConfirmRegistration from "./pages/confirmRegistration"; // Importa la nueva página
+import { Spin, message } from "antd";
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resetPassword";
 //websockets
