@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Form, Input, Button, message, Typography } from "antd";
 import userApi from "../apiservice/userApi";
-import delfines from "../images/delfines.png";
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
