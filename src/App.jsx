@@ -87,10 +87,7 @@ export const App = () => {
         <Route path="/trip/:id" element={<Trip />} />
         <Route path="categories/:id" element={<ViewCategory />} />
         <Route path="/registration" element={<RegistrationForm2 />} />
-        <Route
-          path="/confirm-validation/:token"
-          element={<ConfirmValidation />}
-        />
+        <Route path="/confirm-validation/:token" element={<ConfirmValidation />} />
         <Route path="/join-trip/:id" element={<JoinTripPage />} />
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/forgot-password/" element={<ForgotPassword />} />
