@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Alert, Tooltip, notification, Breadcrumb, Badge } from "antd";
+import {
+  Typography,
+  Alert,
+  Tooltip,
+  notification,
+  Breadcrumb,
+  Badge,
+} from "antd";
 import { TeamOutlined, UserAddOutlined, HomeOutlined } from "@ant-design/icons";
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
@@ -21,7 +28,6 @@ export function Trip() {
   const [categories, setCategories] = useState([]);
   const [isAddingCategory, setIsAddingCategory] = useState(false);
   const [newCategory, setNewCategory] = useState("");
- 
 
   const [error, setError] = useState("");
 
@@ -88,7 +94,6 @@ export function Trip() {
     getTripById(id);
   }, [id]);
 
-  
   return (
     <div>
       <div className="breadcrumbContainer">
@@ -133,12 +138,12 @@ export function Trip() {
           <p>{description}</p>
         </div>
         <p>
-        <TeamOutlined />{" "}
+          <TeamOutlined />{" "}
           {users.map((user) => (
             <span key={user._id}>
               <Badge
                 status={user.isConnected ? "success" : "default"}
-                style={{ marginRight: 8 }}
+                style={{ marginRight: 4, marginLeft: 9 }}
               />
               {user.username}
             </span>
