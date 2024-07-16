@@ -79,7 +79,7 @@ const UserDetails = () => {
       const response = await userApi.addNewImage(formData);
 
       message.success("Imagen cargada con éxito!");
-      setImage(response.data.imageUrl);
+      setImage(response.data.imageUrl.replace("http://", "https://"));
     } catch (err) {
       message.error("Error al cargar la imagen");
       console.error("Error al subir la imagen:", err);
@@ -88,6 +88,7 @@ const UserDetails = () => {
 
   const handleSaveChanges = async () => {
     try {
+      console.log("imageUrl: ", imageUrl);
       const response = await userApi.updateUser(
         profile._id,
         firstname,

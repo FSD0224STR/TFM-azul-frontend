@@ -131,6 +131,7 @@ export const ViewCategory = () => {
   };
 
   const handleDeleteProposal = async (proposalId) => {
+    console.log("proposalId", proposalId);
     try {
       const response = await proposalApi.deleteProposal(proposalId);
       console.log("Respuesta de eliminar propuesta:", response.data);

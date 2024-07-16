@@ -39,7 +39,7 @@ const JoinTripPage = () => {
       } else {
         console.log("Éxito:", response);
         // Redirigir al usuario a la página del viaje correspondiente
-        navigate(`/${id}`); // Redirigir al usuario a la página del viaje
+        navigate(`/trip/${id}`); // Redirigir al usuario a la página del viaje
       }
     } catch (error) {
       console.error("Error inesperado:", error);
