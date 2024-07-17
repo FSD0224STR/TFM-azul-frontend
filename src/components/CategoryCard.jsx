@@ -103,7 +103,7 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
       style={{ margin: "15px 0px", padding: "0", width: "100%" }}
     >
       <div className="content-card" onClick={onView}>
-        <div className="category-title">
+        <div>
           {updatingCategory ? (
             <Input
               value={newTitle}
@@ -111,7 +111,6 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
               onChange={(e) => setNewTitle(e.target.value)}
               className="titleInput"
               onClick={(e) => e.stopPropagation()}
-              style={{ fontSize: "20px", color: "#333", textAlign: "" }}
             />
           ) : (
             <Typography.Title level={4} className="cardTitle">
