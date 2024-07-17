@@ -116,102 +116,106 @@ function Home() {
   }, [searchTitle, selectedOwner, trips]);
 
   return (
-    <div className="tripContainer">
-      <Breadcrumb
-        items={[
-          {
-            title: <HomeOutlined />,
-          },
-        ]}
-      />
-      <div style={{ marginBottom: "20px" }} className="tripPanel">
-        <Input
-          placeholder="¿A dónde?"
-          value={searchTitle}
-          onChange={handleSearchTitleChange}
-          style={{ width: "200px", marginRight: "20px" }}
+    <>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              title: <HomeOutlined />,
+            },
+          ]}
         />
-        <Select
-          placeholder="Filtrar por propietario"
-          value={selectedOwner}
-          onChange={handleOwnerChange}
-          style={{ width: "200px" }}
-        >
-          <Option value="">Todos los propietarios</Option>
-          {uniqueOwners.map((owner) => (
-            <Option key={owner} value={owner}>
-              {owner}
-            </Option>
-          ))}
-        </Select>
       </div>
-      <div>
-        {loading ? (
-          <Spin />
-        ) : Array.isArray(filteredTrips) && filteredTrips.length > 0 ? (
-          <div className="tripPanel">
-            {filteredTrips.map((trip) => (
-              <TripCard
-                key={trip._id}
-                title={trip.title}
-                startDate={trip.startDate}
-                endDate={trip.endDate}
-                description={trip.description}
-                owner={trip.owner.username}
-                onEdit={() => updateTrip(trip._id)}
-                onView={() => goToTrip(trip._id)}
-              ></TripCard>
+      <div className="cardInfoTrip">
+        <div style={{ marginTop: "10px" }} className="filters">
+          <Input
+            placeholder="¿A dónde?"
+            value={searchTitle}
+            onChange={handleSearchTitleChange}
+            style={{ width: "200px", marginRight: "20px" }}
+          />
+          <Select
+            placeholder="Filtrar por propietario"
+            value={selectedOwner}
+            onChange={handleOwnerChange}
+            style={{ width: "200px" }}
+          >
+            <Option value="">Todos los propietarios</Option>
+            {uniqueOwners.map((owner) => (
+              <Option key={owner} value={owner}>
+                {owner}
+              </Option>
             ))}
-          </div>
+          </Select>
+        </div>
+        <div>
+          {loading ? (
+            <Spin />
+          ) : Array.isArray(filteredTrips) && filteredTrips.length > 0 ? (
+            <div className="tripPanel">
+              {filteredTrips.map((trip) => (
+                <TripCard
+                  key={trip._id}
+                  title={trip.title}
+                  startDate={trip.startDate}
+                  endDate={trip.endDate}
+                  description={trip.description}
+                  owner={trip.owner.username}
+                  onEdit={() => updateTrip(trip._id)}
+                  onView={() => goToTrip(trip._id)}
+                ></TripCard>
+              ))}
+            </div>
+          ) : (
+            <Typography.Text>No se han encontrado viajes.</Typography.Text>
+          )}
+        </div>
+        {isLoggedIn ? (
+          <>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={12}>
+                <CreateTripModal
+                  visible={isModalVisible}
+                  onCancel={handleModalCancel}
+                  editingTrip={editingTrip}
+                  onUpdate={handleTripUpdate}
+                />
+              </Col>
+            </Row>
+            <Tooltip title="Crear Nuevo Viaje">
+              <Button
+                type="primary"
+                shape="circle"
+                size="large"
+                icon={<PlusOutlined />}
+                onClick={handleCreateTrip}
+                style={{
+                  width: "64px",
+                  height: "64px",
+                  lineHeight: "64px",
+                  textAlign: "center",
+                  position: "fixed",
+                  bottom: 20,
+                  right: 20,
+                }}
+              />
+            </Tooltip>
+          </>
         ) : (
-          <Typography.Text>No se han encontrado viajes.</Typography.Text>
+          <Typography.Text>
+            Por favor, regístrate o inicia sesión.
+          </Typography.Text>
+        )}
+        {error && (
+          <Alert
+            type="error"
+            message={`Ha habido un error: ${error}`}
+            closable
+            onClose={() => setError("")}
+          />
         )}
       </div>
-      {isLoggedIn ? (
-        <>
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={12}>
-              <CreateTripModal
-                visible={isModalVisible}
-                onCancel={handleModalCancel}
-                editingTrip={editingTrip}
-                onUpdate={handleTripUpdate}
-              />
-            </Col>
-          </Row>
-          <Tooltip title="Crear Nuevo Viaje">
-            <Button
-              type="primary"
-              shape="circle"
-              size="large"
-              icon={<PlusOutlined />}
-              onClick={handleCreateTrip}
-              style={{
-                width: "64px",
-                height: "64px",
-                lineHeight: "64px",
-                textAlign: "center",
-                position: "fixed",
-                bottom: 20,
-                right: 20,
-              }}
-            />
-          </Tooltip>
-        </>
-      ) : (
-        <Typography.Text>
-          Por favor, regístrate o inicia sesión.
-        </Typography.Text>
-      )}
-      {error && (
-        <Alert
-          type="error"
-          message={`Ha habido un error: ${error}`}
-          closable
-          onClose={() => setError("")}
-        />
-      )}
-    </div>
+    </>
   );
 }
 
