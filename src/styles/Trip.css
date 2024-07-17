@@ -6,7 +6,6 @@
   border-radius: 10px;
   box-shadow: 0 0px 5px rgba(0, 0, 0, 0.304);
   padding: 2% 5%;
-  /* background-color: #f8faff; */
 }
 
 .cabecera {
@@ -27,7 +26,6 @@
 
 .category {
   cursor: pointer;
-  /* background-color: rgba(0, 0, 0, 0); */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.304);
 }
 .category:hover {
