@@ -5,7 +5,6 @@ import {
   Row,
   Col,
   Alert,
-  Modal,
   Button,
   Tooltip,
   Breadcrumb,
@@ -30,13 +29,6 @@ function Home() {
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const showErrorModal = (message) => {
-    Modal.error({
-      title: "Error",
-      content: message,
-    });
-  };
-
   const getTrips = async () => {
     try {
       setLoading(true);
@@ -44,25 +36,6 @@ function Home() {
       setTrips(response.data);
     } catch (error) {
       setError(`Error fetching trips: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const deleteTrip = async (idToDelete) => {
-    try {
-      setLoading(true);
-      const response = await tripAPI.deleteTrip(idToDelete);
-
-      if (response.error) {
-        setError(response.error);
-        showErrorModal(response.error);
-      } else {
-        setTrips(trips.filter((trip) => trip._id !== idToDelete));
-      }
-    } catch (error) {
-      setError(`Error deleting trip: ${error.message}`);
-      showErrorModal(error.message);
     } finally {
       setLoading(false);
     }
@@ -120,7 +93,6 @@ function Home() {
                 endDate={trip.endDate}
                 description={trip.description}
                 owner={trip.owner.username}
-                onDelete={() => deleteTrip(trip._id)}
                 onEdit={() => updateTrip(trip._id)}
                 onView={() => goToTrip(trip._id)}
               ></TripCard>
