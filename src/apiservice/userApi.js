@@ -68,11 +68,25 @@ const addNewImage = async (formData) => {
   return handleResponse(response);
 };
 
-const updateUser = async (_id, firstname, lastname, username, email, imageUrl) => {
+const updateUser = async (
+  _id,
+  firstname,
+  lastname,
+  username,
+  email,
+  imageUrl
+) => {
   const token = getAuthToken();
   const response = await fetch(`${baseUrl}/users/${_id}`, {
     method: "PUT",
-    body: JSON.stringify({ _id, firstname, lastname, username, email, imageUrl }),
+    body: JSON.stringify({
+      _id,
+      firstname,
+      lastname,
+      username,
+      email,
+      imageUrl,
+    }),
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -89,36 +103,30 @@ const forgotPassword = async (email) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  return handleResponse(response);
-};
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
 
-const validateNewPassword = async (token, newPassword) => {
-  const response = await fetch(`${baseUrl}/users/validate-password`, {
-    method: "POST",
-    body: JSON.stringify({ token, newPassword }),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  const data = await response.json();
-  return response.ok && data;
+  const result = await response.json();
+  return { data: result };
 };
 
 const resetPassword = async (token, newPassword) => {
-  const isValidPassword = await validateNewPassword(token, newPassword);
-
-  if (!isValidPassword) {
-    return { error: "La contraseña ingresada ya ha sido utilizada anteriormente." };
-  }
-
   const response = await fetch(`${baseUrl}/users/reset-password`, {
     method: "POST",
     body: JSON.stringify({ token, newPassword }),
     headers: { "Content-Type": "application/json" },
   });
 
-  return handleResponse(response);
-};
+  if (!response.ok) {
+    const error = await response.json();
+    return { error: error.message };
+  }
 
+  const result = await response.json();
+  return { data: result };
+};
 const getUserByToken = async (token) => {
   const response = await fetch(`${baseUrl}/users/${token}`, {
     method: "GET",
