@@ -20,28 +20,21 @@
   flex-direction: column;
 }
 
-.newCategoryInput {
-  height: 40px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 20px;
-  justify-content: center;
-  align-items: center;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  border-radius: 15px;
-  background-color: beige;
+.date {
+  margin-bottom: 10px;
+}
+
+.category {
+  cursor: pointer;
+  /* background-color: rgba(0, 0, 0, 0); */
+  box-shadow: 0 1px 3px rgba(0, 81, 255, 0.304);
+}
+.category:hover {
+  transform: scale(1.01);
 }
 
 .unlink-btn {
   margin-top: 100px;
   display: flex;
   justify-content: end;
-}
-
-@media (max-width: 1300px) {
-  .cardInfoTrip {
-    margin: 0 15px 15px 15px;
-  }
 }

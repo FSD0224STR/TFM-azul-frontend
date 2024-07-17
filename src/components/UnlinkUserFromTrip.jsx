@@ -59,7 +59,7 @@ const UnlinkUser = ({ tripId }) => {
       okText="Sí"
       cancelText="No"
     >
-      <Button size="small" danger>
+      <Button size="small" style={{ marginBottom: "20px" }} danger>
         Desvincularme del viaje
       </Button>
     </Popconfirm>

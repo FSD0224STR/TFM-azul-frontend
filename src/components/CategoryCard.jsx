@@ -99,8 +99,8 @@ export const CategoryCard = ({ id, title, refreshCategories }) => {
 
   return (
     <Card
-      className="cardSize"
-      style={{ margin: "10px", padding: "0", width: "100%" }}
+      className="category"
+      style={{ margin: "15px 0px", padding: "0", width: "100%" }}
     >
       <div className="content-card" onClick={onView}>
         <div className="category-title">
