@@ -19,7 +19,8 @@
 
 .messagePassword {
   padding-bottom: 100%;
-  margin: 20%;
+  margin-left: 200px;
+  margin-right: 200px;
   text-align: center;
   font-size: 20px;
 }
@@ -30,20 +31,11 @@
   margin-top: 20px;
 }
 
-.emailInput {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 15% 15% 15%;
-  font-size: 17px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.153);
-  /* box-shadow: 0 0px 5px rgba(0, 0, 0, 0.304); */
-  padding: 2% 5%;
-
-  padding-bottom: 30%;
+.sendMail {
+  margin: 30px;
 }
 
-.sendMail {
-  margin-top: 30px;
+.titleCntr {
+  margin: 40px;
+  margin-left: 200px;
 }
