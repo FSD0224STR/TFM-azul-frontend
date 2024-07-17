@@ -194,11 +194,16 @@ const RegistrationForm2 = () => {
                 title="Registro exitoso"
                 open={modalVisible}
                 onOk={handleModalOk}
-                onCancel={() => setModalVisible(false)}
+                footer={[
+                  <Button key="ok" type="primary" onClick={handleModalOk}>
+                    Aceptar
+                  </Button>,
+                ]}
               >
                 <p>
-                  Te has registrado correctamente. Inicia sesión para empezar a
-                  crear viajes.
+                  Te has registrado correctamente. Revisa tu correo electrónico
+                  para verificar tu cuenta e inicia sesión para empezar a crear
+                  viajes!
                 </p>
               </Modal>
             )}
