@@ -2,8 +2,7 @@ body {
   display: block !important;
 }
 
-body,
-html {
+body, html {
   margin: 0;
   padding: 0;
 }
@@ -24,11 +23,7 @@ html {
 }
 
 ::selection {
-  background-color: rgb(
-    255,
-    94,
-    0
-  ); /* Cambia el color de fondo de la selección a naranja */
+  background-color: rgb(255,94,0); /* Cambia el color de fondo de la selección a naranja */
   color: white; /* Cambia el color del texto seleccionado a blanco */
 }
 
@@ -40,9 +35,14 @@ html {
     margin: 150px 10% 25px 10%;
 }
 
+.ant-collapse-content.ant-collapse-content-active {
+  background: rgb(243, 245, 251);
+  border-radius: 0px 0px 10px 10px;
+}
+
 
 @media (max-width: 1300px) { 
   .breadcrumbContainer {
-  margin: 140px 15px 25px 15px;
+    margin: 140px 15px 25px 15px;
   }
 } 

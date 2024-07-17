@@ -41,7 +41,7 @@ export const ProposalCard = ({
 
   const confirm = (e) => {
     console.log(e);
-    message.success("Un viaje menos, una depresión más");
+    message.success("Un plan menos, una depresión más");
     onDelete();
   };
   const cancel = (e) => {
