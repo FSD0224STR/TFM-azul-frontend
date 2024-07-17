@@ -32,9 +32,6 @@ const LoginModal = ({
       onOk={handleOk}
       onCancel={handleCancel}
       footer={[
-        <Button key="back" onClick={handleCancel}>
-          Cancelar
-        </Button>,
         <Button key="submit" type="primary" onClick={handleOk}>
           {loading ? <Spin /> : "Iniciar sesión"}
         </Button>,
