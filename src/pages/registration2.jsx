@@ -192,20 +192,22 @@ const RegistrationForm2 = () => {
 
             {addedUser && (
               <Modal
-                title="Registro exitoso"
+                title="Ya estás dentro!"
                 open={modalVisible}
-                onOk={handleModalOk}
-                footer={[
-                  <Button key="ok" type="primary" onClick={handleModalOk}>
-                    Aceptar
-                  </Button>,
-                ]}
+                onCancel={handleModalOk}
+                footer={[]}
               >
-                <p>
-                  Te has registrado correctamente. Revisa tu correo electrónico
-                  para verificar tu cuenta e inicia sesión para empezar a crear
-                  viajes!
-                </p>
+                <Typography.Text>
+                  Ve a tu bandeja de entrada*, verifica tu cuenta e inicia
+                  sesión <br /> para empezar a crear viajes. ✈️✈️✈️✈️✈️ <br /> O
+                  si te han invitado recupera el enlace y propón tus mejores
+                  planes!
+                  <br />
+                  <br />
+                </Typography.Text>
+                <Typography.Text className="spam">
+                  *Si no lo recibes, revisa tu bandeja de spam.
+                </Typography.Text>
               </Modal>
             )}
           </Form>

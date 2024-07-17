@@ -15,9 +15,8 @@ import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
 import UnlinkUser from "../components/UnlinkUserFromTrip";
+import DeleteTrip from "../components/DeleteTripButton";
 import AddCategoryModal from "../components/CreateCategoryModal";
-import { socket } from "../socket";
-import { Socket } from "socket.io-client";
 
 export function Trip() {
   const [title, setTitle] = useState("");
@@ -113,41 +112,45 @@ export function Trip() {
 
       <AddCategoryModal tripId={id} getTripById={getTripById} />
       <div className="cardInfoTrip">
-        <div className="cabecera">
-          <Typography.Title level={2}>{title}</Typography.Title>
-          <Tooltip title="Copiar enlace de invitación">
-            <UserAddOutlined
-              onClick={generateInvitationLink}
-              className="icon-size"
-            />
-          </Tooltip>
-        </div>
-
-        <div className="description">
-          <Typography.Text>
-            {"Del " +
-              startDateFormatted(startDate) +
-              " al " +
-              endDateFormatted(endDate) +
-              " de " +
-              yearDateFormatted(endDate)}
-          </Typography.Text>
-
-          <Typography.Text>{description}</Typography.Text>
-        </div>
-        <p>
-          <TeamOutlined />{" "}
-          {users.map((user) => (
-            <span key={user._id}>
-              <Badge
-                status={user.isConnected ? "success" : "default"}
-                style={{ marginRight: 4, marginLeft: 9 }}
+        <div className="infoTrip">
+          <div className="cabecera">
+            <Typography.Title level={2}>{title}</Typography.Title>
+            <Tooltip title="Copiar enlace de invitación">
+              <UserAddOutlined
+                onClick={generateInvitationLink}
+                className="icon-size"
               />
-              {user.username}
-            </span>
-          ))}
-        </p>
-        <div className="categoryCardList ">
+            </Tooltip>
+          </div>
+
+          <div className="cabecera1">
+            <Typography.Text>
+              {"Del " +
+                startDateFormatted(startDate) +
+                " al " +
+                endDateFormatted(endDate) +
+                " de " +
+                yearDateFormatted(endDate)}
+            </Typography.Text>
+
+            <Typography.Text className="tripDescription">
+              {description}
+            </Typography.Text>
+          </div>
+          <Typography.Text>
+            <TeamOutlined />{" "}
+            {users.map((user) => (
+              <span key={user._id}>
+                <Badge
+                  status={user.isConnected ? "success" : "default"}
+                  style={{ marginRight: 4, marginLeft: 9 }}
+                />
+                {user.username}
+              </span>
+            ))}
+          </Typography.Text>
+        </div>
+        <div className="">
           {categories.map((categoria) => (
             <CategoryCard
               key={categoria._id}
@@ -175,7 +178,11 @@ export function Trip() {
           />
         )}
         <div className="unlink-btn">
-          <UnlinkUser tripId={id} />
+          {users.length > 1 ? (
+            <UnlinkUser tripId={id} />
+          ) : (
+            <DeleteTrip tripId={id} />
+          )}
         </div>
       </div>
     </div>

@@ -27,10 +27,13 @@
   font-size: 20px; /* Ajusta el tamaño del icono si es necesario */
   z-index: 1000; /* Asegúrate de que el botón esté por encima de otros elementos */
 }
-
-@media (max-width: 1300px) { 
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+@media (max-width: 1300px) {
   .tripContainer {
     margin: 150px 15px 15px 15px;
   }
-
-} 
+}

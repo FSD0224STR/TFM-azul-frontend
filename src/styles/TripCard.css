@@ -1,13 +1,16 @@
 .cardSize {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.468);
+  box-shadow: 0 0px 3px rgba(0, 0, 0, 0.233);
 }
 
 .cardSize:hover {
-  transform: scale(1.03);
+  transform: scale(1.01);
 }
 
+.gray {
+  color: rgb(180, 180, 180);
+}
 .cardBody {
   display: flex;
 }

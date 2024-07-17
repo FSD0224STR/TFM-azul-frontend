@@ -6,6 +6,9 @@ import {
   LikeOutlined,
   LikeFilled,
   DislikeFilled,
+  EnvironmentOutlined,
+  AlignRightOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import "../styles/ProposalCard.css";
 
@@ -26,15 +29,15 @@ export const ProposalCard = ({
 }) => {
   const items = [
     {
-      label: "Dirección",
+      label: <EnvironmentOutlined />,
       children: address,
     },
     {
-      label: "Descripción",
+      label: <AlignRightOutlined />,
       children: description,
     },
     {
-      label: "Propietario",
+      label: <UserOutlined />,
       children: owner,
     },
   ];
@@ -59,7 +62,7 @@ export const ProposalCard = ({
   return (
     <Card
       title={title}
-      className="cardSize"
+      className="proposalCard"
       extra={
         <>
           <div className="btnPanel">
