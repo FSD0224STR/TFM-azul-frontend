@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Breadcrumb } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import userApi from "../apiservice/userApi";
 
@@ -52,68 +52,80 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="cardInfoTrip">
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <h2>Hola {userInfo.firstname}, aquí puedes cambiar tu contraseña:</h2>
-        <img
-          src={userInfo.imageUrl}
-          alt="Foto de perfil"
-          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+    <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb
+          items={[
+            {
+              href: "../reset-password",
+              title: "Restablecer contraseña",
+            },
+          ]}
         />
       </div>
-      <Form name="reset-password-form" onFinish={onFinish}>
-        <Form.Item
-          name="newPassword"
-          rules={[
-            {
-              required: true,
-              message: "Por favor ingresa tu nueva contraseña",
-            },
-            {
-              min: 8,
-              message: "La contraseña debe tener al menos 8 caracteres",
-            },
-            {
-              pattern:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&_-]{8,}$/,
-              message:
-                "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&_-)",
-            },
-          ]}
-        >
-          <Input.Password placeholder="Nueva contraseña" />
-        </Form.Item>
-
-        <Form.Item
-          name="confirmPassword"
-          dependencies={["newPassword"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Por favor confirma tu nueva contraseña",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("newPassword") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error("Las contraseñas no coinciden")
-                );
+      <div className="cardInfoTrip">
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <h2>Hola {userInfo.firstname}, aquí puedes cambiar tu contraseña:</h2>
+          <img
+            src={userInfo.imageUrl}
+            alt="Foto de perfil"
+            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+          />
+        </div>
+        <Form name="reset-password-form" onFinish={onFinish}>
+          <Form.Item
+            name="newPassword"
+            rules={[
+              {
+                required: true,
+                message: "Por favor ingresa tu nueva contraseña",
               },
-            }),
-          ]}
-        >
-          <Input.Password placeholder="Confirmar nueva contraseña" />
-        </Form.Item>
+              {
+                min: 8,
+                message: "La contraseña debe tener al menos 8 caracteres",
+              },
+              {
+                pattern:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&_-]{8,}$/,
+                message:
+                  "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&_-)",
+              },
+            ]}
+          >
+            <Input.Password placeholder="Nueva contraseña" />
+          </Form.Item>
 
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            Restablecer contraseña
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item
+            name="confirmPassword"
+            dependencies={["newPassword"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Por favor confirma tu nueva contraseña",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("newPassword") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Las contraseñas no coinciden")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password placeholder="Confirmar nueva contraseña" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading}>
+              Restablecer contraseña
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   );
 };
