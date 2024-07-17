@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/authContext";
-import { Button, Spin, Alert } from "antd";
+import { Button, Spin, Alert, Typography } from "antd";
 import LoginModal from "./LoginModal"; // Asegúrate de que la ruta sea correcta
 import logo from "../images/logo.png";
 import "../styles/NavBar2.css";
@@ -62,20 +62,20 @@ export const NavBar2 = () => {
             <div className="container21"></div>
             <div className="container22">
               <ul className="navbar-links">
-                <li>
+                <Typography.Text>
                   <a href="/home">Mis viajes</a>
-                </li>
-                <li>
+                </Typography.Text>
+                <Typography.Text>
                   <a href="/perfil">Perfil</a>
-                </li>
-                <li>
+                </Typography.Text>
+                <Typography.Text>
                   <a href="/FAQs">FAQs</a>
-                </li>
-                <li>
+                </Typography.Text>
+                <Typography.Text>
                   <a href="/about" onClick={logout}>
                     Cerrar sesión
                   </a>
-                </li>
+                </Typography.Text>
               </ul>
             </div>
           </div>
