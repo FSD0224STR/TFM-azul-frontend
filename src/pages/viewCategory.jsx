@@ -229,6 +229,7 @@ export const ViewCategory = () => {
         >
           <Form
             form={form}
+            layout="vertical"
             onFinish={isEditing ? handleEditProposal : handleAddProposal}
           >
             <Form.Item
