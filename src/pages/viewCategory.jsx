@@ -15,7 +15,6 @@ import {
 import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import { ProposalCard } from "../components/ProposalCard";
 import { AuthContext } from "/src/contexts/authContext";
-import "../styles/ViewCategory.css";
 
 const { TextArea } = Input;
 
