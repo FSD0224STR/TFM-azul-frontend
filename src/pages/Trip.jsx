@@ -122,20 +122,18 @@ export function Trip() {
             />
           </Tooltip>
         </div>
-        <div className="unlink-btn">
-          <UnlinkUser tripId={id} />
-        </div>
+
         <div className="description">
-          <p>
+          <Typography.Text>
             {"Del " +
               startDateFormatted(startDate) +
               " al " +
               endDateFormatted(endDate) +
               " de " +
               yearDateFormatted(endDate)}
-          </p>
+          </Typography.Text>
 
-          <p>{description}</p>
+          <Typography.Text>{description}</Typography.Text>
         </div>
         <p>
           <TeamOutlined />{" "}
@@ -176,6 +174,9 @@ export function Trip() {
             onClose={() => setError("")}
           />
         )}
+        <div className="unlink-btn">
+          <UnlinkUser tripId={id} />
+        </div>
       </div>
     </div>
   );

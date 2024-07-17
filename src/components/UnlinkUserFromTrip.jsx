@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import tripApi from "../apiservice/tripApi";
 import userApi from "../apiservice/userApi";
-import { Popconfirm, notification } from "antd";
+import { Button, Popconfirm, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const UnlinkUser = ({ tripId }) => {
@@ -59,7 +59,9 @@ const UnlinkUser = ({ tripId }) => {
       okText="Sí"
       cancelText="No"
     >
-      <button className="unlink-btn">Desvincularme del viaje</button>
+      <Button size="small" danger>
+        Desvincularme del viaje
+      </Button>
     </Popconfirm>
   );
 };
