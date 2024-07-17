@@ -140,7 +140,7 @@ function Home() {
             onChange={handleOwnerChange}
             style={{ width: "200px" }}
           >
-            <Option value="">Todos los propietarios</Option>
+            <Option value="">Todos</Option>
             {uniqueOwners.map((owner) => (
               <Option key={owner} value={owner}>
                 {owner}
