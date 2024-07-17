@@ -8,6 +8,8 @@ import {
   Button,
   Tooltip,
   Breadcrumb,
+  Input,
+  Select,
 } from "antd";
 import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 
@@ -19,12 +21,18 @@ import CreateTripModal from "../components/CreateTripModal";
 import "../styles/Home.css";
 import { useNavigate } from "react-router-dom";
 
+const { Option } = Select;
+
 function Home() {
   const [trips, setTrips] = useState([]);
+  const [filteredTrips, setFilteredTrips] = useState([]);
+  const [uniqueOwners, setUniqueOwners] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
-  const [editingTrip, setEditingTrip] = useState(null); // Estado para el viaje que se está editando
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editingTrip, setEditingTrip] = useState(null);
+  const [searchTitle, setSearchTitle] = useState("");
+  const [selectedOwner, setSelectedOwner] = useState("");
 
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -34,6 +42,8 @@ function Home() {
       setLoading(true);
       const response = await tripAPI.getAllTrips();
       setTrips(response.data);
+      setFilteredTrips(response.data);
+      extractUniqueOwners(response.data);
     } catch (error) {
       setError(`Error fetching trips: ${error.message}`);
     } finally {
@@ -41,11 +51,18 @@ function Home() {
     }
   };
 
+  const extractUniqueOwners = (trips) => {
+    const owners = Array.from(
+      new Set(trips.map((trip) => trip.owner.username))
+    );
+    setUniqueOwners(owners);
+  };
+
   const updateTrip = (idToUpdate) => {
     const tripToUpdate = trips.find((trip) => trip._id === idToUpdate);
     if (tripToUpdate) {
-      setEditingTrip(tripToUpdate); // Actualiza el estado con el viaje que se está editando
-      setIsModalVisible(true); // Abre el modal de edición
+      setEditingTrip(tripToUpdate);
+      setIsModalVisible(true);
     }
   };
 
@@ -54,22 +71,49 @@ function Home() {
   };
 
   const handleCreateTrip = () => {
-    setEditingTrip(null); // Asegura que no haya ningún viaje en edición cuando se cree uno nuevo
-    setIsModalVisible(true); // Abre el modal de creación
+    setEditingTrip(null);
+    setIsModalVisible(true);
   };
 
   const handleModalCancel = () => {
-    setIsModalVisible(false); // Cierra el modal
+    setIsModalVisible(false);
   };
 
   const handleTripUpdate = async () => {
-    setIsModalVisible(false); // Cierra el modal después de actualizar
-    await getTrips(); // Vuelve a obtener la lista de viajes actualizada
+    setIsModalVisible(false);
+    await getTrips();
+  };
+
+  const handleSearchTitleChange = (e) => {
+    setSearchTitle(e.target.value);
+  };
+
+  const handleOwnerChange = (value) => {
+    setSelectedOwner(value);
+  };
+
+  const filterTrips = () => {
+    let filtered = trips;
+    if (searchTitle) {
+      filtered = filtered.filter((trip) =>
+        trip.title.toLowerCase().includes(searchTitle.toLowerCase())
+      );
+    }
+    if (selectedOwner) {
+      filtered = filtered.filter(
+        (trip) => trip.owner.username === selectedOwner
+      );
+    }
+    setFilteredTrips(filtered);
   };
 
   useEffect(() => {
     getTrips();
   }, []);
+
+  useEffect(() => {
+    filterTrips();
+  }, [searchTitle, selectedOwner, trips]);
 
   return (
     <div className="tripContainer">
@@ -80,12 +124,33 @@ function Home() {
           },
         ]}
       />
+      <div style={{ marginBottom: "20px" }} className="tripPanel">
+        <Input
+          placeholder="¿A dónde?"
+          value={searchTitle}
+          onChange={handleSearchTitleChange}
+          style={{ width: "200px", marginRight: "20px" }}
+        />
+        <Select
+          placeholder="Filtrar por propietario"
+          value={selectedOwner}
+          onChange={handleOwnerChange}
+          style={{ width: "200px" }}
+        >
+          <Option value="">Todos</Option>
+          {uniqueOwners.map((owner) => (
+            <Option key={owner} value={owner}>
+              {owner}
+            </Option>
+          ))}
+        </Select>
+      </div>
       <div>
         {loading ? (
           <Spin />
-        ) : Array.isArray(trips) && trips.length > 0 ? (
+        ) : Array.isArray(filteredTrips) && filteredTrips.length > 0 ? (
           <div className="tripPanel">
-            {trips.map((trip) => (
+            {filteredTrips.map((trip) => (
               <TripCard
                 key={trip._id}
                 title={trip.title}
@@ -114,7 +179,6 @@ function Home() {
               />
             </Col>
           </Row>
-          {/* Botón flotante para abrir modal de creación */}
           <Tooltip title="Crear Nuevo Viaje">
             <Button
               type="primary"
