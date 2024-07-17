@@ -35,6 +35,7 @@ const RegistrationForm2 = () => {
         email
       );
       if ("error" in response) {
+        console.log("response.error", response.error);
         setError(response.error);
       } else {
         setAddedUser(response.data);
