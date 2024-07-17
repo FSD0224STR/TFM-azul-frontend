@@ -15,6 +15,7 @@ import tripAPI from "../apiservice/tripApi";
 import { CategoryCard } from "../components/CategoryCard";
 import "../styles/Trip.css";
 import UnlinkUser from "../components/UnlinkUserFromTrip";
+import DeleteTrip from "../components/DeleteTripButton";
 import AddCategoryModal from "../components/CreateCategoryModal";
 import { socket } from "../socket";
 import { Socket } from "socket.io-client";
@@ -179,7 +180,11 @@ export function Trip() {
           />
         )}
         <div className="unlink-btn">
-          <UnlinkUser tripId={id} />
+          {users.length > 1 ? (
+            <UnlinkUser tripId={id} />
+          ) : (
+            <DeleteTrip tripId={id} />
+          )}
         </div>
       </div>
     </div>
