@@ -54,7 +54,7 @@ export const TripCard = ({
             <Tooltip title="Editar">
               <EditOutlined
                 onClick={handleEdit}
-                className="icon-size icon-margin-left "
+                className="icon-size icon-margin-left gray"
               />
             </Tooltip>
           </div>
