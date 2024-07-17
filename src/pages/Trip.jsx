@@ -124,8 +124,8 @@ export function Trip() {
             </Tooltip>
           </div>
 
-          <div className="description">
-            <Typography.Text className="date">
+          <div className="cabecera1">
+            <Typography.Text>
               {"Del " +
                 startDateFormatted(startDate) +
                 " al " +
@@ -134,9 +134,11 @@ export function Trip() {
                 yearDateFormatted(endDate)}
             </Typography.Text>
 
-            <Typography.Text>{description}</Typography.Text>
+            <Typography.Text className="tripDescription">
+              {description}
+            </Typography.Text>
           </div>
-          <p>
+          <Typography.Text>
             <TeamOutlined />{" "}
             {users.map((user) => (
               <span key={user._id}>
@@ -147,7 +149,7 @@ export function Trip() {
                 {user.username}
               </span>
             ))}
-          </p>
+          </Typography.Text>
         </div>
         <div className="">
           {categories.map((categoria) => (
