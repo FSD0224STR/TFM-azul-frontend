@@ -86,7 +86,7 @@ const ResetPassword = () => {
               },
               {
                 pattern:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&_-]{8,}$/,
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{8,}$/,
                 message:
                   "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial (@$!%*?&_-)",
               },
