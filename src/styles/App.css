@@ -40,6 +40,13 @@ body, html {
   border-radius: 0px 0px 10px 10px;
 }
 
+.ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-expand-icon {
+  align-items: end;
+}
+
+span.ant-collapse-header-text {
+  font-weight: 500;
+}
 
 @media (max-width: 1300px) { 
   .breadcrumbContainer {

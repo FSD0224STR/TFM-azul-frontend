@@ -176,7 +176,9 @@ function Home() {
               ))}
             </div>
           ) : (
-            <Typography.Text>No se han encontrado viajes.</Typography.Text>
+            <Typography.Title level={5}>
+              No se han encontrado viajes. ¡Añade uno nuevo!
+            </Typography.Title>
           )}
         </div>
         {isLoggedIn ? (

@@ -150,16 +150,22 @@ export function Trip() {
             ))}
           </Typography.Text>
         </div>
-        <div className="">
-          {categories.map((categoria) => (
-            <CategoryCard
-              key={categoria._id}
-              id={categoria._id}
-              title={categoria.title}
-              refreshCategories={() => getTripById(id)} // Pasar la función de actualización como prop
-            ></CategoryCard>
-          ))}
-        </div>
+        {Array.isArray(categories) && categories.length > 0 ? (
+          <div className="">
+            {categories.map((categoria) => (
+              <CategoryCard
+                key={categoria._id}
+                id={categoria._id}
+                title={categoria.title}
+                refreshCategories={() => getTripById(id)} // Pasar la función de actualización como prop
+              ></CategoryCard>
+            ))}
+          </div>
+        ) : (
+          <Typography.Title level={5}>
+            No se han encontrado categorias. ¡Añade una nueva!
+          </Typography.Title>
+        )}
         {isAddingCategory && (
           <input
             className="newCategoryInput tripInfo"

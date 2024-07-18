@@ -11,7 +11,7 @@ import {
   Spin,
   Breadcrumb,
 } from "antd";
-// import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 import "../styles/Registration.css";
 
 const RegistrationForm2 = () => {
@@ -63,10 +63,10 @@ const RegistrationForm2 = () => {
       <div className="breadcrumbContainer">
         <Breadcrumb
           items={[
-            // {
-            //   href: "../",
-            //   title: <HomeOutlined />,
-            // },
+            {
+              href: "../",
+              title: <HomeOutlined />,
+            },
             {
               title: `Registro de un nuevo usuario`,
             },

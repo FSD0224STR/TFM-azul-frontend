@@ -285,29 +285,34 @@ export const ViewCategory = () => {
             onClose={() => setError("")}
           />
         )}
-
-        <div className="categoryCardList">
-          {proposals.map((proposal) => (
-            <ProposalCard
-              key={proposal._id}
-              id={proposal._id}
-              title={proposal.title}
-              address={proposal.address}
-              description={proposal.description}
-              owner={proposal.owner}
-              like={proposal.like}
-              dislike={proposal.dislike}
-              userId={userId}
-              addLike={() => handleAddLikeAndSync(proposal._id)}
-              addDislike={() => handleAddDislikeAndSync(proposal._id)}
-              removeLike={() => handleRemoveLikeAndSync(proposal._id)}
-              removeDislike={() => handleRemoveDislikeAndSync(proposal._id)}
-              onEdit={() => handleEditClick(proposal)}
-              onDelete={() => handleDeleteProposal(proposal._id)}
-              refreshProposals={() => getCategoryById(id)}
-            ></ProposalCard>
-          ))}
-        </div>
+        {Array.isArray(proposals) && proposals.length > 0 ? (
+          <div className="categoryCardList">
+            {proposals.map((proposal) => (
+              <ProposalCard
+                key={proposal._id}
+                id={proposal._id}
+                title={proposal.title}
+                address={proposal.address}
+                description={proposal.description}
+                owner={proposal.owner}
+                like={proposal.like}
+                dislike={proposal.dislike}
+                userId={userId}
+                addLike={() => handleAddLikeAndSync(proposal._id)}
+                addDislike={() => handleAddDislikeAndSync(proposal._id)}
+                removeLike={() => handleRemoveLikeAndSync(proposal._id)}
+                removeDislike={() => handleRemoveDislikeAndSync(proposal._id)}
+                onEdit={() => handleEditClick(proposal)}
+                onDelete={() => handleDeleteProposal(proposal._id)}
+                refreshProposals={() => getCategoryById(id)}
+              ></ProposalCard>
+            ))}
+          </div>
+        ) : (
+          <Typography.Title level={5}>
+            No se han encontrado propuestas. ¡Añade una nueva!
+          </Typography.Title>
+        )}
       </div>
     </div>
   );

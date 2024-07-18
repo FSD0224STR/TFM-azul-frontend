@@ -39,7 +39,7 @@ const ForgotPassword = () => {
               title: <HomeOutlined />,
             },
             {
-              title: `Has olvidado tu contraseña?`,
+              title: `¿Has olvidado tu contraseña?`,
             },
           ]}
         />
@@ -52,8 +52,8 @@ const ForgotPassword = () => {
         ) : (
           <>
             <Typography.Title level={4} className="titleCntr">
-              Danos tu email y te enviaremos un correo con instrucciones <br />{" "}
-              para restablecer tu contraseña.
+              Danos tu email y te enviaremos un correo con instrucciones para
+              restablecer tu contraseña.
             </Typography.Title>
             <Form
               name="forgot-password-form "
