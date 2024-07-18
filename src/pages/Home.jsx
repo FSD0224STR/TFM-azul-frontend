@@ -41,9 +41,13 @@ function Home() {
     try {
       setLoading(true);
       const response = await tripAPI.getAllTrips();
-      setTrips(response.data);
-      setFilteredTrips(response.data);
-      extractUniqueOwners(response.data);
+      if (response.data === undefined) {
+        console.log("response.error", response.error);
+      } else {
+        setTrips(response.data);
+        setFilteredTrips(response.data);
+        extractUniqueOwners(response.data);
+      }
     } catch (error) {
       setError(`Error fetching trips: ${error.message}`);
     } finally {
