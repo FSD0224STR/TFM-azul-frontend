@@ -125,7 +125,12 @@ function Home() {
         <Breadcrumb
           items={[
             {
-              title: <HomeOutlined />,
+              title: (
+                <>
+                  <HomeOutlined />
+                  <span>Mis viajes</span>
+                </>
+              ),
             },
           ]}
         />

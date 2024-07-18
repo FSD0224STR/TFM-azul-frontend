@@ -33,13 +33,14 @@ export const App = () => {
     function onConnect() {
       if (userId !== null) {
         setUserToDisconnect(userId);
-        console.log("este el es id del usuario", userId);
+        console.log("conectando usuario");
+        //console.log("este el es id del usuario", userId);
         socket.emit("connection", userId); // Enviar userId al servidor al conectar
       }
     }
 
     function onDisconnect() {
-      console.log("desconectando usuario", userToDisconnect);
+      console.log("desconectando usuario");
       socket.emit("disconnect", userToDisconnect); // Enviar userId al servidor al desconectar
     }
 
@@ -87,7 +88,10 @@ export const App = () => {
         <Route path="/trip/:id" element={<Trip />} />
         <Route path="categories/:id" element={<ViewCategory />} />
         <Route path="/registration" element={<RegistrationForm2 />} />
-        <Route path="/confirm-validation/:token" element={<ConfirmValidation />} />
+        <Route
+          path="/confirm-validation/:token"
+          element={<ConfirmValidation />}
+        />
         <Route path="/join-trip/:id" element={<JoinTripPage />} />
         <Route path="/faqs" element={<FAQs />} />
         <Route path="/forgot-password/" element={<ForgotPassword />} />
