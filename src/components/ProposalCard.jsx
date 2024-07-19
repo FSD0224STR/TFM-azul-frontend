@@ -44,7 +44,6 @@ export const ProposalCard = ({
 
   const confirm = (e) => {
     console.log(e);
-    message.success("Un plan menos, una depresión más");
     onDelete();
   };
   const cancel = (e) => {
