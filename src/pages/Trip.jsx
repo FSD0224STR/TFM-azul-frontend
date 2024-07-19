@@ -163,7 +163,7 @@ export function Trip() {
           </div>
         ) : (
           <Typography.Title level={5}>
-            No se han encontrado categorias. ¡Añade una nueva!
+            No se han encontrado categorías. ¡Añade una nueva!
           </Typography.Title>
         )}
         {isAddingCategory && (
