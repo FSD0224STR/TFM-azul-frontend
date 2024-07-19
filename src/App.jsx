@@ -46,9 +46,12 @@ export const App = () => {
 
     function onUpdate(data) {
       console.log("actualizando un viaje", data);
+
+      const content = <div dangerouslySetInnerHTML={{ __html: data }} />;
+
       messageApi.open({
         type: "success",
-        content: `${data}`,
+        content: content,
         duration: 10,
       });
     }
